@@ -15,72 +15,48 @@
 @import "components/navbar";
 
 
-body {
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    height: 100%;
+
+.app-list{
+
+    margin-top: 30px;
 }
-.button.is-success {
-    background-color: #2EB398;
+.breadcrumb {
+
+    list-style: none;
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+      & > li + li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: var(--separator, "\2044");
+  }
 }
-.nav.is-dark {
-    background-color: #232B2D;
-    color: #F6F7F7;
-    .nav-item {
-        a {
-            color: #F6F7F7;
-        }
-        a.button.is-default {
-            color: #F6F7F7;
-            background-color: transparent;
-            border-width: 2px;
-        }
+
+.table {
+    td.is-icon{
+        width:80px;
     }
-    a.nav-item {
-        color: #F6F7F7;
-    }
-}
-.aside {
-    background-color: #354052;
-    margin-right: -10px;
-    .main {
-        padding: 40px;
-        color: #6F7B7E;
-        .item {
-            display: block;
-            padding: 10px 0;
-            color: #6F7B7E;
-        }
-        .item.active {
-            color: #F6F7F7;
-        }
-        .icon {
-            font-size: 19px;
-            padding-right: 30px;
-        }
-        .name {
-            font-size: 16px;
-            font-weight: bold;
-        }
-    }
-    .title {
-        color: #6F7B7E;
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
+    &.is-bordered2{
+        border-top: 2px solid #dbdbdb;
+        border-bottom: 2px solid #dbdbdb;
+
     }
 }
-.admin-panel {
-    padding-bottom: 0;
+
+
+.is-circle{
+    border-radius: 50%;
+    overflow: hidden;
 }
-.content {
-    display: block;
-    background-color: #fff;
-    padding: 40px 20px;
-}
-.hero {
-    .tabs {
-        ul {
-            border-bottom: 1px solid #d3d6db;
-        }
+
+.has-centered{
+    text-align: center;
+    > * {
+        display: inline-block;
     }
+}
+
+.is-mb3{
+    margin-bottom: 3rem;
 }
