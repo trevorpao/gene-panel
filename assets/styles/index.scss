@@ -1,0 +1,86 @@
+// Custom variable overrides
+
+@import "../../node_modules/bulma/sass/utilities/all";
+
+// Custom overrides.
+
+@import "../../node_modules/bulma/sass/grid/all";
+@import "../../node_modules/bulma/sass/base/all";
+@import "../../node_modules/bulma/sass/elements/all";
+@import "../../node_modules/bulma/sass/components/all";
+@import "../../node_modules/bulma/sass/layout/all";
+
+@import "components/aside";
+@import "components/main";
+@import "components/navbar";
+
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    height: 100%;
+}
+.button.is-success {
+    background-color: #2EB398;
+}
+.nav.is-dark {
+    background-color: #232B2D;
+    color: #F6F7F7;
+    .nav-item {
+        a {
+            color: #F6F7F7;
+        }
+        a.button.is-default {
+            color: #F6F7F7;
+            background-color: transparent;
+            border-width: 2px;
+        }
+    }
+    a.nav-item {
+        color: #F6F7F7;
+    }
+}
+.aside {
+    background-color: #354052;
+    margin-right: -10px;
+    .main {
+        padding: 40px;
+        color: #6F7B7E;
+        .item {
+            display: block;
+            padding: 10px 0;
+            color: #6F7B7E;
+        }
+        .item.active {
+            color: #F6F7F7;
+        }
+        .icon {
+            font-size: 19px;
+            padding-right: 30px;
+        }
+        .name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+    .title {
+        color: #6F7B7E;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+.admin-panel {
+    padding-bottom: 0;
+}
+.content {
+    display: block;
+    background-color: #fff;
+    padding: 40px 20px;
+}
+.hero {
+    .tabs {
+        ul {
+            border-bottom: 1px solid #d3d6db;
+        }
+    }
+}

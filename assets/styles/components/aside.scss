@@ -1,0 +1,61 @@
+.aside {
+      top: 0px;
+    left: 0;
+    bottom: 0;
+    padding:25px;
+    position: absolute;
+  
+    width: 250px;
+    min-height: 100%;
+    height: auto;
+   // height: calc(100% );
+    z-index: 1023;
+   background: #09090A;
+    //box-shadow: 0 2px 3px hsla(0,0%,7%,.1), 0 0 0 1px hsla(0,0%,7%,.1);
+    overflow-y: auto;
+    overflow-x: hidden;
+    .title {
+        color: #6F7B7E;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    background-color: #354052;
+    margin-right: -10px;
+    .main {
+        padding: 40px;
+        color: #6F7B7E;
+        .item {
+            display: block;
+            padding: 10px 0;
+            color: #6F7B7E;
+            &.active {
+                color: #F6F7F7;
+            }
+        }
+    }
+}
+
+.aside .main .icon {
+    font-size: 19px;
+    padding-right: 30px;
+}
+
+.aside .main .name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.admin-panel {
+    padding-bottom: 0;
+}
+
+.content {
+    display: block;
+    background-color: #fff;
+    padding: 40px 20px;
+}
+
+.hero .tabs ul {
+    border-bottom: 1px solid #d3d6db;
+}
