@@ -1,0 +1,32 @@
+<form class="modal-form login-form">
+  <div class="form-group">
+    <input type="email" class="form-control" placeholder="請輸入Email">
+  </div>
+  <div class="form-group has-error">
+    <input type="email" class="form-control" placeholder="請輸入Email" required>
+    <label class="control-label">
+        此 Email 尚未註冊會員。
+    </label>
+  </div>
+  <div class="form-group has-success has-feedback">
+    <input type="password" class="form-control" placeholder="請輸入密碼" required>
+    <i class="fa fa-check form-control-feedback" aria-hidden="true"></i>
+  </div>
+  <div class="checkbox clearfix">
+    <label class="pull-left"><input type="checkbox">
+        記住我的帳號密碼
+    </label>
+    <a href="#" class="pull-right normal link" data-toggle="modal" data-target="#forget-password-form-modal">忘記密碼？</a>
+  </div>
+  <button type="button" class="btn btn-primary submit-btn login-btn gee" data-gene="click:login">登入</button>
+</form>
+<div class="text-center facebook-auth-div">
+  <button class="btn facebook-auth-btn">
+    <i class="fa fa-facebook" aria-hidden="true"></i>
+  </button>
+  <span class="facebook-auth-info">使用 Facebook 帳號登入</span>
+</div>
+<div class="text-center">
+  還沒有帳號嗎？
+  <a href="javascript:;" class="inline link normal gee" data-gene="click:showModal" data-src="register-modal" data-title="現在就註冊">立即註冊</a>
+</div>

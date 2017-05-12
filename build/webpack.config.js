@@ -2,20 +2,21 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const projectRoot = path.resolve(__dirname, '../');
-
 const dirApp = path.join(projectRoot, 'app');
 const dirAssets = path.join(projectRoot, 'assets');
 
 // Is the current build a development build
 const IS_DEV = (process.env.NODE_ENV === 'dev');
 
+const imgPath = (IS_DEV === true) ? '/src/' : '/./';
+
 module.exports = {
     entry: {
         vendor: [
-            'jquery',
+            'jquery'
             // 'lodash'
         ],
-        bundle: path.join(dirApp, 'index')
+        bundle: path.join(dirApp, 'main')
     },
     resolve: {
         modules: [
@@ -26,22 +27,26 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            IS_DEV: IS_DEV
+            IS_DEV: IS_DEV,
+            imgPath: imgPath
         }),
 
         new webpack.ProvidePlugin({
             // jQuery
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            'root.jQuery': 'jquery',
+            'window.jQuery': 'jquery'
+        }),
 
-            // lodash
-            // '_': 'lodash'
+        new HtmlWebpackPlugin({
+            template: path.join(projectRoot, 'src/table.ejs'),
+            filename: 'table.html',
+            title: 'GeneJs Panel'
         }),
 
         new HtmlWebpackPlugin({
             template: path.join(projectRoot, 'src/index.ejs'),
+            filename: 'index.html',
             title: 'GeneJs Panel'
         })
     ],
@@ -92,10 +97,9 @@ module.exports = {
                 ]
             },
 
-            // EJS
             {
                 test: /\.ejs$/,
-                loader: 'ejs-loader'
+                loader: "ejs-compiled-loader"
             },
 
             // IMAGES
