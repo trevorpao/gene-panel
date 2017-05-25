@@ -24,7 +24,7 @@ var app = function() {
 
         tmplStores: {},
         htmlStores: {},
-        tmplPath: (IS_DEV?'/src':'/dist') + '/js/tmpls',
+        tmplPath: '/app/tmpls',
 
         init: function(modules) {
 
@@ -49,34 +49,6 @@ var app = function() {
             }
         },
 
-        resetCurrent: function (box) {
-            var tmpl = box.data('tmpl');
-            app.pageBox = box;
-
-            if (typeof app.tmplStores[tmpl] === 'undefined') {
-                app.tmplStores[tmpl] = $.templates(box.html());
-            }
-
-            app.pageCounter = 1;
-            app.pageBox.html('');
-            app.destroyPaginate();
-        },
-
-        setPaginate: function (total, callback) {
-            $('#paginate').twbsPagination({
-              totalPages: Math.ceil(total/app.pageLimit),
-              visiblePages: 7,
-              onPageClick: function (event, page) {
-                app.pageCounter = page;
-                callback.call(this);
-              }
-            });
-        },
-
-        destroyPaginate: function (total, callback) {
-            $('#paginate').empty().removeData('twbs-pagination').off('page');
-        },
-
         loadHtml: function(src, box, redirect) {
             var newPath = '/'+ src;
             var success = function(html, status, xhr) {
@@ -87,7 +59,9 @@ var app = function() {
                     });
                 }
                 else {
-                    app.htmlStores['tmp-'+ src] = html;
+                    gee.clog(html);
+                    app.htmlStores['tmpl-'+ src] = html;
+                    box.html(html);
                     if (redirect !== '') {
                         app.redirect({path: newPath, ta: redirect});
                     }
@@ -97,12 +71,12 @@ var app = function() {
             box = (typeof box === 'string') ? $('#'+ box) : box;
             redirect = (redirect) ? redirect : '';
 
-            if (typeof app.htmlStores['tmp-'+ src] === 'undefined') {
+            if (typeof app.htmlStores['tmpl-'+ src] === 'undefined') {
                 gee.clog('load: '+ app.tmplPath + newPath +'.html');
                 box.load(app.tmplPath + newPath +'.html', success);
             }
             else {
-                box.html(app.htmlStores['tmp-'+ src]);
+                box.html(app.htmlStores['tmpl-'+ src]);
                 if (redirect !== '') {
                     app.redirect({path: newPath, ta: redirect});
                 }
@@ -134,39 +108,10 @@ var app = function() {
             window.history.pushState(state, '', state.path);
         },
 
-        renderBox: function (box, dataList, clearBox, orientation) {
-            orientation = (orientation) ? orientation : 'down';
-            if (box && dataList) {
-                var tmpl = box.data('tmpl');
-
-                if (clearBox) {
-                    box.html('');
-                }
-
-                if (orientation === 'down') {
-                    box.append(app.tmplStores[tmpl].render(dataList));
-
-                    if (app.pageCounter === 1) {
-                        app.toTop();
-                    }
-                }
-                else {
-                    app.toTop();
-
-                    box.prepend(app.tmplStores[tmpl].render(dataList));
-                }
-            }
-        },
-
-        toTop: function () {
-            gee.clog('nowTop::'+ $('body').offset().top);
-            app.body.animate({
-                scrollTop: app.body.offset().top
-            }, 700, 'easeOutBounce');
-        },
-
-        defaultPic: function(element) {
-            element.src = '/images/member.jpg';
+        defaultPic: function() {
+            var img = event.srcElement;
+            $(img).attr('src', 'default.svg');
+            img.onerror = null;
         },
 
         stdErr: function(e, redo) {

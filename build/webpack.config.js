@@ -13,7 +13,8 @@ const imgPath = (IS_DEV === true) ? '/src/' : '/./';
 module.exports = {
     entry: {
         vendor: [
-            'jquery'
+            'jquery',
+            'jquery.cookie'
             // 'lodash'
         ],
         bundle: path.join(dirApp, 'main')
@@ -36,12 +37,6 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
-        }),
-
-        new HtmlWebpackPlugin({
-            template: path.join(projectRoot, 'src/table.ejs'),
-            filename: 'table.html',
-            title: 'GeneJs Panel'
         }),
 
         new HtmlWebpackPlugin({
@@ -100,6 +95,14 @@ module.exports = {
             {
                 test: /\.ejs$/,
                 loader: "ejs-compiled-loader"
+            },
+
+            {
+                test: /\.html$/,
+                loader: 'mustache-loader'
+                // loader: 'mustache-loader?minify'
+                // loader: 'mustache-loader?{ minify: { removeComments: false } }'
+                // loader: 'mustache-loader?noShortcut'
             },
 
             // IMAGES

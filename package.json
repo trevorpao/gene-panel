@@ -18,6 +18,8 @@
     "bulma": "^0.3.2",
     "gene-event-handler": "0.0.1",
     "jquery": "^3.1.1",
+    "jquery-touch-events": "git+https://github.com/benmajor/jQuery-Touch-Events.git",
+    "jquery.cookie": "^1.4.1",
     "jsrender": "^0.9.84"
   },
   "devDependencies": {
@@ -28,7 +30,9 @@
     "css-loader": "^0.26.1",
     "ejs-compiled-loader": "^1.1.0",
     "file-loader": "^0.10.0",
+    "hogan.js": "^3.0.2",
     "html-webpack-plugin": "^2.28.0",
+    "mustache-loader": "^0.4.1",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
