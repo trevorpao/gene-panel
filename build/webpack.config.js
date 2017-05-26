@@ -1,9 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const projectRoot = path.resolve(__dirname, '../');
 const dirApp = path.join(projectRoot, 'app');
 const dirAssets = path.join(projectRoot, 'assets');
+const dirDist = path.join(projectRoot, 'dist');
 
 // Is the current build a development build
 const IS_DEV = (process.env.NODE_ENV === 'dev');
@@ -38,6 +41,17 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }),
+
+        new CopyWebpackPlugin([
+            {
+                from: path.join(dirAssets, 'images'),
+                to: path.join(dirDist, '/images')
+            },
+            {
+                from: path.join(dirApp, 'tmpls'),
+                to: path.join(dirDist, '/app/tmpls')
+            }
+        ]),
 
         new HtmlWebpackPlugin({
             template: path.join(projectRoot, 'src/index.ejs'),

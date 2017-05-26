@@ -24,7 +24,7 @@ var app = function() {
 
         tmplStores: {},
         htmlStores: {},
-        tmplPath: '/app/tmpls',
+        tmplPath: './app/tmpls',
 
         init: function(modules) {
 

@@ -8,7 +8,7 @@ require('jsrender');
 import 'gene-event-handler/app/scripts/validatr';
 import 'gene-event-handler/app/scripts/jquery.gene';
 
-window.mainUrl = (IS_DEV) ? 'http://music.sense-info.co/' : '/';
+window.mainUrl = 'http://music.sense-info.co/';
 window.apiUrl = window.mainUrl +'';
 gee.debug = IS_DEV;
 
