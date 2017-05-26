@@ -59,7 +59,6 @@ var app = function() {
                     });
                 }
                 else {
-                    gee.clog(html);
                     app.htmlStores['tmpl-'+ src] = html;
                     box.html(html);
                     if (redirect !== '') {

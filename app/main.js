@@ -17,6 +17,7 @@ import './app';
 import './modules/arena';
 import './modules/table';
 
+// $.views.settings.delimiters('<%', '%>');
 $.views.helpers(app.formatHelper);
 
 $(document).ready(function () {

@@ -34,6 +34,12 @@
                 });
         },
 
+        toTop: function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 600);
+        },
+
         handler: function() {
             var currentWindowPosition = $(window).scrollTop();
             gee.clog('currentWindowPosition::' + currentWindowPosition);
@@ -80,7 +86,11 @@
             box = box || $('#main-box');
 
             if (typeof app.tmplStores[app.arena.module] === 'undefined') {
-                app.tmplStores[app.arena.module] = $.templates(box.html());
+                let tmpl = box.html();
+                if (box.is('tbody')) { // fix tbody>tr bug
+                    tmpl = '{{props data}}'+ tmpl +'{{/props}}';
+                }
+                app.tmplStores[app.arena.module] = $.templates(tmpl);
             }
 
             app.arena.pageCounter = 0;
@@ -100,15 +110,14 @@
                             if (this.code !== '1') {
                                 app.stdErr(this);
                             } else {
-                                var rows = this.data;
-                                app.renderBox(box, rows);
+                                app.arena.renderBox(box, {'data': this.data});
                             }
                         };
 
                         gee.yell(app.arena.module +'/list_all', JSON.stringify({_token: "6d5ymvtn9nlljcgmg7rsikvs4i"}), callback, callback);
                         break;
                 }
-            }, 300);
+            }, 10);
         },
 
         renderBox: function (box, dataList, clearBox, orientation) {
@@ -124,11 +133,11 @@
                     box.append(app.tmplStores[app.arena.module].render(dataList));
 
                     if (app.pageCounter === 1) {
-                        app.toTop();
+                        app.arena.toTop();
                     }
                 }
                 else {
-                    app.toTop();
+                    app.arena.toTop();
 
                     box.prepend(app.tmplStores[app.arena.module].render(dataList));
                 }
@@ -162,9 +171,7 @@
     });
 
     gee.hook('go2Top', function(me) {
-        $("html, body").animate({
-            scrollTop: 0
-        }, 600);
+        app.arena.toTop();
     });
 
     gee.hook('showModal', function(me) {
