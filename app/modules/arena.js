@@ -56,15 +56,21 @@
             var modal = (ta) ? $('#' + ta) : $('#defaultModal');
 
             modal
-                .find('.modal-dialog').removeClass('modal-lg modal-nor modal-sm').addClass('modal-' + size).end()
+                .find('.modal-content').removeClass('modal-lg modal-nor modal-sm').addClass('modal-' + size).end()
                 .find('.modal-title').text(title);
 
-            app.loadHtml(src, modal.find('.modal-body'));
+            app.loadHtml(src, modal.find('.modal-content'));
 
             if (modal !== app.arena.cuModal) {
                 app.arena.cuModal = modal;
-                modal.modal('show');
+                modal.addClass('is-active');
             }
+        },
+
+        hideModal: function () {
+            app.arena.cuModal.removeClass('is-active')
+                .find('.modal-content').removeClass('modal-lg modal-nor modal-sm').html('');
+            app.arena.cuModal = null;
         },
 
         setPaginate: function (total, callback) {
@@ -179,6 +185,10 @@
             var size = me.data('size') ? me.data('size') : 'nor';
             app.arena.showModal(me.data('title'), me.data('src'), size);
         }
+    });
+
+    gee.hook('hideModal', function (me) {
+        app.arena.hideModal();
     });
 
     gee.hook('loadMain', function(me) {
