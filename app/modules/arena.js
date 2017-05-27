@@ -5,10 +5,12 @@
     // register a module name
     app.arena = {
         cuModal: null,
-        menuBox: $("#mainMenu"),
+        menuBox: $("#mainNav"),
 
         init: function() {
             app.arena.handler();
+
+            app.arena.menuBox = (app.screen === 'mobile') ? $("#mobileNav") : app.arena.menuBox;
 
             if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
                 $(window).bind("touchend touchcancel touchleave", function(e) {
@@ -19,19 +21,6 @@
                     app.arena.handler();
                 });
             }
-
-            $('.modal').unbind()
-                .on('show.bs.modal', function() {
-                    gee.clog('show.bs.modal');
-                })
-                .on('hidden.bs.modal', function() {
-                    gee.clog('hidden.bs.modal');
-                    app.arena.cuModal
-                        .find('.modal-dialog').removeClass('modal-lg modal-nor modal-sm').end()
-                        .find('.modal-title').html('').end()
-                        .find('.modal-body').html('');
-                    app.arena.cuModal = null;
-                });
         },
 
         toTop: function() {
@@ -178,6 +167,15 @@
 
     gee.hook('go2Top', function(me) {
         app.arena.toTop();
+    });
+
+    gee.hook('toggleMenu', function(me) {
+        if (app.arena.menuBox.hasClass('is-active')) {
+            app.arena.menuBox.removeClass('is-active');
+        }
+        else {
+            app.arena.menuBox.addClass('is-active');
+        }
     });
 
     gee.hook('showModal', function(me) {

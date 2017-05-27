@@ -1,6 +1,6 @@
 <aside class="aside hero is-fullheight is-hidden-mobile">
   <div>
-    <div class="main">
+    <div class="main" id="mainNav">
       <div class="title">Main</div>
       <a href="javascript:;" class="item gee" data-gene="tap:loadMain" data-module="product" data-layout="table"><span class="icon"><i class="fa fa-th-list"></i></span><span class="name">Product List</span></a>
       <a href="javascript:;" class="item gee" data-gene="tap:loadMain" data-module="staff" data-layout="simple"><span class="icon"><i class="fa fa-th-list"></i></span><span class="name">Staff List</span></a>
@@ -16,12 +16,12 @@
     <div class="nav-left">
       <a class="nav-item" href="../index.html"><img src="../assets/images/logo.png" class="logo" alt="Description"></a>
     </div>
-    <span class="nav-toggle">
-            <span></span>
-    <span></span>
-    <span></span>
+    <span class="nav-toggle gee" data-gene="click:toggleMenu">
+      <span></span>
+      <span></span>
+      <span></span>
     </span>
-    <div class="nav-right nav-menu is-hidden-tablet">
+    <div class="nav-right nav-menu is-hidden-tablet" id="mobileNav">
       <a href="javascript:;" class="nav-item gee" data-gene="tap:loadMain" data-module="product" data-layout="table">Product List</a>
       <a href="javascript:;" class="nav-item gee" data-gene="tap:loadMain" data-module="staff" data-layout="simple">Staff List</a>
       <a href="#" class="nav-item">Dashboard</a>
