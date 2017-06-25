@@ -5,7 +5,7 @@
 var gee = window.gee || $.fn.gene;
 window.gee = gee;
 
-var app = function() {
+var App = function() {
     'use strict';
 
     var that = this;
@@ -30,7 +30,7 @@ var app = function() {
 
             app.win = $(window);
             app.docu = $(document);
-            app.body = (app.win.opera) ? (app.docu.compatMode == 'CSS1Compat' ? $('html') : $('body')) : $('body');
+            app.body = (app.win.opera) ? (app.docu.compatMode === 'CSS1Compat' ? $('html') : $('body')) : $('body');
 
             app.screen = (app.body.width() < that.config.detectWidth) ? 'mobile' : 'tablet';
             app.body.addClass(app.screen);
@@ -52,7 +52,7 @@ var app = function() {
         loadHtml: function(src, box, redirect) {
             var newPath = '/'+ src;
             var success = function(html, status, xhr) {
-                if ( status == 'error' ) {
+                if ( status === 'error' ) {
                     gee.alert({
                         title: 'Alert!',
                         txt: 'Sorry but there was an error: '+ xhr.status + ' ' + xhr.statusText
@@ -83,6 +83,38 @@ var app = function() {
             }
         },
 
+        loadTmpl: function (tmplName, box) {
+
+            if (typeof app.tmplStores[tmplName] === 'undefined') {
+                var htmlCode = box.html() || '';
+                if (box.is('tbody')) { // fix tbody>tr bug
+                    htmlCode = '{{props data}}'+ htmlCode +'{{/props}}';
+                }
+                if (box.is('form')) {
+                    app.initForm(box);
+                    htmlCode = box.html();
+                }
+                app.tmplStores[tmplName] = $.templates(htmlCode);
+            }
+
+            box.html('');
+        },
+
+        initForm: function(box) {
+            box.find(':input:not(:button)').each(function() {
+                let me = $(this);
+                if (me.is(':radio, :checkbox')) {
+                    gee.clog(me.attr('name'));
+                }
+                else if (me.is('textarea')) {
+                    me.text('{{:item.'+ me.attr('name') +'}}');
+                }
+                else {
+                    me.attr('value', '{{:item.'+ me.attr('name') +'}}');
+                }
+            });
+        },
+
         setForm: function (ta, row) {
             ta.find(':input:not(:button)').each(function() {
                 var col = $(this);
@@ -92,8 +124,6 @@ var app = function() {
                     if (col.is(':checkbox')) {
                         if (col.attr('value') === val) {
                             col.prop('checked', true);
-                            col.next('.switchery').remove();
-                            new Switchery(col[0], col.data());
                         }
                     }
                     else {
@@ -138,6 +168,39 @@ var app = function() {
             }
         },
 
+        stdSuccess: function(rtn) {
+            rtn.data = rtn.data || {};
+
+            if (gee.isset(rtn.data.msg)) {
+                gee.alert({title: 'Alert!', txt: rtn.data.msg });
+            }
+
+            if (gee.isset(rtn.data.redirect)) {
+                location.href = (rtn.data.redirect === '') ? gee.apiUri : rtn.data.redirect;
+            }
+
+            if (gee.isset(rtn.data.goback)) {
+                history.go(-1);
+            }
+        },
+
+        showErrMsg: function(col, cond, msg) {
+            var box = col.closest('.form-group');
+            box.removeClass('has-error has-success has-feedback');
+
+            if (cond) {
+                box.addClass('has-error').find('.error-msg').text(msg);
+                col.one('keyup', app.clearMsg);
+            }
+            else {
+                box.addClass('has-success has-feedback');
+            }
+        },
+
+        clearMsg: function () {
+            $(this).closest('.form-group').removeClass('has-error has-success has-feedback');
+        },
+
         cleanArray: function (actual) {
           var newArray = [];
           for (var i = 0; i < actual.length; i++) {
@@ -150,9 +213,9 @@ var app = function() {
 
         formatHelper: {
             currency: function(val) { return '$' + ($.fn.formatMoney((val+''), 0)); },
-            sum: function(price, qty) { return tmplHelpers.currency(qty*price); },
+            sum: function(price, qty) { return app.tmplHelpers.currency(qty*price); },
             loadPic: function(path) { return that.config.baseUrl + path; },
-            average: function(sum, divide) { return (divide!='0') ? Math.round(sum*10/divide)/10 : 0; },
+            average: function(sum, divide) { return (divide*1!=='0') ? Math.round(sum*10/divide)/10 : 0; },
             beforeDate: function(ts, target) {
                 var cu = moment(ts);
                 app[target].max_ts = moment.max(app[target].max_ts, cu);
@@ -203,10 +266,14 @@ var app = function() {
                 });
             });
             return attr;
+        },
+
+        progressingBtn: function(me) {
+            me.attr('disabled', 'disabled').append('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
         }
     };
 
     return app;
 };
 
-window.app = new app();
+window.app = new App();

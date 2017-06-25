@@ -15,11 +15,11 @@ gee.debug = IS_DEV;
 import './extend';
 import './app';
 import './modules/arena';
-import './modules/table';
+import './modules/tableList';
 
 // $.views.settings.delimiters('<%', '%>');
 $.views.helpers(app.formatHelper);
 
 $(document).ready(function () {
-    app.init(['arena', 'tableList']);
+    app.init(['arena']);
 });

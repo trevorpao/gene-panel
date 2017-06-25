@@ -1,17 +1,18 @@
 <div class="box">
+  <form class="gee" data-gene="init:loadRow" data-tmpl="prodForm" id="prodForm">
   <label class="label">Name</label>
   <p class="control">
-    <input class="input" type="text" placeholder="Text input">
+    <input class="input" type="text" placeholder="Text input" name="title">
   </p>
-  <label class="label">Username</label>
+  <label class="label">ship</label>
   <p class="control has-icon has-icon-right">
-    <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+    <input class="input is-success" type="text" placeholder="Text input" value="bulma" name="ship">
     <span class="icon is-small"><i class="fa fa-check"></i></span>
     <span class="help is-success">This username is available</span>
   </p>
-  <label class="label">Email</label>
+  <label class="label">slug</label>
   <p class="control has-icon has-icon-right">
-    <input class="input is-danger" type="text" placeholder="Email input" value="hello@">
+    <input class="input is-danger" type="text" placeholder="Email input" value="hello@" name="slug">
     <span class="icon is-small"><i class="fa fa-warning"></i></span>
     <span class="help is-danger">This email is invalid</span>
   </p>
@@ -26,11 +27,11 @@
   </p>
   <label class="label">Message</label>
   <p class="control">
-    <textarea class="textarea" placeholder="Textarea"></textarea>
+    <textarea class="textarea" placeholder="Textarea" name="content"></textarea>
   </p>
   <p class="control">
     <label class="checkbox">
-      <input type="checkbox"> Remember me
+      <input type="checkbox" name="rememberme"> Remember me
     </label>
   </p>
   <p class="control">
@@ -48,5 +49,5 @@
     <p class="control">
       <button class="button is-link">Cancel</button>
     </p>
-  </div>
+  </div></form>
 </div>

@@ -1,19 +1,19 @@
-;
-(function(app, gee, $) {
-    "use strict";
+;(function(app, gee, $) {
+    'use strict';
 
     // register a module name
     app.arena = {
         cuModal: null,
-        menuBox: $("#mainNav"),
+        pid: null,
+        menuBox: $('#mainNav'),
 
         init: function() {
             app.arena.handler();
 
-            app.arena.menuBox = (app.screen === 'mobile') ? $("#mobileNav") : app.arena.menuBox;
+            app.arena.menuBox = (app.screen === 'mobile') ? $('#mobileNav') : app.arena.menuBox;
 
             if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                $(window).bind("touchend touchcancel touchleave", function(e) {
+                $(window).bind('touchend touchcancel touchleave', function(e) {
                     app.arena.handler();
                 });
             } else {
@@ -24,19 +24,19 @@
         },
 
         toTop: function() {
-            $("html, body").animate({
+            $('html, body').animate({
                 scrollTop: 0
             }, 600);
         },
 
         handler: function() {
             var currentWindowPosition = $(window).scrollTop();
-            gee.clog('currentWindowPosition::' + currentWindowPosition);
+            // gee.clog('currentWindowPosition::' + currentWindowPosition);
 
             if (currentWindowPosition > 300) {
-                $(".goTop").show();
+                $('.goTop').show();
             } else {
-                $(".goTop").hide();
+                $('.goTop').hide();
             }
         },
 
@@ -79,17 +79,11 @@
 
         resetCurrent: function(box) {
             box = box || $('#main-box');
+            let tmpl = box.data('tmpl');
+            let tmplName = app.arena.module + tmpl;
 
-            if (typeof app.tmplStores[app.arena.module] === 'undefined') {
-                let tmpl = box.html();
-                if (box.is('tbody')) { // fix tbody>tr bug
-                    tmpl = '{{props data}}'+ tmpl +'{{/props}}';
-                }
-                app.tmplStores[app.arena.module] = $.templates(tmpl);
-            }
-
+            app.loadTmpl(tmplName, box);
             app.arena.pageCounter = 0;
-            box.html('');
         },
 
         nextPage: function(box) {
@@ -106,17 +100,35 @@
                                 app.stdErr(this);
                             } else {
                                 app.arena.renderBox(box, {'data': this.data});
+                                gee.init();
                             }
                         };
 
-                        gee.yell(app.arena.module +'/list_all', JSON.stringify({_token: "6d5ymvtn9nlljcgmg7rsikvs4i"}), callback, callback);
+                        gee.yell(app.arena.module +'/list_all', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i'}), callback, callback);
                         break;
                 }
             }, 10);
         },
 
+        loadRow: function(pid, tmpl) {
+            let callback = function() {
+                app.arena.pid = null;
+                if (this.code !== '1') {
+                    app.stdErr(this);
+                } else {
+                    app.arena.renderBox($('#'+ tmpl), { item: this.data }, 1);
+                    gee.init();
+                }
+            };
+
+            gee.yell(app.arena.module +'/get_one', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i', pid: pid}), callback, callback);
+        },
+
         renderBox: function (box, dataList, clearBox, orientation) {
             box = box || $('#main-box');
+            let tmpl = box.data('tmpl');
+            let tmplName = app.arena.module + tmpl;
+
             orientation = orientation || 'down';
             if (dataList) {
 
@@ -125,7 +137,7 @@
                 }
 
                 if (orientation === 'down') {
-                    box.append(app.tmplStores[app.arena.module].render(dataList));
+                    box.append(app.tmplStores[tmplName].render(dataList));
 
                     if (app.pageCounter === 1) {
                         app.arena.toTop();
@@ -134,7 +146,7 @@
                 else {
                     app.arena.toTop();
 
-                    box.prepend(app.tmplStores[app.arena.module].render(dataList));
+                    box.prepend(app.tmplStores[tmplName].render(dataList));
                 }
             }
         }
@@ -198,11 +210,6 @@
         me.parent().find('>a').removeClass('active').end().end()
             .addClass('active');
 
-    });
-
-    gee.hook('loadList', function(me) {
-        app.arena.resetCurrent(me);
-        app.arena.nextPage(me);
     });
 
 }(app, gee, jQuery));

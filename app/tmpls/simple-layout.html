@@ -30,7 +30,7 @@
       </thead>
       <tfoot></tfoot>
       <tbody class="gee" data-gene="init:loadList" data-tmpl="tableList">
-        <tr> <td>{{:prop.account}}</td> <td>{{:prop.email}}</td> <td>Bass Guitar</td> <td class="is-icon"> <a href="#"> <span class="icon"><i class="fa fa-edit"></i></span> </a> <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a> </td> </tr>
+        <tr> <td>{{:prop.account}}</td> <td>{{:prop.email}}</td> <td>Bass Guitar</td> <td class="is-icon"> <a href="javascript:;" class="gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a> <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a> </td> </tr>
       </tbody>
     </table>
     <div class="columns list-footer">
@@ -52,10 +52,10 @@
   </div>
 </div>
 <div class="column is-4">
-  <div class="box">
+  <div class="box gee" data-gene="init:loadRow" data-tmpl="tableForm" id="tableForm">
     <label class="label">Name</label>
     <p class="control">
-      <input class="input" type="text" placeholder="Text input">
+      <input class="input" type="text" value="{{:item.email}}" placeholder="Text input">
     </p>
     <label class="label">Username</label>
     <p class="control has-icon has-icon-right">
