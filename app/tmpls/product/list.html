@@ -6,34 +6,33 @@
         <div class="level-item">
           <p class="control has-addons">
             <input class="input" type="text" placeholder="Find a post">
-            <button class="button">
-              Search
-            </button>
+            <button class="button"> Search </button>
           </p>
         </div>
       </div>
       <div class="level-right">
-        <p class="level-item"><strong>All</strong></p>
-        <p class="level-item"><a>Published</a></p>
-        <p class="level-item"><a>Drafts</a></p>
-        <p class="level-item"><a>Deleted</a></p>
         <p class="level-item">
-          <a class="button is-success gee" data-gene="click:showModal" data-src="product-modal">New</a>
+          <a class="button is-success gee" data-gene="click:showModal" data-src="modal">New</a>
         </p>
       </div>
     </nav>
     <table class="list-body table is-bordered">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Instrument</th>
-          <th>Instrument</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Price</th>
+          <th>Slug</th>
           <th>Action</th>
         </tr>
       </thead>
       <tfoot></tfoot>
       <tbody class="gee" data-gene="init:loadList" data-tmpl="tableList">
-        <tr> <td>{{:prop.title}}</td> <td>{{:test}}</td> <td>Bass Guitar</td> <td class="is-icon"> <a href="javascript:;" class="gee" data-gene="click:loadRow" data-id="{{:prop.id}}" data-src="product-modal" data-title="Product"> <span class="icon"><i class="fa fa-edit"></i></span> </a> <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a> </td> </tr>
+        <tr> <td>{{:prop.title}}</td> <td>{{:prop.status}}</td> <td>{{:prop.price}}</td> <td><a href="/prod/{{:prop.slug}}" target="_blank">/prod/{{:prop.slug}}</a></td>
+        <td class="is-icon">
+          <a href="javascript:;" class="gee" data-gene="click:loadRow" data-id="{{:prop.id}}" data-src="modal" data-title="Product"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+          <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+        </td> </tr>
       </tbody>
     </table>
     <div class="columns list-footer">

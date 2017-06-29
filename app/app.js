@@ -22,6 +22,8 @@ var App = function() {
 
         redo: null,
 
+        module: {},
+
         tmplStores: {},
         htmlStores: {},
         tmplPath: './app/tmpls',
@@ -71,8 +73,8 @@ var App = function() {
             redirect = (redirect) ? redirect : '';
 
             if (typeof app.htmlStores['tmpl-'+ src] === 'undefined') {
-                gee.clog('load: '+ app.tmplPath + newPath +'.html');
-                box.load(app.tmplPath + newPath +'.html', success);
+                gee.clog('load: '+ app.tmplPath +'/'+ app.module.name + newPath +'.html');
+                box.load(app.tmplPath +'/'+ app.module.name + newPath +'.html', success);
             }
             else {
                 box.html(app.htmlStores['tmpl-'+ src]);
@@ -84,35 +86,41 @@ var App = function() {
         },
 
         loadTmpl: function (tmplName, box) {
-
+            var item = {};
             if (typeof app.tmplStores[tmplName] === 'undefined') {
                 var htmlCode = box.html() || '';
                 if (box.is('tbody')) { // fix tbody>tr bug
                     htmlCode = '{{props data}}'+ htmlCode +'{{/props}}';
                 }
                 if (box.is('form')) {
-                    app.initForm(box);
+                    item = app.initForm(box);
                     htmlCode = box.html();
                 }
                 app.tmplStores[tmplName] = $.templates(htmlCode);
             }
 
-            box.html('');
+            // box.html('');
+            return item;
         },
 
         initForm: function(box) {
+            var item = {};
             box.find(':input:not(:button)').each(function() {
                 let me = $(this);
+                let name = me.attr('name');
+                item[name] = '';
                 if (me.is(':radio, :checkbox')) {
-                    gee.clog(me.attr('name'));
+                    gee.clog(name);
                 }
                 else if (me.is('textarea')) {
-                    me.text('{{:item.'+ me.attr('name') +'}}');
+                    me.text('{{:item.'+ name +'}}');
                 }
                 else {
-                    me.attr('value', '{{:item.'+ me.attr('name') +'}}');
+                    me.attr('value', '{{:item.'+ name +'}}');
                 }
             });
+
+            return item;
         },
 
         setForm: function (ta, row) {

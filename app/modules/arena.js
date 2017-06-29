@@ -4,7 +4,6 @@
     // register a module name
     app.arena = {
         cuModal: null,
-        pid: null,
         menuBox: $('#mainNav'),
 
         init: function() {
@@ -80,17 +79,18 @@
         resetCurrent: function(box) {
             box = box || $('#main-box');
             let tmpl = box.data('tmpl');
-            let tmplName = app.arena.module + tmpl;
+            let tmplName = app.module.name + tmpl;
 
             app.loadTmpl(tmplName, box);
             app.arena.pageCounter = 0;
+            box.html('');
         },
 
         nextPage: function(box) {
             gee.clog('nextPage');
             app.arena.pageCounter++;
             setTimeout(function() {
-                switch (app.arena.module) {
+                switch (app.module.name) {
                     case 'calendar':
                         $('#calendar').fullCalendar('refetchEvents');
                         break;
@@ -104,7 +104,7 @@
                             }
                         };
 
-                        gee.yell(app.arena.module +'/list_all', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i'}), callback, callback);
+                        gee.yell(app.module.name +'/list_all', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i'}), callback, callback);
                         break;
                 }
             }, 10);
@@ -112,7 +112,7 @@
 
         loadRow: function(pid, tmpl) {
             let callback = function() {
-                app.arena.pid = null;
+                app.module.pid = null;
                 if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
@@ -121,13 +121,13 @@
                 }
             };
 
-            gee.yell(app.arena.module +'/get_one', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i', pid: pid}), callback, callback);
+            gee.yell(app.module.name +'/get_one', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i', pid: pid}), callback, callback);
         },
 
         renderBox: function (box, dataList, clearBox, orientation) {
             box = box || $('#main-box');
             let tmpl = box.data('tmpl');
-            let tmplName = app.arena.module + tmpl;
+            let tmplName = app.module.name + tmpl;
 
             orientation = orientation || 'down';
             if (dataList) {
@@ -202,8 +202,8 @@
     });
 
     gee.hook('loadMain', function(me) {
-        var layout = (me.data('layout') || 'table') + '-layout';
-        app.arena.module = me.data('module') || 'post';
+        var layout = me.data('layout') || 'list';
+        app.module.name = me.data('module') || 'post';
 
         app.loadHtml(layout, 'main-box');
 
