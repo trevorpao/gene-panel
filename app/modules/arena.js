@@ -61,15 +61,21 @@
             app.arena.cuModal = null;
         },
 
-        setPaginate: function (total, callback) {
-            $('#paginate').twbsPagination({
-              totalPages: Math.ceil(total/app.pageLimit),
-              visiblePages: 7,
-              onPageClick: function (event, page) {
-                app.pageCounter = page;
-                callback.call(this);
-              }
-            });
+        setPaginate: function (total) {
+            if (!$('#paginate').data('twbsPagination')) {
+                $('#paginate').twbsPagination({
+                  totalPages: Math.ceil(total/app.pageLimit),
+                  visiblePages: 3,
+                  initiateStartPageClick: false,
+                  paginationClass: 'pagination-list',
+                  anchorClass: 'pagination-link',
+                  activeClass: 'is-current',
+                  onPageClick: function (event, page) {
+                    app.arena.pageCounter = page-1;
+                    app.arena.nextPage();
+                  }
+                });
+            }
         },
 
         destroyPaginate: function (total, callback) {
@@ -83,11 +89,13 @@
 
             app.loadTmpl(tmplName, box);
             app.arena.pageCounter = 0;
+            app.arena.pageBox = box;
             box.html('');
         },
 
         nextPage: function(box) {
             gee.clog('nextPage');
+            box = box || app.arena.pageBox;
             app.arena.pageCounter++;
             setTimeout(function() {
                 switch (app.module.name) {
@@ -99,12 +107,16 @@
                             if (this.code !== '1') {
                                 app.stdErr(this);
                             } else {
-                                app.arena.renderBox(box, {'data': this.data});
+                                app.arena.renderBox(box, {'data': this.data.rows}, 1);
+                                app.arena.setPaginate(this.data.counter);
                                 gee.init();
                             }
                         };
 
-                        gee.yell(app.module.name +'/list_all', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i'}), callback, callback);
+                        gee.yell(app.module.name +'/list_all', JSON.stringify({
+                            _token: '6d5ymvtn9nlljcgmg7rsikvs4i',
+                            page: app.arena.pageCounter -1
+                        }), callback, callback);
                         break;
                 }
             }, 10);
@@ -139,7 +151,7 @@
                 if (orientation === 'down') {
                     box.append(app.tmplStores[tmplName].render(dataList));
 
-                    if (app.pageCounter === 1) {
+                    if (app.arena.pageCounter === 1) {
                         app.arena.toTop();
                     }
                 }

@@ -16,7 +16,7 @@ var App = function() {
 
     var app = {
         pageCounter: 1,
-        pageLimit: 8,
+        pageLimit: 10,
 
         fontSize: 1.25,
 
@@ -61,7 +61,7 @@ var App = function() {
                     });
                 }
                 else {
-                    app.htmlStores['tmpl-'+ src] = html;
+                    app.htmlStores[app.module.name +'-tmpl-'+ src] = html;
                     box.html(html);
                     if (redirect !== '') {
                         app.redirect({path: newPath, ta: redirect});
@@ -72,12 +72,12 @@ var App = function() {
             box = (typeof box === 'string') ? $('#'+ box) : box;
             redirect = (redirect) ? redirect : '';
 
-            if (typeof app.htmlStores['tmpl-'+ src] === 'undefined') {
+            if (typeof app.htmlStores[app.module.name +'-tmpl-'+ src] === 'undefined') {
                 gee.clog('load: '+ app.tmplPath +'/'+ app.module.name + newPath +'.html');
                 box.load(app.tmplPath +'/'+ app.module.name + newPath +'.html', success);
             }
             else {
-                box.html(app.htmlStores['tmpl-'+ src]);
+                box.html(app.htmlStores[app.module.name +'-tmpl-'+ src]);
                 if (redirect !== '') {
                     app.redirect({path: newPath, ta: redirect});
                 }

@@ -17,7 +17,8 @@ module.exports = {
     entry: {
         vendor: [
             'jquery',
-            'jquery.cookie'
+            'jquery.cookie',
+            'twbs-pagination'
             // 'lodash'
         ],
         bundle: path.join(dirApp, 'main')

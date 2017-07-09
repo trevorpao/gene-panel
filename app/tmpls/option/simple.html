@@ -1,0 +1,64 @@
+<div class="column is-8">
+  <!-- LIST -->
+  <div class="app-list">
+    <nav class="list-filter level">
+      <div class="level-left">
+        <div class="level-item">
+          <p class="control has-addons">
+            <input class="input" type="text" placeholder="Find a post">
+            <button class="button"> Search </button>
+          </p>
+        </div>
+      </div>
+      <div class="level-right">
+        <p class="level-item">
+          <a class="button is-success gee" data-gene="click:showModal" data-src="modal">New</a>
+        </p>
+      </div>
+    </nav>
+    <table class="list-body table is-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Content</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tfoot></tfoot>
+      <tbody class="gee" data-gene="init:loadList" data-tmpl="tableList">
+        <tr> <td>{{:prop.name}}</td> <td>{{:prop.content}}</td>
+        <td class="is-icon">
+        <a href="javascript:;" class="gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+        <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+        </td> </tr>
+      </tbody>
+    </table>
+    <div class="columns list-footer">
+      <div class="column">Showing 1 to 10 of 57 entries</div>
+      <div class="column">
+        <nav class="pagination is-right" id="paginate"></nav>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="column is-4">
+  <div class="box"><form class="gee" data-gene="init:loadRow" data-tmpl="tableForm" id="tableForm">
+    <label class="label">Name</label>
+    <p class="control">
+      <input class="input" name="name" type="text" placeholder="Text input">
+    </p>
+    <label class="label">Content</label>
+    <p class="control">
+      <textarea class="textarea" placeholder="Textarea" name="content"></textarea>
+    </p>
+    <div class="control is-grouped">
+      <p class="control">
+        <button class="button is-primary">Submit</button>
+      </p>
+      <p class="control">
+        <button class="button is-link">Cancel</button>
+      </p>
+    </div>
+    <input type="hidden" name="id">
+  </form></div>
+</div>

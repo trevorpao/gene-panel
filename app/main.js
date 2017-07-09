@@ -2,6 +2,7 @@ import 'styles/index.scss';
 
 import 'jquery-touch-events/src/jquery.mobile-events';
 import 'jquery.cookie/jquery.cookie';
+import 'twbs-pagination/jquery.twbsPagination';
 
 // import 'gene-event-handler/docs/scripts/jquery.gene.min';
 require('jsrender');
