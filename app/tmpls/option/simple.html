@@ -1,22 +1,35 @@
-<div class="column is-8">
-  <!-- LIST -->
-  <div class="app-list">
-    <nav class="list-filter level">
-      <div class="level-left">
-        <div class="level-item">
-          <p class="control has-addons">
-            <input class="input" type="text" placeholder="Find a post">
-            <button class="button"> Search </button>
+
+<h2 class="title">Option</h2>
+<hr>
+<nav class="breadcrumb">
+  <ul>
+    <li> <a>Admin</a> </li>
+    <li class="is-active"> <a>Option</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <div class="level-item">
+      <div class="field has-addons">
+          <p class="control">
+            <input class="input" type="text" placeholder="Find a option">
+          </p>
+          <p class="control">
+            <button class="button is-info" type="button">Search</button>
           </p>
         </div>
-      </div>
-      <div class="level-right">
-        <p class="level-item">
-          <a class="button is-success gee" data-gene="click:showModal" data-src="modal">New</a>
-        </p>
-      </div>
-    </nav>
-    <table class="list-body table is-bordered">
+    </div>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="0">New</a>
+    </p>
+  </div>
+</nav>
+<div class="columns">
+<div class="column is-8 content">
+  <!-- LIST -->
+    <table class="list-body table is-bordered is-striped is-narrow">
       <thead>
         <tr>
           <th>Name</th>
@@ -39,19 +52,21 @@
         <nav class="pagination is-right" id="paginate"></nav>
       </div>
     </div>
-  </div>
 </div>
-<div class="column is-4">
+<div class="column">
   <div class="box"><form class="gee" data-gene="init:loadRow" data-tmpl="tableForm" id="tableForm">
+    <div class="field">
     <label class="label">Name</label>
     <p class="control">
       <input class="input" name="name" type="text" placeholder="Text input">
-    </p>
+    </p></div>
+    <div class="field">
     <label class="label">Content</label>
     <p class="control">
       <textarea class="textarea" placeholder="Textarea" name="content"></textarea>
-    </p>
-    <div class="control is-grouped">
+    </p></div>
+
+    <div class="field is-grouped">
       <p class="control">
         <button class="button is-primary">Submit</button>
       </p>
@@ -61,4 +76,5 @@
     </div>
     <input type="hidden" name="id">
   </form></div>
+</div>
 </div>

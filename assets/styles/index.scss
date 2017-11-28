@@ -1,48 +1,26 @@
 // Custom variable overrides
 
-@import "../../node_modules/bulma/sass/utilities/all";
+@import "../../node_modules/bulmaswatch/minty/_variables.scss";
+@import "../../node_modules/bulma/bulma.sass";
+@import "../../node_modules/bulmaswatch/minty/_overrides.scss";
+
+// @import "../../node_modules/bulma/sass/utilities/all";
+
+// @import "../../node_modules/bulma/sass/grid/all";
+// @import "../../node_modules/bulma/sass/base/all";
+// @import "../../node_modules/bulma/sass/elements/all";
+// @import "../../node_modules/bulma/sass/components/all";
+// @import "../../node_modules/bulma/sass/layout/all";
 
 // Custom overrides.
 
-@import "../../node_modules/bulma/sass/grid/all";
-@import "../../node_modules/bulma/sass/base/all";
-@import "../../node_modules/bulma/sass/elements/all";
-@import "../../node_modules/bulma/sass/components/all";
-@import "../../node_modules/bulma/sass/layout/all";
-
-@import "components/aside";
-@import "components/main";
+// @import "components/aside";
+// @import "components/main";
 @import "components/navbar";
-
-
 
 .app-list{
     margin-top: 30px;
 }
-.breadcrumb {
-
-    list-style: none;
-    align-items: center;
-    display: flex;
-    justify-content: flex-end;
-      & > li + li:before {
-    padding: 0 5px;
-    color: #ccc;
-    content: var(--separator, "\2044");
-  }
-}
-
-.table {
-    td.is-icon{
-        width:80px;
-    }
-    &.is-bordered2{
-        border-top: 2px solid #dbdbdb;
-        border-bottom: 2px solid #dbdbdb;
-
-    }
-}
-
 
 .is-circle{
     border-radius: 50%;
@@ -58,10 +36,4 @@
 
 .is-mb3{
     margin-bottom: 3rem;
-}
-
-.nav-item {
-    .logo {
-        max-height: 4rem;
-    }
 }

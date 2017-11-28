@@ -1,15 +1,5 @@
-.app-navbar{
-    position: relative;
-    max-height: 100px;
-    z-index: 1030;
-    margin-left: 250px;
-    // border-bottom: 1px #ccc solid;
-
-      .nav{
-        background: transparent;
-        .nav-left{
-            flex: 0 0 230px;
-             background: #666;
-        }
-      }
+.navbar-item {
+    .logo {
+        max-height: 4rem;
+    }
 }

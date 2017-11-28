@@ -62,7 +62,7 @@
         },
 
         setPaginate: function (total) {
-            if (!$('#paginate').data('twbsPagination')) {
+            if (1===2 && !$('#paginate').data('twbsPagination')) {
                 $('#paginate').twbsPagination({
                   totalPages: Math.ceil(total/app.pageLimit),
                   visiblePages: 3,
