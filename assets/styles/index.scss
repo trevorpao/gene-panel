@@ -37,3 +37,22 @@
 .is-mb3{
     margin-bottom: 3rem;
 }
+
+
+body {
+    &.logout {
+        .is-login-t{
+            display: none;
+        }
+    }
+
+    &.login {
+        .is-login-f {
+            display: none;
+        }
+    }
+}
+
+.hidden {
+    display:none;
+}

@@ -28,6 +28,14 @@ var App = function() {
         htmlStores: {},
         tmplPath: './app/tmpls',
 
+        errMsg: {
+            'e9100': '資料庫發生錯誤',
+            'e9101': '資料庫發生錯誤',
+            'e9102': '資料庫發生錯誤',
+            'e9103': '資料庫發生錯誤',
+            'e8100': '請輸入必填欄位'
+        },
+
         init: function(modules) {
 
             app.win = $(window);
@@ -152,26 +160,29 @@ var App = function() {
         },
 
         stdErr: function(e, redo) {
-            if (e.code === '100') {
-                app.redo = redo || null;
-                app.body.removeClass('login').addClass('logout');
+            e.data = e.data || {};
 
+            if (gee.isset(e.data) && gee.isset(e.data.msg)) {
                 gee.alert({
                     title: 'Alert!',
-                    txt: '請重新登入'
+                    txt: e.data.msg
                 });
-            }
-            else {
-                if (gee.isset(e.data.msg)) {
+            } else {
+                var code = 'e' + e.code;
+                if (gee.isset(app.errMsg[code])) {
                     gee.alert({
                         title: 'Alert!',
-                        txt: e.data.msg
+                        txt: app.errMsg[code]
                     });
                 } else {
                     gee.alert({
                         title: 'Error!',
                         txt: 'Server Error, Plaese Try Later(' + e.code + ')'
                     });
+                }
+
+                if (e.code === '8001') {
+                    app.body.removeClass('login').addClass('logout');
                 }
             }
         },

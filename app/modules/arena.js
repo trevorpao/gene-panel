@@ -7,19 +7,44 @@
         menuBox: $('#mainNav'),
 
         init: function() {
-            app.arena.handler();
+            app.arena.adjustAjax();
+
+            app.arena.handlerScroll();
 
             app.arena.menuBox = (app.screen === 'mobile') ? $('#mobileNav') : app.arena.menuBox;
 
             if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
                 $(window).bind('touchend touchcancel touchleave', function(e) {
-                    app.arena.handler();
+                    app.arena.handlerScroll();
                 });
             } else {
                 $(window).scroll(function() {
-                    app.arena.handler();
+                    app.arena.handlerScroll();
                 });
             }
+        },
+
+        adjustAjax: function(argument) {
+            $.ajaxSetup({
+                async: false,
+                contentType: 'application/x-www-form-urlencoded',
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
+
+            $(document).ajaxSend(function (event, jqXHR, ajaxOptions) {
+                $('#preloader').addClass('in');
+                jqXHR.setRequestHeader('X-Requested-Token', window.csrfToken);
+            });
+
+            $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
+                $('#preloader').removeClass('in');
+                if (jqXHR.responseJSON) {
+                    gee.clog(jqXHR.responseJSON);
+                    window.csrfToken = (jqXHR.responseJSON.csrf) ? jqXHR.responseJSON.csrf : '';
+                }
+            });
         },
 
         toTop: function() {
@@ -28,7 +53,7 @@
             }, 600);
         },
 
-        handler: function() {
+        handlerScroll: function() {
             var currentWindowPosition = $(window).scrollTop();
             // gee.clog('currentWindowPosition::' + currentWindowPosition);
 
@@ -105,10 +130,11 @@
                     default:
                         var callback = function() {
                             if (this.code !== '1') {
+                                gee.clog('========================');
                                 app.stdErr(this);
                             } else {
-                                app.arena.renderBox(box, {'data': this.data.rows}, 1);
-                                app.arena.setPaginate(this.data.counter);
+                                app.arena.renderBox(box, {'data': this.data}, 1);
+                                // app.arena.setPaginate(this.data.counter);
                                 gee.init();
                             }
                         };

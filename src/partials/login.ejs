@@ -1,0 +1,49 @@
+<div class="columns is-centered is-login-f">
+  <div class="column is-half">
+    <section class="app-main section">
+      <div class="box">
+        <h1 class="title">Login</h1>
+        <form action="/authenticate?loginredirect=" method="post">
+          <div class="notification is-danger hidden"></div>
+          <div class="notification is-info hidden"></div>
+          <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                  <label class="label">Email</label>
+              </div>
+              <div class="field-body">
+                  <div class="field">
+                      <p class="control has-icons-left">
+                          <input class="input" type="text" name="account" placeholder="Account" maxlength="255" tabindex="1" value="" autofocus="">
+                          <span class="icon is-small is-left"><i class="fa fa-user" aria-hidden="true"></i></span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+          <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                  <label class="label">Password</label>
+              </div>
+              <div class="field-body">
+                  <div class="field">
+                      <p class="control has-icons-left">
+                          <input class="input gee" data-gene="keyup:staff/login" type="password" name="pwd" placeholder="Password" maxlength="72" tabindex="2">
+                          <span class="icon is-small is-left"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+          <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                  <div class="field">
+                      <p class="control">
+                          <button type="button" class="button is-primary gee" data-gene="click:staff/login" tabindex="4">Log in</button>
+                      </p>
+                  </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,16 +1,21 @@
 <%- include src/partials/header -%>
 
-  <body>
-    <%- include src/partials/toolbar -%>
+  <body class="logout">
+    <%- include src/partials/navbar -%>
+    <div class="columns is-login-t">
+      <%- include src/partials/toolbar -%>
       <div class="column">
-      <section class="app-main">
-        <div class="app-list">
-          <div class="container is-fluid">
-            <div id='main-box'></div>
+        <section class="app-main section">
+          <div class="app-list">
+            <div class="container is-fluid">
+              <div id='main-box'></div>
+            </div>
           </div>
-        </div>
-      </section></div>
-      <%- include src/partials/modal -%>
+        </section>
+      </div>
+    </div>
+    <%- include src/partials/login -%>
+    <%- include src/partials/modal -%>
   </body>
 
   </html>
