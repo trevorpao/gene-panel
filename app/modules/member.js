@@ -8,7 +8,7 @@
         },
         status: function() {
             var callback = function() {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 }
                 else {
@@ -36,7 +36,7 @@
 
         login: function(data) {
             var callback = function() {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 }
                 else {
@@ -136,7 +136,7 @@
 
         logout: function() {
             var callback = function() {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 }
                 else {

@@ -18,7 +18,7 @@ import './extend';
 import './app';
 import './modules/arena';
 import './modules/staff';
-import './modules/tableList';
+import './modules/simple';
 
 // $.views.settings.delimiters('<%', '%>');
 $.views.helpers(app.formatHelper);

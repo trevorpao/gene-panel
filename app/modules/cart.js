@@ -14,7 +14,7 @@
 
         add2Cart: function (item_id, qty, type) {
             var callback = function () {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
                     var msg = (gee.isset(this.data) && gee.isset(this.data.msg)) ? this.data.msg : "購物車已更新";
@@ -36,7 +36,7 @@
 
         removeItem: function (item_id) {
             var callback = function () {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
                     var msg = (gee.isset(this.data) && gee.isset(this.data.msg)) ? this.data.msg : "購物車已更新";
@@ -64,7 +64,7 @@
         renewCount: function (num) {
             if (!$.isNumeric(num)) {
                 var callback = function () {
-                    if (this.code !== 0) {
+                    if (this.code !== '1') {
                         app.stdErr(this);
                     } else {
                         $('.cart_count').html(this.data.count);
@@ -114,7 +114,7 @@
 
         loadCart: function ($elem) {
             var callback = function () {
-                if (this.code !== 0) {
+                if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
                     app.cart.store = this.data.cart;

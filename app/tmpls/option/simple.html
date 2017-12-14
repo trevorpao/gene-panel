@@ -21,7 +21,7 @@
   </div>
   <div class="level-right">
     <p class="level-item">
-      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="0">New</a>
+      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="baseForm" data-id="0">New</a>
     </p>
   </div>
 </nav>
@@ -31,19 +31,21 @@
     <table class="list-body table is-bordered is-striped is-narrow">
       <thead>
         <tr>
+          <th>GROUP</th>
           <th>Name</th>
           <th>Content</th>
           <th>Action</th>
         </tr>
       </thead>
       <tfoot></tfoot>
-      <tbody class="gee" data-gene="init:loadList" data-tmpl="tableList">
+      <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mainList" data-nopde="1">
         <tr>
+          <td>{{:prop.group}}</td>
           <td>{{:prop.name}}</td>
           <td>{{:prop.content}}</td>
           <td class="is-icon">
-            <a href="javascript:;" class="gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
-            <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+            <a href="javascript:;" data-func="loadRow" data-tmpl="baseForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+            <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
           </td>
         </tr>
       </tbody>
@@ -57,25 +59,31 @@
   </div>
   <div class="column">
     <div class="box">
-      <form class="gee" data-gene="init:loadRow" data-tmpl="tableForm" id="tableForm">
+      <form class="gee" data-gene="init:initForm" data-tmpl="baseForm" id="baseForm">
+        <div class="field">
+          <label class="label">Group</label>
+          <p class="control">
+            <input class="input" name="group" type="text" placeholder="Group">
+          </p>
+        </div>
         <div class="field">
           <label class="label">Name</label>
           <p class="control">
-            <input class="input" name="name" type="text" placeholder="Text input">
+            <input class="input" name="name" type="text" placeholder="Name">
           </p>
         </div>
         <div class="field">
           <label class="label">Content</label>
           <p class="control">
-            <textarea class="textarea" placeholder="Textarea" name="content"></textarea>
+            <textarea class="textarea" placeholder="Content" name="content"></textarea>
           </p>
         </div>
         <div class="field is-grouped">
           <p class="control">
-            <button class="button is-primary">Submit</button>
+            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow">Submit</button>
           </p>
           <p class="control">
-            <button class="button is-link">Cancel</button>
+            <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>
           </p>
         </div>
         <input type="hidden" name="id">

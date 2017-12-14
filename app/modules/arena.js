@@ -81,9 +81,11 @@
         },
 
         hideModal: function () {
-            app.arena.cuModal.removeClass('is-active')
-                .find('.modal-content').removeClass('modal-lg modal-nor modal-sm').html('');
-            app.arena.cuModal = null;
+            if (app.arena.cuModal !== null) {
+                app.arena.cuModal.removeClass('is-active')
+                    .find('.modal-content').removeClass('modal-lg modal-nor modal-sm').html('');
+                app.arena.cuModal = null;
+            }
         },
 
         setPaginate: function (total) {
@@ -120,46 +122,46 @@
 
         nextPage: function(box) {
             gee.clog('nextPage');
-            box = box || app.arena.pageBox;
             app.arena.pageCounter++;
-            setTimeout(function() {
+            app.arena.loadPage(box || app.arena.pageBox);
+        },
+
+        loadPage: function (box) {
+            var callback = function () {
+                if (this.code !== '1') {
+                    app.stdErr(this);
+                } else {
+                    app.arena.renderBox(box, { 'data': this.data }, 1);
+                    app.arena.setPaginate(this.data.length);
+
+                    app.waitFor(function () {
+                        return !box.is(':empty');
+                    }).then(function () {
+                        gee.init();
+                    });
+                }
+            };
+
+            setTimeout(function () {
                 switch (app.module.name) {
                     case 'calendar':
                         $('#calendar').fullCalendar('refetchEvents');
                         break;
                     default:
-                        var callback = function() {
-                            if (this.code !== '1') {
-                                gee.clog('========================');
-                                app.stdErr(this);
-                            } else {
-                                app.arena.renderBox(box, {'data': this.data}, 1);
-                                // app.arena.setPaginate(this.data.counter);
-                                gee.init();
-                            }
+                        // TODO: get other params
+
+                        var data = {
+                            page: app.arena.pageCounter
                         };
 
-                        gee.yell(app.module.name +'/list_all', JSON.stringify({
-                            _token: '6d5ymvtn9nlljcgmg7rsikvs4i',
-                            page: app.arena.pageCounter -1
-                        }), callback, callback);
+                        if (app.arena.type) {
+                            data = $.extend({}, data, { type: app.arena.type });
+                        }
+
+                        gee.yell(app.module.name + '/list_all', data, callback, callback);
                         break;
                 }
             }, 10);
-        },
-
-        loadRow: function(pid, tmpl) {
-            let callback = function() {
-                app.module.pid = null;
-                if (this.code !== '1') {
-                    app.stdErr(this);
-                } else {
-                    app.arena.renderBox($('#'+ tmpl), { item: this.data }, 1);
-                    gee.init();
-                }
-            };
-
-            gee.yell(app.module.name +'/get_one', JSON.stringify({_token: '6d5ymvtn9nlljcgmg7rsikvs4i', pid: pid}), callback, callback);
         },
 
         renderBox: function (box, dataList, clearBox, orientation) {
@@ -169,17 +171,12 @@
 
             orientation = orientation || 'down';
             if (dataList) {
-
                 if (clearBox) {
                     box.html('');
                 }
 
                 if (orientation === 'down') {
                     box.append(app.tmplStores[tmplName].render(dataList));
-
-                    if (app.arena.pageCounter === 1) {
-                        app.arena.toTop();
-                    }
                 }
                 else {
                     app.arena.toTop();
@@ -247,7 +244,6 @@
 
         me.parent().find('>a').removeClass('active').end().end()
             .addClass('active');
-
     });
 
 }(app, gee, jQuery));

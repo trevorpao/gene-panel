@@ -26,6 +26,7 @@ var App = function() {
 
         tmplStores: {},
         htmlStores: {},
+        moduleItems: {},
         tmplPath: './app/tmpls',
 
         errMsg: {
@@ -94,39 +95,61 @@ var App = function() {
         },
 
         loadTmpl: function (tmplName, box) {
-            var item = {};
             if (typeof app.tmplStores[tmplName] === 'undefined') {
                 var htmlCode = box.html() || '';
+
                 if (box.is('tbody')) { // fix tbody>tr bug
                     htmlCode = '{{props data}}'+ htmlCode +'{{/props}}';
                 }
+
                 if (box.is('form')) {
-                    item = app.initForm(box);
+                    app.moduleItems[tmplName] = app.initForm(box);
                     htmlCode = box.html();
                 }
+
+                htmlCode = htmlCode.replace(/pre-gee/g, 'gee')
+                    .replace(/pre-src/g, 'src'); // img src
+
                 app.tmplStores[tmplName] = $.templates(htmlCode);
             }
 
             // box.html('');
-            return item;
         },
 
         initForm: function(box) {
             var item = {};
-            box.find(':input:not(:button)').each(function() {
-                let me = $(this);
-                let name = me.attr('name');
+
+            box.find(':input:not(:button)').each(function () {
+                var me = $(this);
+                var name = me.attr('name');
+                var gene = me.data('gene');
+                var boolGee = me.hasClass('gee');
+
                 item[name] = '';
+
                 if (me.is(':radio, :checkbox')) {
-                    gee.clog(name);
-                }
-                else if (me.is('textarea')) {
-                    me.text('{{:item.'+ name +'}}');
-                }
-                else {
-                    me.attr('value', '{{:item.'+ name +'}}');
+                    me.closest('.form-group').toggleClass('pre-gee', !boolGee).attr('data-gene', 'init:setRadio')
+                        .attr('data-value', '{{:item.' + name + '}}');
+                } else if (me.is('[type="datetime-local"]')) {
+                    me.attr('value', '{{:~formatDate(item.' + name + ', \'YYYY-MM-DDTHH:mm:00\')}}');
+                } else if (me.is('textarea')) {
+                    me.html('{{:item.' + name + '}}');
+                } else if (me.is('select')) {
+                    var value = 'init:setSelect';
+
+                    if (gene !== 'undefined' && typeof gene !== 'undefined') {
+                        value = 'init:setSelect,' + gene;
+                    }
+
+                    me.toggleClass('pre-gee', !boolGee).attr('data-gene', value)
+                        .attr('data-value', '{{:item.' + name + '}}');
+                } else {
+                    me.attr('value', '{{:item.' + name + '}}');
                 }
             });
+
+            gee.clog('------------------------');
+            gee.clog(item);
 
             return item;
         },
@@ -157,6 +180,35 @@ var App = function() {
             var img = event.srcElement;
             $(img).attr('src', 'default.svg');
             img.onerror = null;
+        },
+
+        /**
+         * a object of promise
+         * @param  function condition return bool
+         * @param  int limit max test times
+         * @return promise
+         */
+        waitFor: function (condition, limit) {
+            var dfr = $.Deferred();
+            var times = 0;
+            var during = 70;
+            limit = limit || 9; // Longest duration :  during * (limit+1)
+
+
+            var timer = setInterval(function () {
+                times++;
+                if (condition()) {
+                    clearInterval(timer);
+                    dfr.resolve();
+                }
+
+                if (times > limit) {
+                    clearInterval(timer);
+                    dfr.reject();
+                }
+            }, during);
+
+            return dfr.promise();
         },
 
         stdErr: function(e, redo) {
