@@ -84,7 +84,7 @@
                 if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
-                    location.href = '/';
+                    app.body.removeClass('login').addClass('logout');
                 }
             };
 
