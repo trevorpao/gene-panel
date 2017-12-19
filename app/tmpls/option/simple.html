@@ -18,6 +18,11 @@
         </p>
       </div>
     </div>
+    <div class="level-item"><div class="tags">
+          <span class="tag is-primary is-medium"> status:Enabled
+            <button class="delete is-small"> </button>
+          </span>
+        </div></div>
   </div>
   <div class="level-right">
     <p class="level-item">
@@ -26,38 +31,64 @@
   </div>
 </nav>
 <div class="columns">
-  <div class="column is-8 content">
-    <!-- LIST -->
-    <table class="list-body table is-bordered is-striped is-narrow">
-      <thead>
-        <tr>
-          <th>GROUP</th>
-          <th>Name</th>
-          <th>Content</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tfoot></tfoot>
-      <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mainList" data-nopde="1">
-        <tr>
-          <td>{{:prop.group}}</td>
-          <td>{{:prop.name}}</td>
-          <td>{{:prop.content}}</td>
-          <td class="is-icon">
-            <a href="javascript:;" data-func="loadRow" data-tmpl="baseForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
-            <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="columns list-footer">
-      <div class="column">Showing 1 to 10 of 57 entries</div>
-      <div class="column">
-        <nav class="pagination is-right" id="paginate"></nav>
-      </div>
+  <div class="column">
+    <div class="content">
+      <!-- LIST -->
+      <table class="list-body table is-bordered is-striped is-narrow">
+        <thead>
+          <tr>
+            <th>GROUP</th>
+            <th>Name</th>
+            <th>Content</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mainList" data-nopde="1">
+          <tr>
+            <td>{{:prop.group}}</td>
+            <td>{{:prop.name}}</td>
+            <td>{{:prop.content}}</td>
+            <td class="is-icon">
+              <a href="javascript:;" data-func="loadRow" data-tmpl="baseForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="list-footer">
+        <nav class="pagination">
+          <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a>
+          <ul class="pagination-list hidden">
+            <li>
+              <a class="pagination-link">1</a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">…</span>
+            </li>
+            <li>
+              <a class="pagination-link">45</a>
+            </li>
+            <li>
+              <a class="pagination-link is-current">46</a>
+            </li>
+            <li>
+              <a class="pagination-link">47</a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">…</span>
+            </li>
+            <li>
+              <a class="pagination-link">86</a>
+            </li>
+          </ul>
+        </nav>
     </div>
   </div>
-  <div class="column">
+  <div class="column is-3">
     <div class="box">
       <form class="gee" data-gene="init:initForm" data-tmpl="baseForm" id="baseForm">
         <div class="field">

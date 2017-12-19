@@ -126,13 +126,19 @@
             app.arena.loadPage(box || app.arena.pageBox);
         },
 
+        prevPage: function(box) {
+            gee.clog('prevPage');
+            app.arena.pageCounter--;
+            app.arena.loadPage(box || app.arena.pageBox);
+        },
+
         loadPage: function (box) {
             var callback = function () {
                 if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
-                    app.arena.renderBox(box, { 'data': this.data }, 1);
-                    app.arena.setPaginate(this.data.length);
+                    app.arena.renderBox(box, { 'data': this.data.subset }, 1);
+                    app.arena.setPaginate(this.data.total);
 
                     app.waitFor(function () {
                         return !box.is(':empty');
@@ -158,7 +164,7 @@
                             data = $.extend({}, data, { type: app.arena.type });
                         }
 
-                        gee.yell(app.module.name + '/list_all', data, callback, callback);
+                        gee.yell(app.module.name + '/list', data, callback, callback);
                         break;
                 }
             }, 10);
@@ -236,14 +242,22 @@
         app.arena.hideModal();
     });
 
+    gee.hook('nextPage', function (me) {
+        app.arena.nextPage();
+    });
+
+    gee.hook('prevPage', function (me) {
+        app.arena.prevPage();
+    });
+
     gee.hook('loadMain', function(me) {
         var layout = me.data('layout') || 'list';
         app.module.name = me.data('module') || 'post';
 
         app.loadHtml(layout, 'main-box');
 
-        me.parent().find('>a').removeClass('active').end().end()
-            .addClass('active');
+        me.parent().find('>a').removeClass('is-active').end().end()
+            .addClass('is-active');
     });
 
 }(app, gee, jQuery));
