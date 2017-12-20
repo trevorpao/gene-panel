@@ -20,7 +20,7 @@
 
         set: function (data, btn) {
             let callback = function () {
-                btn.prop('disabled', false).find('.fa-spinner').remove();
+                app.doneBtn(btn);
                 if (this.code !== '1') {
                     app.stdErr(this);
                 } else {

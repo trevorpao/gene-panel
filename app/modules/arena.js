@@ -88,24 +88,34 @@
             }
         },
 
-        setPaginate: function (total) {
-            if (1===2 && !$('#paginate').data('twbsPagination')) {
+        setPaginate: function (pageTotal) {
+            if (!$('#paginate').data('twbsPagination')) {
                 $('#paginate').twbsPagination({
-                  totalPages: Math.ceil(total/app.pageLimit),
-                  visiblePages: 3,
-                  initiateStartPageClick: false,
-                  paginationClass: 'pagination-list',
-                  anchorClass: 'pagination-link',
-                  activeClass: 'is-current',
-                  onPageClick: function (event, page) {
-                    app.arena.pageCounter = page-1;
-                    app.arena.nextPage();
-                  }
+                    hideOnlyOnePage: true,
+                    totalPages: pageTotal,
+                    visiblePages: 3, // pagination-ellipsis
+                    initiateStartPageClick: false,
+                    paginationClass: 'pagination-list',
+                    pageClass: 'pagination-link',
+                    activeClass: 'is-current',
+                    nextClass: 'pagination-link',
+                    prevClass: 'pagination-link',
+                    lastClass: 'pagination-link',
+                    firstClass: 'pagination-link',
+                    disabledClass: 'is-disabled',
+                    first: '<span aria-hidden="true"> &laquo; </span>',
+                    last: '<span aria-hidden="true"> &raquo; </span>',
+                    prev: '<span aria-hidden="true"> &lt; </span>',
+                    next: '<span aria-hidden="true"> &gt; </span>',
+                    onPageClick: function (event, page) {
+                        app.arena.pageCounter = page - 1; // nextPage will +1
+                        app.arena.nextPage();
+                    }
                 });
             }
         },
 
-        destroyPaginate: function (total, callback) {
+        destroyPaginate: function () {
             $('#paginate').empty().removeData('twbs-pagination').off('page');
         },
 
@@ -138,7 +148,7 @@
                     app.stdErr(this);
                 } else {
                     app.arena.renderBox(box, { 'data': this.data.subset }, 1);
-                    app.arena.setPaginate(this.data.total);
+                    app.arena.setPaginate(this.data.count);
 
                     app.waitFor(function () {
                         return !box.is(':empty');

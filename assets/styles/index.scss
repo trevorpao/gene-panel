@@ -56,3 +56,17 @@ body {
 .hidden {
     display:none;
 }
+
+.pagination-link.is-current a {
+    color: #fff;
+}
+
+.is-disabled, .is-disabled:hover {
+    border-color: transparent;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    opacity: 0.5;
+    a {
+        pointer-events: none;
+    }
+}

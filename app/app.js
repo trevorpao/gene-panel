@@ -340,7 +340,11 @@ var App = function() {
         },
 
         progressingBtn: function(me) {
-            me.attr('disabled', 'disabled').append('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+            me.attr('disabled', 'disabled').addClass('is-loading'); // .append('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+        },
+
+        doneBtn: function(me) {
+            btn.prop('disabled', false).removeClass('is-loading'); // .find('.fa-spinner').remove();
         }
     };
 
