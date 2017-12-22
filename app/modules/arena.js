@@ -89,9 +89,8 @@
         },
 
         setPaginate: function (pageTotal) {
-            if (!$('#paginate').data('twbsPagination')) {
+            if (!$('#paginate').data('twbsPagination') && pageTotal > 1) {
                 $('#paginate').twbsPagination({
-                    hideOnlyOnePage: true,
                     totalPages: pageTotal,
                     visiblePages: 3, // pagination-ellipsis
                     initiateStartPageClick: false,
@@ -166,13 +165,21 @@
                     default:
                         // TODO: get other params
 
-                        var data = {
-                            page: app.arena.pageCounter
+                        let data = {
+                            page: app.arena.pageCounter,
+                            query: ''
                         };
 
                         if (app.arena.type) {
                             data = $.extend({}, data, { type: app.arena.type });
                         }
+
+                        $('.tags .tag').each(function () {
+                            let q = $(this).text().trim();
+                            if (q !== '') {
+                                data.query += ','+ q;
+                            }
+                        });
 
                         gee.yell(app.module.name + '/list', data, callback, callback);
                         break;

@@ -15,7 +15,7 @@ var App = function() {
     };
 
     var app = {
-        pageCounter: 1,
+        pageCounter: 0,
         pageLimit: 10,
 
         fontSize: 1.25,

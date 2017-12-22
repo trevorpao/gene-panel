@@ -17,6 +17,7 @@ gee.debug = IS_DEV;
 import './extend';
 import './app';
 import './modules/arena';
+import './modules/query';
 import './modules/staff';
 import './modules/simple';
 

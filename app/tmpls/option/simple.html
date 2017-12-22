@@ -14,7 +14,7 @@
           <input class="input" type="text" placeholder="Find a option">
         </p>
         <p class="control">
-          <button class="button is-info" type="button">Search</button>
+          <button class="button is-info gee" data-gene="init:initQueryForm,click:addQuery" type="button">Search</button>
         </p>
       </div>
     </div>
@@ -26,14 +26,17 @@
   </div>
 </nav>
 <div class="columns is-multiline">
-  <div class="column is-12"><div class="tags">
+  <div class="column is-12"><div class="tags js-query-list">
     <span class="tag is-primary is-medium"> status:Enabled
       <button class="delete is-small"> </button>
     </span>
-    <span class="tag is-primary is-medium"> date&gt;2017-12-01
+    <span class="tag is-info is-medium"> date<>2017-12-01|2017-12-05
       <button class="delete is-small"> </button>
     </span>
-    <span class="tag is-primary is-medium"> date&lt;2017-12-05
+    <span class="tag is-danger is-medium"> name!test
+      <button class="delete is-small"> </button>
+    </span>
+    <span class="tag is-warning is-medium"> content~likeme
       <button class="delete is-small"> </button>
     </span>
   </div></div>
