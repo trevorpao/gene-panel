@@ -20,7 +20,7 @@
 
         set: function (data, btn) {
             let callback = function () {
-                app.doneBtn(btn);
+                // app.doneBtn(btn);
                 if (this.code !== '1') {
                     app.stdErr(this);
                 } else {
@@ -104,7 +104,7 @@
         if (!$.validatr.validateForm(form)) {
             return false;
         } else {
-            app.progressingBtn(me);
+            // app.progressingBtn(me);
             app.simple.set(form.serialize(), me);
             gee.hideModal();
         }

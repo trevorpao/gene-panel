@@ -163,7 +163,6 @@
                         $('#calendar').fullCalendar('refetchEvents');
                         break;
                     default:
-                        // TODO: get other params
 
                         let data = {
                             page: app.arena.pageCounter,
@@ -174,7 +173,7 @@
                             data = $.extend({}, data, { type: app.arena.type });
                         }
 
-                        $('.tags .tag').each(function () {
+                        $('.js-query-list .tag').each(function () {
                             let q = $(this).text().trim();
                             if (q !== '') {
                                 data.query += ','+ q;

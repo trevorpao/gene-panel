@@ -1,6 +1,12 @@
 ;(function (app, gee, $) {
     'use strict';
 
+    // sample query
+    // status:Enabled
+    // date<>2017-12-01~2017-12-05
+    // name!test
+    // content~likeme
+
     app.query = {
         tagElem: '<span class="tag {{:cls}} js-query-{{:col}} is-medium"> {{:label}} <button class="delete is-small gee" data-gene="click:delQuery"> </button> </span>',
         cu: {},
@@ -20,7 +26,10 @@
 
             app.query.box.find('.js-query-'+ item.col).remove().end() // remove the same column from the condition
                 .append(app.query.tagTmpl.render(item));
-            gee.init();
+            gee.init(); // TODO: update list
+
+            app.arena.resetCurrent(app.arena.pageBox);
+            app.arena.nextPage(app.arena.pageBox);
         },
         remove: function (tag) {
             let item = app.query._str2Item(tag.text().trim());
@@ -28,7 +37,10 @@
             delete app.query.cu[item.col];
             gee.clog(app.query.cu);
             // TODO: update LS
-            tag.remove();
+            tag.remove(); // TODO: update list
+
+            app.arena.resetCurrent(app.arena.pageBox);
+            app.arena.nextPage(app.arena.pageBox);
         },
         _str2Item: function (str) {
             let cls = 'is-primary';
@@ -69,10 +81,12 @@
     });
 
     gee.hook('addQuery', function (me) {
-        let txt = me.closest('.field').find('.input').val().trim();
+        let input = me.closest('.field').find('.input');
+        let txt = input.val().trim();
         if (txt) {
             app.query.add(txt);
         }
+        input.val('');
     });
 
     gee.hook('delQuery', function (me) {
