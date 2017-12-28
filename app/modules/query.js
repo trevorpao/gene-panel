@@ -28,6 +28,7 @@
                 .append(app.query.tagTmpl.render(item));
             gee.init(); // TODO: update list
 
+            app.arena.destroyPaginate();
             app.arena.resetCurrent(app.arena.pageBox);
             app.arena.nextPage(app.arena.pageBox);
         },
@@ -39,6 +40,8 @@
             // TODO: update LS
             tag.remove(); // TODO: update list
 
+
+            app.arena.destroyPaginate();
             app.arena.resetCurrent(app.arena.pageBox);
             app.arena.nextPage(app.arena.pageBox);
         },
