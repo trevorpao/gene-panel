@@ -1,0 +1,102 @@
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Press</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <!-- // TODO: skilled user use this -->
+    <!-- <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:addQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div> -->
+
+    <div class="level-item">
+      <p class="control">
+        <div class="select" >
+          <select name="query" class="gee" data-gene="change:checkOption">
+            <optgroup label="Press">
+              <option value="title~">文章標題</option>
+              <option value="id:">文章編號</option>
+              <option value="tags~">標籤</option>
+            </optgroup>
+            <optgroup label="狀態">
+                <option value="status=Published">已發佈</option>
+                <option value="status=Draft">草稿</option>
+                <option value="status=Scheduled">排程中</option>
+                <option value="status=Offlined">已下架</option>
+            </optgroup>
+          </select>
+        </div>
+      </p>
+    </div>
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="level-right">
+
+    <p class="level-item">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <!-- <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div> -->
+  <div class="column">
+    <div class="content">
+      <table class="list-body table is-striped">
+        <thead>
+          <tr>
+            <th>首圖</th>
+            <th>文章標題 / 作者 / 上線時間</th>
+            <th>前往文章</th>
+            <th>建立者</th>
+            <th>分類</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="pressList" data-nopde="1">
+          <tr>
+            <td><figure class="image is-16by9 is-marginless"> <img pre-src="{{:~loadPic(prop.pic)}}" alt="Image"> </figure></td>
+            <td>
+              <a href="javascript:;" data-func="press/loadRow" data-tmpl="pressForm" data-src="editor" data-id="{{:prop.id}}" class="ellipsis press-title engrossed-btn" title="{{:prop.title}}" style="width: 28vw;">{{:prop.title}}</a>
+              <br>
+              {{props prop.authors}} <a href="javascript:;" data-func="loadQuery" data-query="author_id:{{:prop.id}}" data-mode="Add" class="author-id">{{:prop.title}}</a> {{/props}}
+              <br>
+              {{:~formatDate(prop.online_date, 'YYYY-MM-DD')}}
+            </td>
+            <td><a href="https://stage.how-living.com/p/{{:prop.id}}" target="_blank" class="is-pulled-right"> <span class="icon"><i class="fa fa-share-square-o"></i></span> </a>
+            </td>
+            <td><div class="ellipsis" style=" width: 70px;">{{:prop.account}}</div></td>
+            <td> <div class="tags" style="width: 25vw;"> {{props prop.tags}} <span class="tag is-info"> {{:prop.title}} </span> {{/props}} </div> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

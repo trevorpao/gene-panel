@@ -1,0 +1,68 @@
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Post</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:addQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="postForm" data-src="modal" data-size="lg" data-id="0">New</a>
+    </p>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <!-- LIST -->
+      <table class="list-body table is-striped">
+        <thead>
+          <tr>
+            <th>SITE</th>
+            <th>STATUS</th>
+            <th>網址</th>
+            <th>TITLE</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="postList" data-nopde="1">
+          <tr>
+            <td>{{:prop.site_id}}</td>
+            <td>{{:prop.status}}</td>
+            <td>{{:prop.slug}}</td>
+            <td>{{:prop.title}}</td>
+            <td class="is-icon">
+              <a href="javascript:;" data-func="post/loadRow" data-tmpl="postForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <a href="javascript:;" data-func="post/delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

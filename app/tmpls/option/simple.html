@@ -1,8 +1,5 @@
-<h2 class="title">Option</h2>
-<hr>
 <nav class="breadcrumb">
   <ul>
-    <li> <a>Admin</a> </li>
     <li class="is-active"> <a>Option</a> </li>
   </ul>
 </nav>
@@ -14,23 +11,28 @@
           <input class="input" type="text" placeholder="Find a option">
         </p>
         <p class="control">
-          <button class="button is-info gee" data-gene="init:initQueryForm,click:addQuery" type="button">Search</button>
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:addQuery" type="button"><i class="fa fa-search"></i></button>
         </p>
       </div>
     </div>
   </div>
   <div class="level-right">
     <p class="level-item">
-      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="baseForm" data-id="0">New</a>
+      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="optionForm" data-id="0">New</a>
     </p>
   </div>
 </nav>
 <div class="columns is-multiline">
-  <div class="column is-12"><div class="tags js-query-list"></div></div>
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div>
   <div class="column">
     <div class="content">
       <!-- LIST -->
-      <table class="list-body table is-bordered is-striped is-narrow">
+      <table class="list-body table is-striped">
         <thead>
           <tr>
             <th>GROUP</th>
@@ -40,31 +42,30 @@
           </tr>
         </thead>
         <tfoot></tfoot>
-        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mainList" data-nopde="1">
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="optionList" data-nopde="1">
           <tr>
             <td>{{:prop.group}}</td>
             <td>{{:prop.name}}</td>
             <td>{{:prop.content}}</td>
             <td class="is-icon">
-              <a href="javascript:;" data-func="loadRow" data-tmpl="baseForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <a href="javascript:;" data-func="loadRow" data-tmpl="optionForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
               <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
     <div class="list-footer">
-        <nav class="pagination">
-          <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
           <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
-          <ul id="paginate"></ul>
-        </nav>
+        <ul id="paginate"></ul>
+      </nav>
     </div>
   </div>
   <div class="column is-3">
     <div class="box">
-      <form class="gee" data-gene="init:initForm" data-tmpl="baseForm" id="baseForm">
+      <form class="gee" data-gene="init:initForm" data-tmpl="optionForm" id="optionForm">
         <div class="field">
           <label class="label">Group</label>
           <p class="control">
@@ -78,6 +79,12 @@
           </p>
         </div>
         <div class="field">
+          <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
+          <label class="radio" for="tag-status-enabled">啟用</label>
+          <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
+          <label class="radio" for="tag-status-disabled">停用</label>
+        </div>
+        <div class="field">
           <label class="label">Content</label>
           <p class="control">
             <textarea class="textarea" placeholder="Content" name="content"></textarea>
@@ -85,7 +92,7 @@
         </div>
         <div class="field is-grouped">
           <p class="control">
-            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow">Submit</button>
+            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow" data-reset="1">Submit</button>
           </p>
           <p class="control">
             <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>

@@ -1,110 +1,121 @@
-<div class="column is-8">
-  <!-- LIST -->
-  <div class="app-list">
-    <nav class="list-filter level">
-      <div class="level-left">
-        <div class="level-item">
-          <p class="control has-addons">
-            <input class="input" type="text" placeholder="Find a post">
-            <button class="button"> Search </button>
-          </p>
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Staff</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+
+    <div class="level-item">
+      <p class="control">
+        <div class="select" >
+          <select name="query" class="gee" data-gene="change:checkOption">
+            <optgroup label="Press">
+              <option value="account~">名稱</option>
+            </optgroup>
+            <optgroup label="狀態">
+                <option value="status=Verified">生效</option>
+                <option value="status=Freeze">失效</option>
+                <option value="status=New">新進人員</option>
+            </optgroup>
+          </select>
         </div>
-      </div>
-      <div class="level-right">
-        <p class="level-item"><strong>All</strong></p>
-        <p class="level-item"><a>Verified</a></p>
-        <p class="level-item"><a>New</a></p>
-        <p class="level-item"><a>Freezed</a></p>
-      </div>
-    </nav>
-    <table class="list-body table is-bordered">
-      <thead>
-        <tr>
-          <th>Account</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Role</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tfoot></tfoot>
-      <tbody class="gee" data-gene="init:loadList" data-tmpl="tableList">
-        <tr> <td>{{:prop.account}}</td> <td>{{:prop.email}}</td> <td>{{:prop.status}}</td>  <td>{{:prop.role}}</td>
-        <td class="is-icon">
-        <a href="javascript:;" class="gee" data-gene="click:loadRow" data-tmpl="tableForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
-        <a href="#"> <span class="icon"><i class="fa fa-close"></i></span> </a>
-        </td> </tr>
-      </tbody>
-    </table>
-    <div class="columns list-footer">
-      <div class="column">Showing 1 to 10 of 57 entries</div>
-      <div class="column">
-        <nav class="pagination is-right">
-          <ul class="pagination-list">
-            <li><a class="pagination-link">1</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link">45</a></li>
-            <li><a class="pagination-link is-current">46</a></li>
-            <li><a class="pagination-link">47</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link">86</a></li>
-          </ul>
-        </nav>
+      </p>
+    </div>
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
       </div>
     </div>
   </div>
-</div>
-<div class="column is-4">
-  <div class="box"><form class="gee" data-gene="init:loadRow" data-tmpl="tableForm" id="tableForm">
-    <label class="label">Name</label>
-    <p class="control">
-      <input class="input" name="account" type="text"placeholder="Text input">
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="staffForm" data-id="0">New</a>
     </p>
-    <label class="label">Username</label>
-    <p class="control has-icon has-icon-right">
-      <input class="input is-success" type="text" name="account" placeholder="Text input" value="bulma">
-      <span class="icon is-small"><i class="fa fa-check"></i></span>
-      <span class="help is-success">This username is available</span>
-    </p>
-    <label class="label">Email</label>
-    <p class="control has-icon has-icon-right">
-      <input class="input is-danger" type="text" name="email"  placeholder="Email input" value="hello@">
-      <span class="icon is-small"><i class="fa fa-warning"></i></span>
-      <span class="help is-danger">This email is invalid</span>
-    </p>
-    <label class="label">Subject</label>
-    <p class="control">
-      <span class="select">
-          <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
-          </select>
-      </span>
-    </p>
-    <label class="label">Message</label>
-    <p class="control">
-      <textarea class="textarea" placeholder="Textarea"></textarea>
-    </p>
-    <p class="control">
-      <label class="checkbox">
-        <input type="checkbox"> Remember me
-      </label>
-    </p>
-    <p class="control">
-      <label class="radio">
-        <input type="radio" name="question"> Yes
-      </label>
-      <label class="radio">
-        <input type="radio" name="question"> No
-      </label>
-    </p>
-    <div class="control is-grouped">
-      <p class="control">
-        <button class="button is-primary">Submit</button>
-      </p>
-      <p class="control">
-        <button class="button is-link">Cancel</button>
-      </p>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
     </div>
-  </form></div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <!-- LIST -->
+      <table class="list-body table is-striped">
+        <thead>
+          <tr>
+            <th>STATUS</th>
+            <th>ACCOUNT</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="staffList" data-nopde="1">
+          <tr>
+            <td>{{:prop.status}}</td>
+            <td>{{:prop.account}}</td>
+            <td class="is-icon">
+              <a href="javascript:;" data-func="loadRow" data-tmpl="staffForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+  <div class="column is-3">
+    <div class="box">
+      <form class="gee" data-gene="init:initForm" data-tmpl="staffForm" id="staffForm">
+        <div class="field">
+          <label class="label">Account</label>
+          <p class="control">
+            <input class="input" name="account" type="text" placeholder="Account">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <p class="control">
+            <input class="password input" name="pwd" type="password" placeholder="Password">
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <label class="radio">
+              <input type="radio" name="status" value="New"> 新進
+            </label>
+            <label class="radio">
+              <input type="radio" name="status" value="Verified" checked="checked"> 生效
+            </label>
+            <label class="radio">
+              <input type="radio" name="status" value="Freeze" checked="checked"> 失效
+            </label>
+          </p>
+        </div>
+        <div class="field is-grouped">
+          <p class="control">
+            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow">Submit</button><!--  data-reset="1" -->
+          </p>
+          <p class="control">
+            <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>
+          </p>
+        </div>
+        <input type="hidden" name="id">
+      </form>
+    </div>
+  </div>
 </div>

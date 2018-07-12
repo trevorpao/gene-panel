@@ -1,0 +1,96 @@
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Campaign</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+
+    <div class="level-item">
+      <p class="control">
+        <div class="select" >
+          <select name="query" class="gee" data-gene="change:checkOption">
+            <optgroup label="Press">
+              <option value="title~">名稱</option>
+              <option value="uri~">網址</option>
+              <option value="id:">編號</option>
+              <option value="board_id:">版位編號</option>
+            </optgroup>
+            <optgroup label="狀態">
+                <option value="status=Enabled">啟用</option>
+                <option value="status=Disabled">未啟用</option>
+            </optgroup>
+          </select>
+        </div>
+      </p>
+    </div>
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="level-right">
+    <!-- <p class="level-item">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div> -->
+    <p class="level-item">
+      <a class="button is-primary engrossed-btn gee" data-gene="click:press/loadRow" data-tmpl="resourceForm" data-src="editor" data-id="0">New</a>
+    </p>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <table class="list-body table is-striped">
+        <thead>
+          <tr>
+            <th>名稱</th>
+            <th>曝光排序(權重)</th>
+            <th>期間</th>
+            <th>曝光率</th>
+            <th>曝光次數</th>
+            <th>點擊次數</th>
+            <th>CTR</th>
+            <th>狀態</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="resourceList" data-nopde="1">
+          <tr>
+            <td>{{:prop.title}}</td>
+            <td>{{:prop.weight}}</td>
+            <td>{{:~formatDate(prop.start_date, 'YYYY-MM-DD')}} ~ <br />{{:~formatDate(prop.end_date, 'YYYY-MM-DD')}}</td>
+            <td><span class="rates"></span></td>
+            <td>{{:prop.exposure}}</td>
+            <td>{{:prop.counter}}</td>
+            <td>{{:~average(prop.counter, prop.exposure)}}%</td>
+            <td>{{:prop.status}}</td>
+            <td class="is-icon">
+              <a href="javascript:;" data-func="press/loadRow" data-tmpl="resourceForm" data-src="editor" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -48,6 +48,13 @@ var App = function() {
 
             gee.apiUri = window.apiUrl +'';
             gee.mainUri = window.mainUrl;
+            gee.picUri = gee.mainUri.slice(0, -1);
+
+            app.editor.option.imageUploadURL = gee.apiUri + app.editor.option.imageUploadURL;
+            app.editor.option.pastedImagesUploadURL = gee.apiUri + app.editor.option.pastedImagesUploadURL;
+
+            app.editor.inlineOption.imageUploadURL = gee.apiUri + app.editor.inlineOption.imageUploadURL;
+            app.editor.inlineOption.pastedImagesUploadURL = gee.apiUri + app.editor.inlineOption.pastedImagesUploadURL;
 
             gee.init();
 
@@ -60,35 +67,33 @@ var App = function() {
             }
         },
 
-        loadHtml: function(src, box, redirect) {
-            var newPath = '/'+ src;
-            var success = function(html, status, xhr) {
-                if ( status === 'error' ) {
+        loadHtml: function (src, box, redirect) {
+            var newPath = src;
+            var success = function (html, status, xhr) {
+                if (status === 'error') {
                     gee.alert({
                         title: 'Alert!',
-                        txt: 'Sorry but there was an error: '+ xhr.status + ' ' + xhr.statusText
+                        txt: 'Sorry but there was an error: ' + xhr.status + ' ' + xhr.statusText
                     });
-                }
-                else {
-                    app.htmlStores[app.module.name +'-tmpl-'+ src] = html;
+                } else {
+                    app.htmlStores[app.module.name + '-tmpl-' + src] = html;
                     box.html(html);
                     if (redirect !== '') {
-                        app.redirect({path: newPath, ta: redirect});
+                        app.redirect({ path: newPath, ta: redirect });
                     }
                     gee.init();
                 }
             };
-            box = (typeof box === 'string') ? $('#'+ box) : box;
+            box = (typeof box === 'string') ? $('#' + box) : box;
             redirect = (redirect) ? redirect : '';
 
-            if (typeof app.htmlStores[app.module.name +'-tmpl-'+ src] === 'undefined') {
-                gee.clog('load: '+ app.tmplPath +'/'+ app.module.name + newPath +'.html');
-                box.load(app.tmplPath +'/'+ app.module.name + newPath +'.html', success);
-            }
-            else {
-                box.html(app.htmlStores[app.module.name +'-tmpl-'+ src]);
+            if (typeof app.htmlStores[app.module.name + '-tmpl-' + src] === 'undefined') {
+                gee.clog('load: ' + app.tmplPath + newPath + '.html');
+                box.load(app.tmplPath + newPath + '.html', success);
+            } else {
+                box.html(app.htmlStores[app.module.name + '-tmpl-' + src]);
                 if (redirect !== '') {
-                    app.redirect({path: newPath, ta: redirect});
+                    app.redirect({ path: newPath, ta: redirect });
                 }
                 gee.init();
             }
@@ -104,7 +109,7 @@ var App = function() {
 
                 if (box.is('form')) {
                     app.moduleItems[tmplName] = app.initForm(box);
-                    htmlCode = box.html();
+                    htmlCode = box.html(); // get new htmlcode
                 }
 
                 htmlCode = htmlCode.replace(/pre-gee/g, 'gee')
@@ -116,7 +121,7 @@ var App = function() {
             // box.html('');
         },
 
-        initForm: function(box) {
+        initForm: function (box) {
             var item = {};
 
             box.find(':input:not(:button)').each(function () {
@@ -125,10 +130,20 @@ var App = function() {
                 var gene = me.data('gene');
                 var boolGee = me.hasClass('gee');
 
-                item[name] = '';
+                if (name && name.match(/\[/g)) {
+                    name = name.replace(/\[/g, '.').replace(/]/g, '');
+                }
 
-                if (me.is(':radio, :checkbox')) {
-                    me.closest('.form-group').toggleClass('pre-gee', !boolGee).attr('data-gene', 'init:setRadio')
+                item[name] = (name !== 'id') ? '' : 0;
+
+                if (me.is(':radio')) {
+                    me.closest('.field').toggleClass('pre-gee', !boolGee).attr('data-gene', 'init:setRadio')
+                        .attr('data-value', '{{:item.' + name + '}}');
+                } else if (me.is(':checkbox')) {
+                    name = name.replace('.', '');
+                    me.closest('.field').toggleClass('pre-gee', !boolGee)
+                        .attr('data-gene', 'init:setRadio')
+                        .attr('data-type', 'checkbox')
                         .attr('data-value', '{{:item.' + name + '}}');
                 } else if (me.is('[type="datetime-local"]')) {
                     me.attr('value', '{{:~formatDate(item.' + name + ', \'YYYY-MM-DDTHH:mm:00\')}}');
@@ -143,19 +158,23 @@ var App = function() {
 
                     me.toggleClass('pre-gee', !boolGee).attr('data-gene', value)
                         .attr('data-value', '{{:item.' + name + '}}');
+
+                    // TODO: render select options
+                } else if (me.hasClass('multipleSelect')) {
+                    me.attr('value', '');
                 } else {
                     me.attr('value', '{{:item.' + name + '}}');
                 }
             });
 
-            gee.clog('------------------------');
-            gee.clog(item);
+            // gee.clog('------------------------ initForm');
+            // gee.clog(item);
 
             return item;
         },
 
         setForm: function (ta, row) {
-            ta.find(':input:not(:button)').each(function() {
+            ta.find(':input:not(:button)').each(function () {
                 var col = $(this);
                 var idx = col.attr('name');
                 if (row.hasOwnProperty(idx)) {
@@ -164,19 +183,24 @@ var App = function() {
                         if (col.attr('value') === val) {
                             col.prop('checked', true);
                         }
-                    }
-                    else {
+                    } else {
                         col.val(val);
                     }
                 }
             });
         },
 
-        redirect: function(state){
-            window.history.pushState(state, '', state.path);
+        redirect: function (state) {
+            if (!app.route) {
+                if (IS_DEV) {
+                    window.location.hash = state.ta;
+                } else {
+                    window.history.pushState(state, '', state.path);
+                }
+            }
         },
 
-        defaultPic: function() {
+        defaultPic: function () {
             var img = event.srcElement;
             $(img).attr('src', 'default.svg');
             img.onerror = null;
@@ -184,7 +208,7 @@ var App = function() {
 
         /**
          * a object of promise
-         * @param  function condition return bool
+         * @param  condition function OR sec return bool
          * @param  int limit max test times
          * @return promise
          */
@@ -194,19 +218,26 @@ var App = function() {
             var during = 70;
             limit = limit || 9; // Longest duration :  during * (limit+1)
 
-
-            var timer = setInterval(function () {
-                times++;
-                if (condition()) {
-                    clearInterval(timer);
+            if (Number(condition) === condition) {
+                setTimeout(function () {
                     dfr.resolve();
-                }
+                }, condition * 1000);
+            }
+            else {
+                var timer = setInterval(function () {
+                    times++;
+                    if (condition()) {
+                        clearInterval(timer);
+                        dfr.resolve();
+                    }
 
-                if (times > limit) {
-                    clearInterval(timer);
-                    dfr.reject();
-                }
-            }, during);
+                    if (times > limit) {
+                        clearInterval(timer);
+                        dfr.reject();
+                    }
+                }, during);
+
+            }
 
             return dfr.promise();
         },
@@ -283,68 +314,150 @@ var App = function() {
         },
 
         formatHelper: {
-            currency: function(val) { return '$' + ($.fn.formatMoney((val+''), 0)); },
-            sum: function(price, qty) { return app.tmplHelpers.currency(qty*price); },
-            loadPic: function(path) { return that.config.baseUrl + path; },
-            average: function(sum, divide) { return (divide*1!=='0') ? Math.round(sum*10/divide)/10 : 0; },
-            beforeDate: function(ts, target) {
+            currency: function (num, prefix) {
+                var str = $.fn.formatNum((num + ''), 0, '.', ',', 1);
+                var cls = 'dollar';
+                if (num < 0) {
+                    cls += ' minus';
+                }
+                if (typeof prefix !== 'undefined') {
+                    cls += ' currency';
+                }
+                return '<span class="' + cls + '"></span>' + str + '';
+            },
+            sum: function (price, qty) { return app.tmplHelpers.currency(qty * price); },
+            loadPic: function (path) { return gee.picUri + path; },
+            average: function (sum, divide) { return (divide * 1 !== 0) ? Math.round(sum * 10000 / divide) / 100 : 0; },
+            beforeDate: function (ts, target) {
                 var cu = moment(ts);
                 app[target].max_ts = moment.max(app[target].max_ts, cu);
                 app[target].min_ts = moment.min(app[target].min_ts, cu);
                 return $.timeago(ts);
             },
-            showDate: function(status, flow, schedule, createDate, publishDate) {
+            showDate: function (status, flow, schedule, createDate, publishDate) {
                 var ts = publishDate || createDate;
 
-                return status +' 於 ' + moment(ts).format('MM/DD HH:mm');
+                return status + ' 於 ' + moment(ts).format('MM/DD HH:mm');
             },
-            iso8601: function(ts) {
+            iso8601: function (ts) {
                 return moment(ts).toISOString();
             },
-            getYear: function(ts) {
+            getYear: function (ts) {
                 return moment(ts).format('YYYY');
             },
-            getMon: function(ts) {
+            getMon: function (ts) {
                 return moment(ts).format('MMMM');
             },
-            getWeek: function(ts) {
+            getWeek: function (ts) {
                 return moment(ts).format('ddd');
             },
-            getDay: function(ts) {
+            getDay: function (ts) {
                 return moment(ts).format('DD');
             },
-            getTime: function(ts) {
+            getTime: function (ts) {
                 return moment(ts).format('HH:mm');
             },
-            genderedHonorific: function(gender) {
+            formatDate: function (str, format) {
+                str = (str) ? moment(str, 'YYYY-MM-DD HH:mm:ss') : moment();
+
+                if (str.isValid()) {
+                    return str.format(format);
+                } else {
+                    return moment().format(format);
+                }
+            },
+            genderedHonorific: function (gender) {
                 return (gender === 'f') ? '女士' : '先生';
             },
-            linkAPI: function(str) {
+            linkAPI: function (str) {
                 return that.config.uri + str;
             },
-            nl2br: function(str) {
+            nl2br: function (str) {
                 var breakTag = '<br />';
                 return (str + '')
                     .replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
             }
         },
 
-        extractAttr: function(obj) {
+        extractAttr: function (obj) {
             var attr = {};
-            obj.each(function() {
-                $.each(this.attributes, function() {
+            obj.each(function () {
+                $.each(this.attributes, function () {
                     attr[this.name] = this.value;
                 });
             });
             return attr;
         },
 
-        progressingBtn: function(me) {
-            me.attr('disabled', 'disabled').addClass('is-loading'); // .append('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+        progressingBtn: function (btn) {
+            btn.attr('disabled', 'disabled').addClass('is-loading'); // .append('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
         },
 
-        doneBtn: function(me) {
+        doneBtn: function (btn) {
             btn.prop('disabled', false).removeClass('is-loading'); // .find('.fa-spinner').remove();
+        },
+
+        baseConverter: function (nbasefrom, basefrom, baseto) {
+            var SYMBOLS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (basefrom <= 0 || basefrom > SYMBOLS.length || baseto <= 0 || baseto > SYMBOLS.length) {
+
+                return null;
+            }
+            var i, nbaseten = 0;
+            if (basefrom !== 10) {
+                var sizenbasefrom = nbasefrom.length;
+                for (i = 0; i < sizenbasefrom; i++) {
+                    var mul, mul_ok = -1;
+                    for (mul = 0; mul < SYMBOLS.length; mul++) {
+                        if (nbasefrom[i] === SYMBOLS[mul]) {
+                            mul_ok = 1;
+                            break;
+                        }
+                    }
+                    if (mul >= basefrom) {
+
+                        return null;
+                    }
+                    if (mul_ok === -1) {
+                        return null;
+                    }
+                    var exp = (sizenbasefrom - i - 1);
+                    if (exp === 0) {
+                        nbaseten += mul;
+                    }
+                    else {
+                        nbaseten += mul * Math.pow(basefrom, exp);
+                    }
+                }
+            } else {
+                nbaseten = parseInt(nbasefrom);
+            }
+
+            if (baseto !== 10) {
+                var nbaseto = [];
+                while (nbaseten > 0) {
+                    var mod = nbaseten % baseto;
+                    if (mod < 0 || mod >= SYMBOLS.length) {
+
+                        return null;
+                    }
+                    nbaseto.push(SYMBOLS[mod]);
+                    nbaseten = parseInt(nbaseten / baseto);
+                }
+                return nbaseto.reverse().toString().replace(/,/g, '');
+            } else {
+                return nbaseten.toString();
+            }
+            return '0';
+        },
+
+        padLeft: function(str, lenght){
+            if(str.length >= lenght) {
+                return str;
+            }
+            else {
+                return app.padLeft('0'+ str, lenght);
+            }
         }
     };
 

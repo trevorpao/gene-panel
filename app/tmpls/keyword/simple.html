@@ -1,0 +1,86 @@
+<h2 class="title">Keyword</h2>
+<hr>
+<nav class="breadcrumb">
+  <ul>
+    <li> <a>Admin</a> </li>
+    <li class="is-active"> <a>Keyword</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-info gee" data-gene="init:initQueryForm,click:addQuery" type="button">Search</button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="keywordForm" data-id="0">New</a>
+    </p>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column is-12">
+    <div class="tags js-query-list"></div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <div class="tags gee" data-gene="init:loadList,click:reactList" data-tmpl="keywordList" data-nopde="1">{{props data}}
+        <span class="tag loop-item is-medium {{if prop.status === 'Enabled'}}is-success{{else}}is-warning{{/if}}">
+          <a href="javascript:;" data-func="loadRow" data-tmpl="keywordForm" data-id="{{:prop.id}}">{{:prop.title}}</a>
+          <button class="delete is-small" data-func="delRow" data-id="{{:prop.id}}"> </button>
+        </span>
+      {{/props}}</div>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+  <div class="column is-3">
+    <div class="box">
+      <form class="gee" data-gene="init:initForm" data-tmpl="keywordForm" id="keywordForm">
+        <div class="field">
+          <label class="label">Keyword</label>
+          <p class="control">
+            <input class="input" name="title" type="text" placeholder="Keyword">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Slug</label>
+          <p class="control">
+            <input class="input" name="slug" type="text" placeholder="Slug">
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <label class="radio">
+              <input type="radio" name="status" value="Enabled"> 啟用
+            </label>
+            <label class="radio">
+              <input type="radio" name="status" value="Disabled" checked="checked"> 停用
+            </label>
+          </p>
+        </div>
+        <div class="field is-grouped">
+          <p class="control">
+            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow">Submit</button><!--  data-reset="1" -->
+          </p>
+          <p class="control">
+            <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>
+          </p>
+        </div>
+        <input type="hidden" name="id">
+      </form>
+    </div>
+  </div>
+</div>

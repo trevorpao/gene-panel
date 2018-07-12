@@ -34,7 +34,7 @@
                     if (app.route && app.modal.slienceMode !== 1) {
                         app.route.changing = 1;
                         // TODO: move this to app.route
-                        var path = '/' + app.module.name + '/' + app.module.layout;
+                        var path = app.route.getPath('short');
                         if (app.route.mode === 'history') {
                             window.history.pushState({ ta: app.module.name, path: path }, null, app.route.base + path);
                         } else {

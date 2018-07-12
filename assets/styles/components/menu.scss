@@ -1,0 +1,61 @@
+.border-list {
+    border: solid 1px;
+    ul {
+        list-style-type: none;
+        li {
+            background-color: #DFDFDF;
+            margin: 1rem;
+            a {
+                display: inline;
+            }
+        }
+        ul.menu-list-sub {
+            list-style-type: none;
+            li {
+                position: relative;
+                left: 1rem;
+                margin-right: 2rem;
+                margin-left: 2rem;
+            }
+        }
+    }
+}
+
+.border-list-test {
+    @extend .border-list;
+    margin-bottom: 5rem;
+}
+
+.menu__pic-label {
+    margin-bottom: 0.5em;
+    font-size: 15px;
+    font-weight: 700;
+    color: #363636;
+}
+
+.gee__uploadingFile-dnd  {
+    width:100%;
+    background-color: white;
+    border: dashed;
+    padding: 3rem;
+    .box__dragndrop {
+        display: inline;
+    }
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+    label:hover {
+        cursor: pointer;
+        background-color: #EEEEEE;
+    }
+}
+
+.pic__control {
+    display: none;
+    margin-top: 0.3rem;
+}

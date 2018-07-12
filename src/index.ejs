@@ -1,11 +1,20 @@
 <%- include src/partials/header -%>
 
-  <body class="logout">
+  <body class="logout defocused">
     <%- include src/partials/navbar -%>
-    <div class="columns is-login-t">
+    <div class="columns is-gapless is-multiline is-login-t is-engrossed-f" id="app-box">
+      <div class="column is-12">
+        <div class="tabs subnavbar-menu is-hidden">
+          <ul>
+            <li><a href="javascript:;" class="item gee" data-gene="tap:loadMain" data-module="tag" data-layout="simple"><span class="icon"><i class="fa fa-tag"></i></span><span class="name">Tag</span></a></li>
+            <li><a href="javascript:;" class="item gee" data-gene="tap:loadMain" data-module="keyword" data-layout="simple"><span class="icon"><i class="fa fa-key"></i></span><span class="name">Keyword</span></a></li>
+            <li><a href="javascript:;" class="item gee" data-gene="tap:loadMain" data-module="media" data-layout="gallery"><span class="icon"><i class="fa fa-file-image-o"></i></span><span class="name">Media</span></a></li>
+          </ul>
+        </div>
+      </div>
       <%- include src/partials/toolbar -%>
       <div class="column">
-        <section class="app-main section">
+        <section class="app-main">
           <div class="app-list">
             <div class="container is-fluid">
               <div id='main-box'></div>
@@ -15,6 +24,7 @@
       </div>
     </div>
     <%- include src/partials/login -%>
+    <%- include src/partials/engrossed -%>
     <%- include src/partials/modal -%>
   </body>
 

@@ -1,0 +1,63 @@
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Press</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:addQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="level-right"></div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="gee" data-gene="init:loadList,click:reactList" data-tmpl="pressGallery" data-nopde="1">
+<div class="columns is-multiline">
+  {{props data}}<div class="column is-3">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-16by9"> <img pre-src="https://www.how-living.com/wp-content/uploads/{{:prop.pic}}" alt="Image"> </figure><!-- {{:~loadPic(prop.pic)}} -->
+        </div>
+        <div class="card-content">
+          <div class="content">{{:prop.title}}
+            <br />
+            <a href="{{:prop.slug}}" target="_blank"><small>查看</small></a>
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item"><small>{{:~formatDate(prop.online_date, 'YYYY-MM-DD')}}</small></div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <a href="javascript:;" data-func="press/loadRow" data-tmpl="pressForm" data-src="editor" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+                  <a href="javascript:;" data-func="press/delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div></div>
+      {{/props}}</div>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

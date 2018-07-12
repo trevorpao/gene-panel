@@ -1,0 +1,60 @@
+<div class="box">
+  <form class="gee" data-gene="init:staff.initForm" data-tmpl="mineForm" id="mineForm">
+    <div class="field">
+      <label class="label">Email</label>
+      <p class="control">
+        <input class="input" name="email" type="text" placeholder="Email">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Phone</label>
+      <p class="control">
+        <input class="input" name="phone" type="text" placeholder="Phone">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">上傳大頭照</label>
+    </div>
+    <div class="field fuu has-addons">
+      <p class="control">
+        <input type="text" name="avatar" class="input fuu-filename" readonly="readonly" placeholder="大頭照">
+      </p>
+      <p class="control">
+          <a class="button is-warning fuu-clear pre-gee" data-gene="click:clearFile" style="display:none;">Clear</a>
+          <div class="button is-expanded fuu-input">
+              <span class="glyphicon glyphicon-folder-open"></span>
+              <span class="fuu-input-btn">Browse</span>
+              <input type="file" accept="image/png, image/jpeg, image/gif" class="pre-gee" data-gene="change:passFile" />
+          </div>
+          <a class="button is-success fuu-upload pre-gee" data-gene="click:upload" style="display:none;">Upload</a>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">自述</label>
+      <p class="control">
+        <textarea class="textarea" placeholder="自述" name="info"></textarea>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Passwd</label>
+      <p class="control">
+        <input class="input" name="pwd" type="password" placeholder="Passwd">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Confirm Passwd</label>
+      <p class="control">
+        <input class="input" name="pwd_confirm" type="password" placeholder="Passwd">
+      </p>
+    </div>
+    <div class="field is-grouped">
+      <p class="control">
+        <button type="button" class="button is-primary pre-gee" data-gene="click:staff.setMine">Submit</button>
+      </p>
+      <p class="control">
+        <button type="button" class="button is-link pre-gee" data-gene="click:hideModal">Cancel</button>
+      </p>
+    </div>
+    <input type="hidden" name="id">
+  </form>
+</div>

@@ -1,7 +1,7 @@
 ;(function (app, gee, $) {
     'use strict';
 
-    var RoutingObj = function (u, f, t) {
+    let RoutingObj = function (u, f, t) {
         this.Params = u.split('/').filter(function(h){ return h.length > 0; });
         this.Url = u;
         this.Fn = f;
@@ -14,28 +14,29 @@
         //to check status of pages
         currentPage: '',
         mode: 'history',
-        base: '/backend',
+        base: '',
+        changing: 0,
         init: function () {
-            var state = {ta: '', path: ((app.route.mode === 'history') ? location.pathname : location.hash)};
+            let state = {ta: '', path: ((app.route.mode === 'history') ? location.pathname : location.hash)};
+            app.route.changing = 1;
             app.route.flash(state);
 
             window.onpopstate = app.route.onChange;
 
             if (app.route.mode === 'history') {
-                var path = document.location.toString();
-                app.backend.urlQuery = gee.parseUrlQuery(path);
+                let path = document.location.toString();
+                app.arena.urlQuery = gee.parseUrlQuery(path);
             } else {
-                var params_tmp = window.location.hash.substring(1);
-                var first = params_tmp.indexOf('&');
-                var hash = params_tmp.substr(0, first);
+                let params_tmp = window.location.hash.substring(1);
+                let first = params_tmp.indexOf('&');
+                let hash = params_tmp.substr(0, first);
 
-                app.backend.urlQuery = gee.parseUrlQuery('/?' + params_tmp.substr(first));
+                app.arena.urlQuery = gee.parseUrlQuery('/?' + params_tmp.substr(first));
             }
         },
 
         onChange: function(e) {
-            var targetPage = app.route.fixPath(((app.route.mode === 'history') ? location.pathname : location.hash));
-            gee.clog('---------- route onChange ------------');
+            let targetPage = app.route.fixPath(((app.route.mode === 'history') ? location.pathname : location.hash));
             if (targetPage !== app.route.currentPage && app.route.changing !==1) {
                 app.route.changing = 1;
                 app.route.flash({ta: '', path: targetPage});
@@ -43,18 +44,18 @@
         },
 
         flash: function (state) {
-            var urlToParse = app.route.fixPath(state.path);
+            let urlToParse = app.route.fixPath(state.path);
 
             if(app.route.currentPage !== urlToParse) {
                 app.route.previousPage = app.route.currentPage;
                 app.route.currentPage = urlToParse;
-                var uParams = urlToParse.split('/').filter(function (h) {
+                let uParams = urlToParse.split('/').filter(function (h) {
                     return h.length > 0;
                 });
-                var isRouteFound = 0;
-                var routeItem = null;
-                var _params = false;
-                for (var i = 0; i < app.route.routingList.length; i++) {
+                let isRouteFound = 0;
+                let routeItem = null;
+                let _params = false;
+                for (let i = 0; i < app.route.routingList.length; i++) {
                     if (isRouteFound === 0) {
                         routeItem = app.route.routingList[i];
                         if (routeItem.Params.length === uParams.length) {
@@ -73,10 +74,10 @@
         //simple utility function that return 'false' or url params
         //will parse url and fetches param values from 'location.href'
         checkParams: function (urlParams, routeParams) {
-            var paramMatchCount = 0, paramObject = {};
+            let paramMatchCount = 0, paramObject = {};
 
-            for(var i =0 ; i < urlParams.length ; i++){
-                var rtParam = routeParams[i];
+            for(let i =0 ; i < urlParams.length ; i++){
+                let rtParam = routeParams[i];
                 if(rtParam.indexOf(':') >= 0){
                     paramObject[rtParam.split(':')[1]] = urlParams[i];
                     paramMatchCount += 1;
@@ -102,17 +103,18 @@
         },
 
         loadModule: function (params) {
-            var path = '/'+ params.module +'/'+ params.layout;
-            var append = '';
-            var landing = 0;
+            let path = '/'+ params.module +'/'+ params.layout;
+            let append = '';
+
             if (typeof app.module.name === 'undefined') {
-                landing = 1;
+                app.route.landing = 1;
             }
+
+            app.route.params = null;
             app.module.pid = null;
             app.module.name = params.module;
             app.module.layout = params.layout;
 
-            gee.clog('---------- route loadModule ------------');
             if (params.id) {
                 append = '/'+ params.id;
                 app.module.pid = params.id;
@@ -120,52 +122,92 @@
 
             if (!app.route.changing) {
                 if (app.route.mode === 'history') {
-                    window.history.pushState(params, null, app.route.base + path + ((params.modal)?'/'+params.modal:'') + append);
+                    window.history.pushState(params, null, app.route.base + '/'+ params.space + path + ((params.modal)?'/'+params.modal:'') + append);
                 }
                 else {
-                    window.location.hash = path + ((params.modal)?'/'+params.modal:'') + append;
+                    window.location.hash = '/'+ params.space + path + ((params.modal)?'/'+params.modal:'') + append;
                 }
             }
 
             app.route.changing = 0;
 
-            gee.clog('---------- '+ app.module.pid +' ------');
-
-            if (params.modal) {
-                var ta = null;
-                app.modal.slienceMode = app.route.previousPage;
-                if (landing === 1) {
-                    app.loadHtml('backend'+ path, 'main-box', params.module);
-
-                    app.waitFor(function () {
-                        ta = $('.btn[data-src="'+ params.modal +'"]:eq(0)');
-                        return ta.length;
-                    }).then(function () {
-                        if (params.id) {
-                            app.module.pid = params.id;
-                        }
-
-                        app.modal.show({
-                            title: ta.attr('title'),
-                            src: 'backend/'+ app.module.name +'/'+ params.modal,
-                            size: ta.data('size') ? ta.data('size') : 'nor',
-                            canClose: false,
-                        });
-                    });
-                }
-                else {
-                    ta = $('.btn[data-src="'+ params.modal +'"]:eq(0)');
-
-                    app.modal.show({
-                        title: ta.attr('title'),
-                        src: 'backend/'+ app.module.name +'/'+ params.modal,
-                        size: ta.data('size') ? ta.data('size') : 'nor',
-                        canClose: false,
-                    });
-                }
+            if (app.space !== params.space) {
+                app.route.changing = 1;
+                app.route.params = params;
+                app.space = params.space;
+                gee.loadApp($('.navbar-menu .navbar-item[data-app="'+ params.space +'"]'));
             }
             else {
-                app.loadHtml('backend'+ path, 'main-box', params.module, app.module.pid);
+                if (params.modal) {
+                    let ta = null;
+                    // app.modal.slienceMode = app.route.previousPage;
+                    if (app.route.landing === 1) {
+                        app.route.landing = 0;
+                        app.loadHtml(path, 'main-box', params.module);
+
+                        $('#submenu-box').find('.item').removeClass('is-active').end()
+                            .find('[data-module="'+ params.module +'"]').closest('.item').addClass('is-active');
+
+                        app.waitFor(function () {
+                            ta = $('[data-src="'+ params.modal +'"]:eq(0)');
+                            return ta.length;
+                        }).then(function () {
+                            if (params.id) {
+                                app.module.pid = params.id;
+                            }
+
+                            if (ta.hasClass('engrossed-btn')) {
+                                app.body.removeClass('defocused').addClass('engrossed');
+                                app.loadHtml('/'+ app.module.name +'/'+ params.modal, 'engrossed-box', params.module, app.module.pid);
+                                $('.engrossed-app').animateIt('swoopInRight');
+                            }
+                            else {
+                                app.arena.showModal(ta.attr('title'), '/'+ app.module.name +'/'+ params.modal, (ta.data('size') ? ta.data('size') : 'nor'));
+
+                                // app.modal.show({
+                                //     title: ta.attr('title'),
+                                //     src: ''+ app.module.name +'/'+ params.modal,
+                                //     size: ta.data('size') ? ta.data('size') : 'nor',
+                                //     canClose: false,
+                                // });
+                            }
+                        });
+                    }
+                    else {
+                        if (app.body.hasClass('engrossed')) {
+                            app.loadHtml('/'+ app.module.name +'/'+ params.modal, 'engrossed-box', params.module, app.module.pid);
+                        }
+                        else {
+                            ta = $('.modal-btn[data-src="'+ params.modal +'"]:eq(0)');
+
+                            app.arena.showModal(ta.attr('title'), '/'+ app.module.name +'/'+ params.modal, (ta.data('size') ? ta.data('size') : 'nor'));
+
+                            // app.modal.show({
+                            //     title: ta.attr('title'),
+                            //     src: ''+ app.module.name +'/'+ params.modal,
+                            //     size: ta.data('size') ? ta.data('size') : 'nor',
+                            //     canClose: false,
+                            // });
+                        }
+                    }
+
+                }
+                else {
+                    app.loadHtml(path, 'main-box', params.module, app.module.pid);
+                    let cuModule = $('#submenu-box').find('.item').removeClass('is-active').end()
+                        .find('[data-module="'+ params.module +'"][data-layout="'+ params.layout +'"]');
+                    let showSidebar = cuModule.data('sidebar') || 0;
+
+                    cuModule.closest('.item').addClass('is-active');
+
+                    if (showSidebar) {
+                        app.loadHtml('/'+ params.module +'/sidebar', 'aside-box');
+                        $('#aside-box').next('.column').addClass('is-10').end().show();
+                    }
+                    else {
+                        $('#aside-box').next('.column').removeClass('is-10').end().hide();
+                    }
+                }
             }
         },
 
@@ -176,15 +218,21 @@
             }
 
             return urlToParse;
+        },
+
+        getPath: function (mode) {
+            mode = mode || 'full';
+            return '/' + app.space +'/' + app.module.name + '/' + app.module.layout +
+                ((mode === 'short') ? '' : '/' + app.module.modal + '/' + app.module.pid);
         }
     };
 
-    app.route.addRoute('/:module/:layout/:modal/:id', app.route.loadModule, '@module@layout@modal@id');
+    app.route.addRoute('/:space/:module/:layout/:modal/:id', app.route.loadModule, '@space@module@layout@modal@id');
 
-    app.route.addRoute('/:module/:layout/:id', app.route.loadModule, '@module@layout@id');
+    app.route.addRoute('/:space/:module/:layout/:id', app.route.loadModule, '@space@module@layout@id');
 
-    app.route.addRoute('/:module/:layout', app.route.loadModule, '@module@layout');
+    app.route.addRoute('/:space/:module/:layout', app.route.loadModule, '@space@module@layout');
 
-    app.route.addRoute(['/', '/:module'], function (params) {}, '@module');
+    app.route.addRoute(['/', '/:space/:module'], function (params) {}, '@space@module');
 
 }(app, gee, jQuery));

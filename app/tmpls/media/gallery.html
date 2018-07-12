@@ -1,0 +1,78 @@
+<nav class="breadcrumb">
+  <ul>
+    <li class="is-active"> <a>Media</a> </li>
+  </ul>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+
+    <div class="level-item">
+      <p class="control">
+        <div class="select" >
+          <select name="query" class="gee" data-gene="change:checkOption">
+              <option value="title~">標題</option>
+              <option value="slug~">網址</option>
+              <option value="pic~">圖片檔名</option>
+          </select>
+        </div>
+      </p>
+    </div>
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a option">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="0">New</a>
+    </p>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column level is-12">
+    <div class="level-left">
+      <p class="level-item">搜尋條件：</p>
+      <div class="tags js-query-list level-item"></div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mediaList" data-nopde="1">
+<div class="columns is-multiline">
+  {{props data}}<div class="column is-2">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3"> <img pre-src="{{:~loadPic(prop.pic)}}" alt="Image"> </figure>
+        </div>
+        <div class="card-content">{{:prop.title}}
+          <br />
+          <a href="{{:~loadPic(prop.pic)}}" target="_blank"><small>另開視窗</small></a>
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item"><small>{{:~formatDate(prop.last_ts, 'YYYY-MM-DD')}}</small></div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <a href="javascript:;" class="modal-btn" data-func="author/loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+                <a href="javascript:;" data-func="author/delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+              </div>
+            </div>
+        </div>
+      </div></div>
+      {{/props}}</div>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
+          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@
         course: {},
         errMsg: {
             'e8001': '尚未登入',
+            'e8009': '權限不足',
         },
 
         init: function () {
@@ -16,7 +17,7 @@
 
         status: function () {
             var callback = function () {
-                if (this.code !== '1') {
+                if (this.code !== 1) {
                     app.stdErr(this);
                 } else {
                     this.data = this.data || {};
@@ -41,14 +42,32 @@
         },
 
         setHtml: function () {
-            $('.my-nickname').text(app.staff.current.nickname);
-            $('.my-avatar').attr('src', app.staff.current.img);
-            $('.my-email').text(app.staff.current.email);
+            $('.js-staff-name').text(app.staff.current.name);
+            $('.js-staff-avatar').attr('src', app.staff.current.avatar);
+            $('.js-staff-email').text(app.staff.current.email);
+
+            // let priv = app.staff.parsePriv(app.staff.current.priv);
+
+            // if (priv[0] === '1') {
+            //     $('#navMenu .is-tab[data-app="cms"]').removeClass('hidden');
+            // }
+            // if (priv[7] === '1') {
+            //     $('#navMenu .is-tab[data-app="club"]').removeClass('hidden');
+            // }
+            // if (priv[3] === '1') {
+            //     $('#navMenu .is-tab[data-app="market"]').removeClass('hidden');
+            // }
+            // if (priv[2] === '1') {
+            //     $('#navMenu .is-tab[data-app="store"]').removeClass('hidden');
+            // }
+            // if (priv[5] === '1' || priv[6] === '1') {
+            //     $('#navMenu .is-tab[data-app="site"]').removeClass('hidden');
+            // }
         },
 
         login: function (data, btn) {
             var callback = function () {
-                if (this.code !== '1') {
+                if (this.code !== 1) {
                     switch (this.code) {
                         case 7100:
                         case 8202:
@@ -73,6 +92,8 @@
                     app.stdSuccess(this);
 
                     app.staff.status();
+
+                    app.arena.loadPage(app.arena.pageBox);
                 }
             };
 
@@ -81,7 +102,7 @@
 
         logout: function () {
             var callback = function () {
-                if (this.code !== '1') {
+                if (this.code !== 1) {
                     app.stdErr(this);
                 } else {
                     app.body.removeClass('login').addClass('logout');
@@ -89,6 +110,48 @@
             };
 
             gee.yell('staff/logout', {}, callback, callback, 'GET');
+        },
+
+        setMine: function (data, btn) {
+            let callback = function () {
+                app.waitFor(0.9).then(function () {
+                    app.doneBtn(btn);
+                });
+
+                if (this.code !== 1) {
+                    app.stdErr(this);
+                } else {
+                    app.stdSuccess(this);
+                    let successTxt = '已儲存成功!';
+                    app.arena.addNotification(successTxt);
+                }
+            };
+
+            gee.yell('staff/saveMine', data, callback, callback);
+        },
+
+        loadMine: function (tmpl) {
+            let callback = function () {
+                if (this.code !== 1) {
+                    app.stdErr(this);
+                } else {
+                    let row = this.data.user;
+                    let tmplName = 'staff' + tmpl;
+                    let html = app.tmplStores[tmplName].render({ item: row });
+                    $('#' + tmpl).html(html);
+
+                    app.waitFor(0.1).then(function () {
+                        gee.init();
+                    });
+                }
+            };
+
+            gee.yell('staff/status', {}, callback, callback);
+        },
+
+        parsePriv: function (priv) {
+            priv = app.baseConverter(priv, 10, 2);
+            return app.padLeft(priv, 8).split('').reverse();
         }
     };
 
@@ -108,7 +171,42 @@
     });
 
     gee.hook('staff/logout', function (me) {
-        app.staff.logout();
+        if (confirm('確認登出後台?')) {
+            app.staff.logout();
+        }
+    });
+
+    gee.hook('staff/loadMine', function (me) {
+        let size = me.data('size') ? me.data('size') : 'nor';
+        app.arena.showModal('編輯個人資料', me.data('src'), size);
+    });
+
+    gee.hook('staff.initForm', function (me) {
+        let tmpl = me.data('tmpl');
+        let box = $('#' + tmpl);
+        let tmplName = 'staff' + tmpl;
+
+        app.loadTmpl(tmplName, box);
+
+        app.staff.loadMine(tmpl);
+    });
+
+    gee.hook('staff.setMine', function (me) {
+        let form = me.closest('form');
+
+        form.find('input').each(function () {
+            if ($(this).val() === $(this).attr('placeholder')) {
+                $(this).val('');
+            }
+        });
+
+        if (!$.validatr.validateForm(form)) {
+            return false;
+        } else {
+            app.progressingBtn(me);
+            app.staff.setMine(form.serialize(), me);
+            gee.hideModal();
+        }
     });
 
 }(app, gee, jQuery));

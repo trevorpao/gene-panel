@@ -1,0 +1,95 @@
+<div class="box">
+  <form class="gee" data-gene="init:author/initForm" data-tmpl="authorForm" id="authorForm">
+    <div class="field">
+      <label class="label">網址</label>
+      <p class="control">
+        <input class="input" name="slug" type="text" placeholder="Slug">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Title</label>
+      <p class="control">
+        <input class="input" name="title" type="text" placeholder="Title">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Slogan</label>
+      <p class="control">
+        <input class="input" name="slogan" type="text" placeholder="Slogan">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Tags</label>
+      <div class="control">
+        <input type="text" multiple class="multipleSelect" name="tags" placeholder="Tags" data-url='tag/get_opts' />
+      </div>
+    </div>
+    <div class="field fuu has-addons">
+      <label class="label" style="margin-right: 1em;">封面大圖，尺寸1440x600</label>
+      <p class="control">
+        <input type="text" name="cover" class="input fuu-filename" readonly="readonly" placeholder="Cover">
+      </p>
+      <p class="control">
+        <a class="button is-warning fuu-clear pre-gee" data-gene="click:clearFile" style="display:none;">Clear</a>
+        <div class="button is-expanded fuu-input">
+          <span class="glyphicon glyphicon-folder-open"></span>
+          <span class="fuu-input-btn">Browse</span>
+          <input type="file" accept="image/png, image/jpeg, image/gif" class="pre-gee" data-gene="change:passFile" />
+        </div>
+        <a class="button is-success fuu-upload pre-gee" data-gene="click:upload" style="display:none;">Upload</a>
+      </p>
+    </div>
+    <div class="field fuu has-addons">
+      <label class="label" style="margin-right: 1em;">封面大圖(手機版)，尺寸600x600</label>
+      <p class="control">
+        <input type="text" name="cover_m" class="input fuu-filename" readonly="readonly" placeholder="Cover">
+      </p>
+      <p class="control">
+        <a class="button is-warning fuu-clear pre-gee" data-gene="click:clearFile" style="display:none;">Clear</a>
+        <div class="button is-expanded fuu-input">
+          <span class="glyphicon glyphicon-folder-open"></span>
+          <span class="fuu-input-btn">Browse</span>
+          <input type="file" accept="image/png, image/jpeg, image/gif" class="pre-gee" data-gene="change:passFile" />
+        </div>
+        <a class="button is-success fuu-upload pre-gee" data-gene="click:upload" style="display:none;">Upload</a>
+      </p>
+    </div>
+    <div class="field fuu has-addons">
+      <label class="label" style="margin-right: 1em;">作者圖，尺寸350x350</label>
+      <p class="control">
+        <input type="text" name="pic" class="input fuu-filename" readonly="readonly" placeholder="Pic">
+      </p>
+      <p class="control">
+        <a class="button is-warning fuu-clear pre-gee" data-gene="click:clearFile" style="display:none;">Clear</a>
+        <div class="button is-expanded fuu-input">
+          <span class="glyphicon glyphicon-folder-open"></span>
+          <span class="fuu-input-btn">Browse</span>
+          <input type="file" accept="image/png, image/jpeg, image/gif" class="pre-gee" data-gene="change:passFile" />
+        </div>
+        <a class="button is-success fuu-upload pre-gee" data-gene="click:upload" style="display:none;">Upload</a>
+      </p>
+    </div>
+    <div class="field">
+      <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
+      <label class="radio" for="tag-status-enabled">啟用</label>
+      <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
+      <label class="radio" for="tag-status-disabled">停用</label>
+    </div>
+    <div class="field">
+      <label class="label">Content</label>
+      <p class="control">
+        <div class="froalaEditor col-content"></div>
+        <textarea name="content" class="is-hidden"></textarea>
+      </p>
+    </div>
+    <div class="field is-grouped">
+      <p class="control">
+        <button type="button" class="button is-primary pre-gee" data-gene="click:author/setRow">Submit</button>
+      </p>
+      <p class="control">
+        <button type="button" class="button is-link pre-gee" data-gene="click:hideModal">Cancel</button>
+      </p>
+    </div>
+    <input type="hidden" name="id">
+  </form>
+</div>

@@ -18,8 +18,10 @@ module.exports = {
         vendor: [
             'jquery',
             'jquery.cookie',
-            'twbs-pagination'
-            // 'lodash'
+            'twbs-pagination',
+            'localforage',
+            'lodash',
+            'jstree'
         ],
         bundle: path.join(dirApp, 'main')
     },
@@ -40,7 +42,10 @@ module.exports = {
             // jQuery
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            localforage: 'localforage',
+            _: 'lodash',
+            moment: 'moment',
         }),
 
         new CopyWebpackPlugin([
@@ -57,7 +62,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(projectRoot, 'src/index.ejs'),
             filename: 'index.html',
-            title: 'GeneJs Panel'
+            title: 'GeneJs Panel',
+            domain: 'sense-info.co'
         })
     ],
     module: {
