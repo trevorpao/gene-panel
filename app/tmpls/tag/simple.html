@@ -63,9 +63,11 @@
       <div class="field is-grouped is-grouped-multiline gee" data-gene="init:loadList,click:reactList" data-tmpl="tagList" data-nopde="1">{{props data}}
         <div class="control">
           <div class="tags has-addons">
-            <a href="javascript:;" class="tag is-medium {{if prop.status === 'Enabled'}}is-light{{else}}is-info{{/if}}" data-func="loadRow" data-tmpl="tagForm" data-id="{{:prop.id}}">{{:prop.title}}</a>
+            <!-- <a href="javascript:;" class="tag is-medium {{if prop.status === 'Enabled'}}is-light{{else}}is-info{{/if}}" data-func="loadRow" data-tmpl="tagForm" data-id="{{:prop.id}}">{{:prop.title}}</a> -->
+            <a href="{{:~fixLink('tag/'+ prop.id +'/'+ prop.slug)}}" target="_blank" class="tag is-medium {{if prop.status === 'Enabled'}}is-light{{else}}is-info{{/if}}">{{:prop.title}}</a>
             <div class="tag is-medium is-info">
-              <a href="javascript:;" data-func="loadRow" data-tmpl="tagDetailForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
+              <!-- <a href="javascript:;" data-func="loadRow" data-tmpl="tagDetailForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a> -->
+              <a href="javascript:;" data-func="loadRow" data-tmpl="tagForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
               <button class="delete is-small" data-func="delRow" data-id="{{:prop.id}}"> </button>
             </div>
           </div>
@@ -84,9 +86,27 @@
     <div class="box">
       <form class="gee" data-gene="init:initForm" data-tmpl="tagForm" id="tagForm">
         <div class="field">
-          <label class="label">Tag</label>
+          <label class="label">中文 Tag 名</label>
           <p class="control">
-            <input class="input" name="title" type="text" placeholder="Tag">
+            <input class="input" name="lang[tw][title]" type="text" placeholder="Tag">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">英文 Tag 名</label>
+          <p class="control">
+            <input class="input" name="lang[en][title]" type="text" placeholder="Tag">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">中文相關詞</label>
+          <p class="control">
+            <textarea class="textarea" placeholder="相關詞" name="lang[tw][alias]"></textarea>
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">英文相關詞</label>
+          <p class="control">
+            <textarea class="textarea" placeholder="相關詞" name="lang[en][alias]"></textarea>
           </p>
         </div>
         <div class="field">
