@@ -36,8 +36,23 @@ import '../assets/styles/vivify.min.css';
 
 import 'styles/custom.scss';
 
-window.mainUrl = 'https://loc.sense-info.co/';
-window.apiUrl = window.mainUrl +'api/';
+
+
+if (IS_DEV) {
+    window.mainUri = 'http://f3cms.lo:8080/';
+    window.apiUri = 'http://f3cms.lo:8080/api/';
+
+    $.ajaxSetup({
+        crossDomain: true,
+        xhrFields: {
+            withCredentials: true
+        }
+    });
+} else {
+    window.mainUrl = '/';
+    window.apiUrl = window.mainUrl +'api/';
+}
+
 gee.debug = IS_DEV;
 
 import './extend';

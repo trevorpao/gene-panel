@@ -13,6 +13,8 @@ const IS_DEV = (process.env.NODE_ENV === 'dev');
 
 const imgPath = (IS_DEV === true) ? '/src/' : '/./';
 
+const domainName = (IS_DEV === true) ? 'f3cms.lo' : 'your.domain.name';
+
 module.exports = {
     entry: {
         vendor: [
@@ -63,7 +65,7 @@ module.exports = {
             template: path.join(projectRoot, 'src/index.ejs'),
             filename: 'index.html',
             title: 'GeneJs Panel',
-            domain: 'sense-info.co'
+            domain: domainName
         })
     ],
     module: {

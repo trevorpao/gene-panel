@@ -160,7 +160,7 @@
                     ele.remove();
                 }
             };
-            gee.yell(app.module.name + '/del_row', data, callback, callback);
+            gee.yell(app.module.name + '/del', data, callback, callback);
         }
     };
 

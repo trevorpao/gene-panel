@@ -7,7 +7,7 @@
   "homepage": "http://genejs.com",
   "scripts": {
     "clean": "rm -rf dist",
-    "dev": "NODE_ENV=dev webpack-dev-server --allowed-hosts .sense-info.co --port 8008 --progress --config build/webpack.config.dev.js",
+    "dev": "NODE_ENV=dev webpack-dev-server --allowed-hosts .sense-info.co,f3cms.lo --port 8008 --progress --config build/webpack.config.dev.js",
     "win_dev": "cross-env NODE_ENV=dev webpack-dev-server --port 8008 --progress --config build/webpack.config.dev.js",
     "build": "webpack -p --progress --config build/webpack.config.build.js"
   },

@@ -46,15 +46,9 @@ var App = function() {
             app.screen = (app.body.width() < that.config.detectWidth) ? 'mobile' : 'tablet';
             app.body.addClass(app.screen);
 
-            gee.apiUri = window.apiUrl +'';
-            gee.mainUri = window.mainUrl;
+            gee.mainUri = window.mainUri;
+            gee.apiUri = window.apiUri +'';
             gee.picUri = gee.mainUri.slice(0, -1);
-
-            app.editor.option.imageUploadURL = gee.apiUri + app.editor.option.imageUploadURL;
-            app.editor.option.pastedImagesUploadURL = gee.apiUri + app.editor.option.pastedImagesUploadURL;
-
-            app.editor.inlineOption.imageUploadURL = gee.apiUri + app.editor.inlineOption.imageUploadURL;
-            app.editor.inlineOption.pastedImagesUploadURL = gee.apiUri + app.editor.inlineOption.pastedImagesUploadURL;
 
             gee.init();
 
@@ -132,9 +126,30 @@ var App = function() {
 
                 if (name && name.match(/\[/g)) {
                     name = name.replace(/\[/g, '.').replace(/]/g, '');
-                }
 
-                item[name] = (name !== 'id') ? '' : 0;
+                    if (name !== 'id') {
+                        if (name.indexOf('.') !== -1) { // only support meta[column] & lang[code][column]
+                            var dp = name.split('.');
+                            if (!item[dp[0]]) {
+                                item[dp[0]] = {};
+                            }
+
+                            if (!item[dp[0]][dp[1]]) {
+                                item[dp[0]][dp[1]] = (dp.length === 2) ? '' : {};
+                            }
+
+                            if (dp.length === 3) {
+                                item[dp[0]][dp[1]][dp[2]] = '';
+                            }
+                        }
+                        else {
+                            item[name] = '';
+                        }
+                    }
+                    else {
+                        item[name] = 0;
+                    }
+                }
 
                 if (me.is(':radio')) {
                     me.closest('.field').toggleClass('pre-gee', !boolGee).attr('data-gene', 'init:setRadio')
@@ -327,6 +342,7 @@ var App = function() {
             },
             sum: function (price, qty) { return app.tmplHelpers.currency(qty * price); },
             loadPic: function (path) { return gee.picUri + path; },
+            fixLink: function (path) { return gee.mainUri + path; },
             average: function (sum, divide) { return (divide * 1 !== 0) ? Math.round(sum * 10000 / divide) / 100 : 0; },
             beforeDate: function (ts, target) {
                 var cu = moment(ts);
@@ -395,6 +411,23 @@ var App = function() {
 
         doneBtn: function (btn) {
             btn.prop('disabled', false).removeClass('is-loading'); // .find('.fa-spinner').remove();
+        },
+
+        /**
+         *
+         * http://mir.aculo.us/2011/03/09/little-helpers-a-tweet-sized-javascript-templating-engine/
+         *
+         * simple string tmpl
+         * @param  str target string
+         * @param  params object that need to be replaced
+         * @return string
+         */
+        tmpl: function(str, params) {
+            for (var item in params) {
+                str = str.replace(new RegExp('{' + item + '}', 'g'), params[item]);
+            }
+
+            return str;
         },
 
         baseConverter: function (nbasefrom, basefrom, baseto) {

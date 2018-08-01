@@ -62,7 +62,7 @@
                 }
             };
 
-            gee.yell(app.module.name + '/get_one', JSON.stringify({ id: pid }), callback, callback);
+            gee.yell(app.module.name + '/get', JSON.stringify({ id: pid }), callback, callback);
         },
 
         loadOpt: function (attr, data, selectBox, val) {
@@ -174,7 +174,7 @@
                 }
             };
 
-            gee.yell(app.module.name + '/del_row', data, callback, callback);
+            gee.yell(app.module.name + '/del', data, callback, callback);
         },
 
         renderFLDnDDataPic: (area, imgSrc) => {
@@ -271,7 +271,7 @@
         if (app.module.pid) {
             app.simple.loadRow(app.module.pid, tmpl);
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
             app.waitFor(function () {
                 return !box.is(':empty');
             }).then(function () {

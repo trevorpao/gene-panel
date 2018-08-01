@@ -20,7 +20,7 @@
                 }
             };
 
-            gee.yell(app.module.name +'/get_one', JSON.stringify({id: pid}), callback, callback);
+            gee.yell(app.module.name +'/get', JSON.stringify({id: pid}), callback, callback);
         },
 
         set: function (data, btn) {
@@ -55,7 +55,7 @@
                 }
             };
 
-            gee.yell(app.module.name + '/del_row', data, callback, callback);
+            gee.yell(app.module.name + '/del', data, callback, callback);
         },
     };
 
