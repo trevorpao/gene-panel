@@ -56,7 +56,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: path.join(dirAssets, 'images'),
-                to: path.join(dirDist, '/images')
+                to: path.join(dirDist, ((IS_DEV === true) ? '' : '/assets') + '/images')
             },
             {
                 from: path.join(dirApp, 'tmpls'),
