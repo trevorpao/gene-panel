@@ -14,7 +14,7 @@
         //to check status of pages
         currentPage: '',
         mode: 'history',
-        base: '',
+        base: (IS_DEV) ? '' : '/backend',
         changing: 0,
         init: function () {
             let state = {ta: '', path: ((app.route.mode === 'history') ? location.pathname : location.hash)};

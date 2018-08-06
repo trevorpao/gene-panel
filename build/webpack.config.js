@@ -13,7 +13,9 @@ const IS_DEV = (process.env.NODE_ENV === 'dev');
 
 const imgPath = (IS_DEV === true) ? '/src/' : '/./';
 
-const domainName = (IS_DEV === true) ? 'f3cms.lo' : 'your.domain.name';
+const basePath = (IS_DEV === true) ? '/' : '/backend/';
+
+const domainName = (IS_DEV === true) ? 'f3cms.lo' : 'f3cms.lo'; // 'your.domain.name';
 
 module.exports = {
     entry: {
@@ -37,6 +39,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             IS_DEV: IS_DEV,
+            domainName: domainName,
             imgPath: imgPath
         }),
 
@@ -65,7 +68,17 @@ module.exports = {
             template: path.join(projectRoot, 'src/index.ejs'),
             filename: 'index.html',
             title: 'GeneJs Panel',
-            domain: domainName
+            domain: domainName,
+            basePath: basePath
+        }),
+
+        new webpack.LoaderOptionsPlugin({
+            test: /\.ejs$/,
+            options: {
+                'ejs-compiled-loader': {
+                    'htmlmin': true,
+                }
+            }
         })
     ],
     module: {
@@ -109,7 +122,8 @@ module.exports = {
                         loader: 'sass-loader',
                         options: {
                             sourceMap: IS_DEV,
-                            includePaths: [dirAssets]
+                            includePaths: [dirAssets],
+                            implementation: require('dart-sass')
                         }
                     }
                 ]
@@ -117,7 +131,7 @@ module.exports = {
 
             {
                 test: /\.ejs$/,
-                loader: "ejs-compiled-loader"
+                loader: 'ejs-compiled-loader'
             },
 
             {
@@ -137,5 +151,10 @@ module.exports = {
                 }
             }
         ]
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
     }
 };

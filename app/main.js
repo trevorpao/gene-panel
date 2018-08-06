@@ -36,8 +36,6 @@ import '../assets/styles/vivify.min.css';
 
 import 'styles/custom.scss';
 
-
-
 if (IS_DEV) {
     window.mainUri = 'http://f3cms.lo:8080/';
     window.apiUri = 'http://f3cms.lo:8080/api/';
@@ -49,8 +47,8 @@ if (IS_DEV) {
         }
     });
 } else {
-    window.mainUrl = '/';
-    window.apiUrl = window.mainUrl +'api/';
+    window.mainUri = 'http://f3cms.lo:8080/';
+    window.apiUri = window.mainUri +'api/';
 }
 
 gee.debug = IS_DEV;
