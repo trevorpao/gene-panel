@@ -298,7 +298,7 @@
         if (app.module.pid) {
             app.simple.loadDetailRow(app.module.pid, tmpl);
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
             app.waitFor(function () {
                 return !box.is(':empty');
@@ -449,6 +449,7 @@
         // TODO calling API
     });
 
+    // <gee:set-option module="site"></gee:set-option>
     gee.hookTag('gee\\:set-option', function (me) {
         me.each(function (idx) {
             let cu = $(this);
@@ -459,8 +460,6 @@
             }
         });
     });
-
-    // <gee:set-option module="site"></gee:set-option>
 
     gee.hook('setSelect', function (me) {
         let option = me.data('value');
@@ -505,6 +504,35 @@
                 }
             });
         }
+    });
+
+    gee.hook('toggleTab', function (me) {
+        let cu = $(me.event.target);
+
+        if (cu.is('a')) {
+            me.find('li.is-active').removeClass('is-active');
+            $('#'+ me.data('ta')).find('.tab-box.is-active').removeClass('is-active');
+            cu.parent().addClass('is-active');
+            $('#'+ cu.data('ta')).addClass('is-active');
+        }
+    });
+
+    gee.hookTag('gee\\:upload1', (me) => {
+        me.each((idx) => {
+            let cu = $(me[idx]);
+            let param = cu.attr('data-param') ? cu.attr('data-param') : 'pic';
+            let infoText = cu.attr('info-text') ? cu.attr('info-text') : '1200*800';
+
+            let templateCode = app.tmplStores.upload1;
+            if (!templateCode) {
+                let htmlCode = '<div class="field fuu has-addons"> <p class="control"> <input type="text" name="{{:param}}" class="input fuu-filename" readonly="readonly" placeholder="{{:infoText}}"> </p> <p class="control"> <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a> <div class="button is-expanded fuu-input"> <span class="glyphicon glyphicon-folder-open"></span> <span class="fuu-input-btn">Browse</span> <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" /> </div> <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a> </p> </div>';
+
+                templateCode = $.templates(htmlCode);
+                app.tmplStores.upload1 = templateCode;
+            }
+
+            cu.replaceWith(templateCode.render({ param: param, infoText: infoText }));
+        });
     });
 
     gee.hookTag('gee\\:upload', (me) => {

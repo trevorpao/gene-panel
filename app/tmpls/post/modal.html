@@ -1,58 +1,56 @@
 <div class="box">
   <form class="gee" data-gene="init:post/initForm" data-tmpl="postForm" id="postForm">
-    <div class="field">
-      <label class="label">Site</label>
-      <p class="control">
-        <span class="select"><gee:set-option module="site" name="site_id"></gee:set-option></span>
-      </p>
-    </div>
-    <div class="field">
-      <label class="label">網址</label>
-      <p class="control">
-        <input class="input" name="slug" type="text" placeholder="Slug">
-      </p>
-    </div>
-    <div class="field">
-      <label class="label">Title</label>
-      <p class="control">
-        <input class="input" name="title" type="text" placeholder="Title">
-      </p>
-    </div>
-    <!-- <div class="field">
-      <label class="label">Tags</label>
-      <p class="control">
-        <input class="input" type="tags" name="tags" placeholder="Tags">
-      </p>
-    </div> -->
-    <div class="field fuu has-addons">
-      <p class="control">
-        <input type="text" name="pic" class="input fuu-filename" readonly="readonly" placeholder="Pic">
-      </p>
-      <p class="control">
-          <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a>
-          <div class="button is-expanded fuu-input">
-              <span class="glyphicon glyphicon-folder-open"></span>
-              <span class="fuu-input-btn">Browse</span>
-              <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" />
-          </div>
-          <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a>
-      </p>
-    </div>
-    <div class="field">
-      <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
-      <label class="radio" for="tag-status-enabled">啟用</label>
-      <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
-      <label class="radio" for="tag-status-disabled">停用</label>
-    </div>
-    <div class="field">
-      <label class="label">Content</label>
-      <p class="control">
 
-        <div class="froalaEditor col-content"></div>
-        <textarea name="content" class="is-hidden"></textarea>
-        <!-- <textarea class="textarea" placeholder="Content" name="content"></textarea> -->
-      </p>
+    <div class="tabs-content" >
+      <div class="tab-box" title="基本資訊">
+        <div class="field">
+          <label class="label">網址</label>
+          <p class="control">
+            <input class="input" name="slug" type="text" placeholder="Slug">
+          </p>
+        </div>
+        <gee:upload1 module-name="post" data-param="cover" info-text="600x600"></gee:upload1>
+        <div class="field">
+          <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
+          <label class="radio" for="tag-status-enabled">啟用</label>
+          <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
+          <label class="radio" for="tag-status-disabled">停用</label>
+        </div>
+      </div>
+      <div class="tab-box" title="中文">
+        <div class="field">
+          <label class="label">Title</label>
+          <p class="control">
+            <input class="input" name="lang[tw][title]" type="text" placeholder="Title">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Content</label>
+          <p class="control">
+            <div class="froalaEditor col-content"></div>
+            <textarea name="lang[tw][content]" class="is-hidden"></textarea>
+            <!-- <textarea class="textarea" placeholder="Content" name="content"></textarea> -->
+          </p>
+        </div>
+      </div>
+      <div class="tab-box" title="英文">
+        <div class="field">
+          <label class="label">Title</label>
+          <p class="control">
+            <input class="input" name="lang[en][title]" type="text" placeholder="Title">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Content</label>
+          <p class="control">
+            <div class="froalaEditor col-content"></div>
+            <textarea name="lang[en][content]" class="is-hidden"></textarea>
+            <!-- <textarea class="textarea" placeholder="Content" name="content"></textarea> -->
+          </p>
+        </div>
+      </div>
     </div>
+
     <div class="field is-grouped">
       <p class="control">
         <button type="button" class="button is-primary pre-gee" data-gene="click:post/setRow">Submit</button>

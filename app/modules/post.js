@@ -69,7 +69,7 @@
     });
 
     gee.hook('post/loadRow', function(me) {
-        let pid = app.module.pid || me.data('id');
+        let pid = me.data('id') || app.module.pid;
         let tmpl = me.data('tmpl');
         let tmplName = app.module.name + tmpl;
         let box = $('#'+ tmpl);
@@ -88,7 +88,7 @@
             }
         }
         else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
             app.waitFor(function () {
                 return !box.is(':empty');
             }).then(function () {
@@ -105,10 +105,10 @@
 
         app.loadTmpl(tmplName, box);
 
-        if (app.module.pid) {
+        if (app.module.pid && app.module.pid !== '0') {
             app.post.loadRow(app.module.pid, tmpl);
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
             app.waitFor(function () {
                 return !box.is(':empty');

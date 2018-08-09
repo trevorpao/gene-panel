@@ -101,6 +101,21 @@ body {
     }
 }
 
+.tabs-content {
+    .tab-box {
+        display: none;
+        &.is-active {
+            display: block;
+        }
+    }
+
+    border-bottom-color: #dbdbdb;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 
 .fuu-input {
     position: relative;

@@ -6,12 +6,13 @@
         option: {
             inlineMode: false,
             language: 'zh_tw',
-            key: 'mrumF-11eyF4H-7od1==',
+            key: 'qB1H2H1G1rA1C7C7C4E1D4B3E1B9C5eC-11F5C-9pmE2ln==',
             placeholderText: '開始打字吧~~~~~~',
             pluginsEnabled: ['fullscreen', 'image', 'link', 'wordPaste', 'codeView', 'quote', 'url', 'video'],
             imageUploadURL: 'media/editor_upload',
             imageUploadParam: 'photo',
             pasteImage: true,
+            htmlAllowComments: false,
             pastedImagesUploadURL: 'media/editor_upload',
             imageDefaultWidth: 0,
             requestWithCredentials: true,
@@ -22,7 +23,7 @@
         },
 
         inlineOption: {
-            key: 'mrumF-11eyF4H-7od1==',
+            key: 'qB1H2H1G1rA1C7C7C4E1D4B3E1B9C5eC-11F5C-9pmE2ln==',
             placeholderText: '開始打字吧~~~~~~',
             toolbarInline: true,
             toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'indent', 'outdent', '-', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'undo', 'redo'],
@@ -31,6 +32,7 @@
             pastedImagesUploadURL: 'media/editor_upload',
             imageUploadParam: 'photo',
             requestWithCredentials: true,
+            htmlAllowComments: false,
             imageDefaultWidth: 0,
             toolbarButtonsXS: null,
             toolbarButtonsSM: null,
@@ -66,6 +68,16 @@
                 });
             }
 
+            if ($('.tabs-content').length > 0) {
+                app.editor.tabRender($('.tabs-content'));
+                app.waitFor(function () {
+                    return ($('.tabs').length > 0);
+                }).then(function () {
+                    gee.init();
+                    $('.tabs-content').prev().find('a:eq(0)').trigger('click');
+                });
+            }
+
             return app.editor;
         },
 
@@ -81,6 +93,34 @@
 
         get: function (column) {
             return $(app.editor.selector + '.col-' + column).froalaEditor('html.get');
+        },
+
+        tabRender: function (me) {
+            let suffix = Math.floor(Math.random() * 999 + 1);
+            let tabs = [];
+
+            me.find('.tab-box').each(function (idx) {
+                let cu = $(this);
+                gee.clog(cu);
+                cu.attr('id', 'tab-'+ idx +'-'+ suffix);
+                tabs.push({title: cu.attr('title')});
+            });
+
+            let templateCode = app.tmplStores.tabNav;
+            if (!templateCode) {
+                let htmlCode = `<div class="tabs is-boxed gee" data-gene="click:toggleTab" data-ta="tabs-content-{{:suffix}}" data-nopde="1">
+                  <ul>{{props tabs}}
+                    <li>
+                      <a href="javascript:;" data-ta="tab-{{:#index}}-{{:#parent.parent.data.suffix}}"> {{:prop.title}} </a>
+                    </li>
+                  {{/props}}</ul>
+                </div>`;
+
+                templateCode = $.templates(htmlCode);
+                app.tmplStores.tabNav = templateCode;
+            }
+
+            me.attr('id', 'tabs-content-'+ suffix).before(templateCode.render({ tabs: tabs, suffix: suffix}));
         }
     };
 

@@ -85,30 +85,38 @@
   <div class="column is-3">
     <div class="box">
       <form class="gee" data-gene="init:initForm" data-tmpl="tagForm" id="tagForm">
-        <div class="field">
-          <label class="label">中文 Tag 名</label>
-          <p class="control">
-            <input class="input" name="lang[tw][title]" type="text" placeholder="Tag">
-          </p>
+        <div class="tabs-content" >
+          <div class="tab-box" title="中文">
+            <div class="field">
+              <label class="label">中文 Tag 名</label>
+              <p class="control">
+                <input class="input" name="lang[tw][title]" type="text" placeholder="Tag">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">中文相關詞</label>
+              <p class="control">
+                <textarea class="textarea" placeholder="相關詞" name="lang[tw][alias]"></textarea>
+              </p>
+            </div>
+          </div>
+          <div class="tab-box" title="英文">
+            <div class="field">
+              <label class="label">英文 Tag 名</label>
+              <p class="control">
+                <input class="input" name="lang[en][title]" type="text" placeholder="Tag">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">英文相關詞</label>
+              <p class="control">
+                <textarea class="textarea" placeholder="相關詞" name="lang[en][alias]"></textarea>
+              </p>
+            </div>
+
+          </div>
         </div>
-        <div class="field">
-          <label class="label">英文 Tag 名</label>
-          <p class="control">
-            <input class="input" name="lang[en][title]" type="text" placeholder="Tag">
-          </p>
-        </div>
-        <div class="field">
-          <label class="label">中文相關詞</label>
-          <p class="control">
-            <textarea class="textarea" placeholder="相關詞" name="lang[tw][alias]"></textarea>
-          </p>
-        </div>
-        <div class="field">
-          <label class="label">英文相關詞</label>
-          <p class="control">
-            <textarea class="textarea" placeholder="相關詞" name="lang[en][alias]"></textarea>
-          </p>
-        </div>
+
         <div class="field">
           <label class="label">網址</label>
           <p class="control">
