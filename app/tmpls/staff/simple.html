@@ -28,14 +28,14 @@
           <input class="input" type="text" placeholder="Find a option">
         </p>
         <p class="control">
-          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button">查詢</button>
         </p>
       </div>
     </div>
   </div>
   <div class="level-right">
     <p class="level-item">
-      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="staffForm" data-id="0">New</a>
+      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="staffForm" data-id="0">新增</a>
     </p>
   </div>
 </nav>
@@ -63,8 +63,8 @@
             <td>{{:prop.status}}</td>
             <td>{{:prop.account}}</td>
             <td class="is-icon">
-              <a href="javascript:;" data-func="loadRow" data-tmpl="staffForm" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
-              <a href="javascript:;" data-func="delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+              <a href="javascript:;" class="button is-info" data-func="loadRow" data-tmpl="staffForm" data-id="{{:prop.id}}"> 編輯 </a>
+              <a href="javascript:;" class="button is-danger" data-func="delRow" data-id="{{:prop.id}}"> 刪除 </a>
             </td>
           </tr>
         </tbody>

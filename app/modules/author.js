@@ -89,7 +89,7 @@
                 app.author.loadRow(pid, tmpl);
             }
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
             app.waitFor(function () {
                 return !box.is(':empty');
             }).then(function () {
@@ -106,10 +106,10 @@
 
         app.loadTmpl(tmplName, box);
 
-        if (app.module.pid) {
+        if (app.module.pid && app.module.pid !== '0') {
             app.author.loadRow(app.module.pid, tmpl);
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
             app.waitFor(function () {
                 return !box.is(':empty');

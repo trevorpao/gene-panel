@@ -23,7 +23,7 @@
           <input class="input" type="text" placeholder="Find a option">
         </p>
         <p class="control">
-          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button"><i class="fa fa-search"></i></button>
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:combineQuery" type="button">查詢</button>
         </p>
       </div>
     </div>
@@ -31,7 +31,7 @@
   </div>
   <div class="level-right">
     <p class="level-item">
-      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="0">New</a>
+      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="0">新增</a>
     </p>
   </div>
 </nav>
@@ -59,8 +59,8 @@
             </div>
             <div class="level-right">
               <div class="level-item">
-                <a href="javascript:;" class="modal-btn" data-func="author/loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-edit"></i></span> </a>
-                <a href="javascript:;" data-func="author/delRow" data-id="{{:prop.id}}"> <span class="icon"><i class="fa fa-close"></i></span> </a>
+                <a href="javascript:;" class="modal-btn button is-info" data-func="author/loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
+                <a href="javascript:;" class="button is-danger" data-func="author/delRow" data-id="{{:prop.id}}"> 刪除 </a>
               </div>
             </div>
         </div>

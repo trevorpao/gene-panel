@@ -3,7 +3,7 @@
     <div class="column">
 
       <div class="field">
-        <label class="label">行銷Campaign標題</label>
+        <label class="label">廣告標題</label>
         <p class="control">
           <input class="input" name="title" type="text" placeholder="Title">
         </p>
@@ -11,7 +11,7 @@
 
       <div class="field">
         <label class="label">主圖</label>
-        <gee:upload module-name="resource" data-param="cover" info-text="依版位規定" data-multiple="replace"></gee:upload>
+        <gee:upload1 module-name="adv" data-param="cover" info-text="依版位規定"></gee:upload1>
       </div>
 
       <div class="field">
@@ -19,6 +19,21 @@
         <p class="control">
           <input class="input" name="uri" type="text" placeholder="輸入完整網址">
         </p>
+      </div>
+
+      <div class="field">
+        <label class="label">文案描述</label>
+        <p class="control">
+          <textarea class="textarea" placeholder="請輸入文案內容" name="summary"></textarea>
+        </p>
+      </div>
+
+      <input type="hidden" name="id">
+    </div>
+    <div class="column is-4">
+
+      <div class="field has-text-right">
+          <button type="button" class="button is-primary pre-gee" data-gene="click:press/setRow">Submit</button>
       </div>
 
       <div class="field is-horizontal">
@@ -152,60 +167,16 @@
       </div>
 
       <div class="field">
-        <label class="label">文案描述</label>
-        <p class="control">
-          <textarea class="textarea" placeholder="請輸入文案內容" name="summary"></textarea>
-        </p>
-      </div>
-
-
-
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="field">
-            <label class="label">BuyBtn Code</label>
-            <p class="control">
-              <input class="input" name="meta[buy_btn_code]" type="text" placeholder="例：1234567">
-            </p>
-          </div>
-
-          <div class="field">
-            <label class="label">價格</label>
-            <p class="control">
-              <input class="input" name="meta[price]" type="text" placeholder="例：1234567">
-            </p>
-          </div>
-
-          <div class="field">
-            <label class="label">按鈕文案</label>
-            <p class="control">
-              <input class="input" name="meta[btn_txt]" type="text" placeholder="例：立即購買">
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <input type="hidden" name="id">
-    </div>
-    <div class="column is-4">
-
-      <div class="field is-grouped pull-right">
-        <p class="control">
-          <button type="button" class="button is-primary pre-gee" data-gene="click:press/setRow">Submit</button>
-        </p>
-      </div>
-
-      <div class="field">
         <label class="label">選擇版位</label>
         <p class="control">
-          <span class="select"><gee:set-option module="board" name="board_id"></gee:set-option></span>
+          <input class="input" name="position_id" type="text" placeholder="版位編號">
         </p>
       </div>
 
       <div class="field">
-        <label class="label">曝光排序(權重)</label>
+        <label class="label">權重</label>
         <p class="control">
-          <input class="input" name="weight" type="text" placeholder="請輸入 1-10 數字，代表版位順序"><!-- 請輸入 1-10 數字，10 為曝光機率最高 -->
+          <input class="input" name="weight" type="text" placeholder="請輸入 1-10 數字，10 為曝光機率最高">
         </p>
       </div>
 
@@ -217,28 +188,8 @@
       </div>
 
       <div class="field">
-        <label class="label">Highlight</label>
-        <p class="control">
-          <input class="input" name="meta[highlight]" type="text" placeholder="Highlight">
-        </p>
-      </div>
-
-      <div class="field">
-        <input type="radio" class="is-checkradio" name="meta[label_clr]" value="primary" id="tag-highlight-primary">
-        <label class="radio" for="tag-highlight-primary" style="color: #8DCCDF"> ▉ </label>
-        <input type="radio" class="is-checkradio" name="meta[label_clr]" value="success" id="tag-highlight-success">
-        <label class="radio" for="tag-highlight-success" style="color: #8cc4a2"> ▉ </label>
-        <input type="radio" class="is-checkradio" name="meta[label_clr]" value="sencondary" id="tag-highlight-sencondary">
-        <label class="radio" for="tag-highlight-sencondary" style="color: #e39887"> ▉ </label>
-        <input type="radio" class="is-checkradio" name="meta[label_clr]" value="danger" id="tag-highlight-danger">
-        <label class="radio" for="tag-highlight-danger" style="color: #d89098 "> ▉ </label>
-        <input type="radio" class="is-checkradio" name="meta[label_clr]" value="info" id="tag-highlight-info">
-        <label class="radio" for="tag-highlight-info" style="color: #8a8eb8"> ▉ </label>
-      </div>
-
-      <div class="field">
         <label class="label">副圖</label>
-        <gee:upload module-name="resource" data-param="background" info-text="依版位規定" data-multiple="replace"></gee:upload>
+        <gee:upload1 module-name="adv" data-param="background" info-text="依版位規定"></gee:upload1>
       </div>
 
       <div class="field">
@@ -249,29 +200,10 @@
       </div>
 
       <div class="field">
-        <label class="label">影音浮水印</label>
-        <input type="radio" class="is-checkradio" name="meta[play_icon]" value="yes" id="tag-play_icon-enabled">
-        <label class="radio" for="tag-play_icon-enabled">有</label>
-        <input type="radio" class="is-checkradio" name="meta[play_icon]" value="no" checked="checked" id="tag-play_icon-disabled">
-        <label class="radio" for="tag-play_icon-disabled">無</label>
-      </div>
-
-      <div class="field">
-        <label class="label">文案對齊</label>
-        <input type="radio" class="is-checkradio" name="meta[txt_algin]" value="left" checked="checked" id="tag-txt_algin-left">
-        <label class="radio" for="tag-txt_algin-left">左</label>
-        <input type="radio" class="is-checkradio" name="meta[txt_algin]" value="center" id="tag-txt_algin-center">
-        <label class="radio" for="tag-txt_algin-center">中</label>
-        <input type="radio" class="is-checkradio" name="meta[txt_algin]" value="right" id="tag-txt_algin-right">
-        <label class="radio" for="tag-txt_algin-right">右</label>
-      </div>
-
-      <div class="field">
-        <label class="label">文字色調</label>
-        <input type="radio" class="is-checkradio" name="meta[txt_color]" value="dark" checked="checked" id="tag-txt_color-dark">
-        <label class="radio" for="tag-txt_color-dark">深色</label>
-        <input type="radio" class="is-checkradio" name="meta[txt_color]" value="light" id="tag-txt_color-light">
-        <label class="radio" for="tag-txt_color-light">淺色</label>
+        <label class="label">按鈕文案</label>
+        <p class="control">
+          <input class="input" name="meta[btn_txt]" type="text" placeholder="例：立即購買">
+        </p>
       </div>
 
     </div>

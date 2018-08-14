@@ -576,7 +576,7 @@
             var self = this,
                 options = this.options;
 
-            return $.get(window.apiUrl + options.url, params, function (data) {
+            return $.get(window.apiUri + options.url, params, function (data) {
 
                 self.models = options.parseData ? options.parseData(data) : data;
 
