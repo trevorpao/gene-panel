@@ -15,7 +15,7 @@
 
                     app.waitFor(0.1).then(function () {
                         gee.init();
-                        app.editor.init().load('content', row.content);
+                        app.editor.init().load('content', row.lang);
                     });
                 }
             };
@@ -93,7 +93,7 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
+                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
             });
         }
     });
@@ -128,7 +128,8 @@
             }
         });
 
-        form.find('[name="content"]').val(app.editor.get('content'));
+        form.find('[name="lang[tw][content]"]').val(app.editor.get('tw-content'));
+        form.find('[name="lang[en][content]"]').val(app.editor.get('en-content'));
 
         if (!$.validatr.validateForm(form)) {
             return false;

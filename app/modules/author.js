@@ -17,7 +17,7 @@
                     app.waitFor(0.1).then(function () {
                         gee.init();
                         $('input[name="tags"]').data('initial-value', row.tags);
-                        app.editor.init().load('content', row.content);
+                        app.editor.init().load('content', row.lang);
                     });
                 }
             };
@@ -129,7 +129,8 @@
             }
         });
 
-        form.find('[name="content"]').val(app.editor.get('content'));
+        form.find('[name="lang[tw][content]"]').val(app.editor.get('tw-content'));
+        form.find('[name="lang[en][content]"]').val(app.editor.get('en-content'));
 
         if (!$.validatr.validateForm(form)) {
             return false;

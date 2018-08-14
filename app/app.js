@@ -341,7 +341,15 @@ var App = function() {
                 return '<span class="' + cls + '"></span>' + str + '';
             },
             sum: function (price, qty) { return app.tmplHelpers.currency(qty * price); },
-            loadPic: function (path) { return gee.picUri + path; },
+            loadPic: function (path, width, height) {
+                if (!width) {
+                    return gee.picUri + path;
+                }
+                else {
+                    var tmp = path.split('.');
+                    return gee.picUri + tmp[0] +'_'+ width +'x'+ height  +'.'+ tmp[1];
+                }
+            },
             fixLink: function (path) { return gee.mainUri + path; },
             average: function (sum, divide) { return (divide * 1 !== 0) ? Math.round(sum * 10000 / divide) / 100 : 0; },
             beforeDate: function (ts, target) {

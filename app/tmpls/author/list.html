@@ -51,24 +51,30 @@
     <div class="gee" data-gene="init:loadList,click:reactList" data-tmpl="authorList" data-nopde="1">
       <div class="columns is-multiline">
         {{props data}}
-        <div class="column is-2">
+        <div class="column is-3">
           <div class="card">
             <div class="card-image">
-              <figure class="image is-4by3"> <img pre-src="{{:~loadPic(prop.pic)}}" alt="Image"> </figure>
-              <!-- {{:~loadPic(prop.pic)}} -->
+              <figure class="image is-4by3"> <img pre-src="{{:~loadPic(prop.cover, 400, 300)}}" alt="Image"> </figure>
+              <!-- {{:~loadPic(prop.cover)}} -->
             </div>
             <div class="card-content">
               <div class="content">{{:prop.title}}
                 <br />
-                <a href="https://stage.how-living.com/author/{{:prop.slug}}" target="_blank"><small>{{:prop.slug}}</small></a>
+                <a href="{{:~fixLink('author/'+ prop.slug)}}" target="_blank"><small>{{:prop.slug}}</small></a>
                 <nav class="level">
                   <div class="level-left">
                     <div class="level-item"><small>{{:~formatDate(prop.last_ts, 'YYYY-MM-DD')}}</small></div>
                   </div>
                   <div class="level-right">
                     <div class="level-item">
-                      <a href="javascript:;" class="modal-btn button is-info" data-func="author/loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
-                      <a href="javascript:;" class="button is-danger" data-func="author/delRow" data-id="{{:prop.id}}"> 刪除 </a>
+                      <div class="field has-addons">
+                        <p class="control">
+                          <a href="javascript:;" class="modal-btn button is-info" data-func="author/loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
+                        </p>
+                        <p class="control">
+                          <a href="javascript:;" class="button is-danger" data-func="author/delRow" data-id="{{:prop.id}}"> 刪除 </a>
+                        </p>
+                      </div>
                     </div>
                   </div>
               </div>

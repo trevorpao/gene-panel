@@ -82,11 +82,22 @@
         },
 
         load: function (column, content) {
-            app.waitFor(function () {
-                return ($(app.editor.selector + '.col-' + column).length > 0);
-            }).then(function () {
-                $(app.editor.selector + '.col-' + column).froalaEditor('html.set', content);
-            });
+            if (_.isObject(content)) {
+                _.map(content, function (row, idx) {
+                    app.waitFor(function () {
+                        return ($(app.editor.selector + '.col-'+ idx +'-' + column).length > 0);
+                    }).then(function () {
+                        $(app.editor.selector + '.col-'+ idx +'-' + column).froalaEditor('html.set', row[column]);
+                    });
+                });
+            }
+            else {
+                app.waitFor(function () {
+                    return ($(app.editor.selector + '.col-' + column).length > 0);
+                }).then(function () {
+                    $(app.editor.selector + '.col-' + column).froalaEditor('html.set', content);
+                });
+            }
 
             return app.editor;
         },

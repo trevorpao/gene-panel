@@ -43,8 +43,8 @@
 
                         gee.init();
                         app.editor.init();
-                        if (row.content) {
-                            app.editor.load('content', row.content);
+                        if (row.lang.tw.content) {
+                            app.editor.load('content', row.lang);
                         }
 
                         // initialize content data for upload module pic preview
@@ -254,8 +254,8 @@
                 gee.init();
                 app.editor.init();
 
-                if (row.content) {
-                    app.editor.load('content', row.content);
+                if (row.lang.tw.content) {
+                    app.editor.load('content', row.lang);
                 }
             });
         }
@@ -276,7 +276,7 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
+                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
             });
         }
 
@@ -304,7 +304,7 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
+                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
             });
         }
     });
@@ -321,8 +321,9 @@
             }
         });
 
-        if (form.find('.col-content').length > 0) {
-            form.find('[name="content"]').val(app.editor.get('content'));
+        if (form.find('.col-tw-content').length > 0) {
+            form.find('[name="lang[tw][content]"]').val(app.editor.get('tw-content'));
+            form.find('[name="lang[en][content]"]').val(app.editor.get('en-content'));
         }
 
         if (!$.validatr.validateForm(form)) {
@@ -525,7 +526,7 @@
 
             let templateCode = app.tmplStores.upload1;
             if (!templateCode) {
-                let htmlCode = '<div class="field fuu has-addons"> <p class="control"> <input type="text" name="{{:param}}" class="input fuu-filename" readonly="readonly" placeholder="{{:infoText}}"> </p> <p class="control"> <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a> <div class="button is-expanded fuu-input"> <span class="glyphicon glyphicon-folder-open"></span> <span class="fuu-input-btn">Browse</span> <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" /> </div> <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a> </p> </div>';
+                let htmlCode = '<div class="field fuu has-addons"> <p class="control"> <input type="text" name="{{:param}}" class="input fuu-filename" readonly="readonly" placeholder="{{:infoText}}"> </p> <p class="control"> <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a> </p> <div class="button is-expanded fuu-input"> <span class="glyphicon glyphicon-folder-open"></span> <span class="fuu-input-btn">Browse</span> <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" /> </div> <p class="control"> <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a> </p> </div>';
 
                 templateCode = $.templates(htmlCode);
                 app.tmplStores.upload1 = templateCode;

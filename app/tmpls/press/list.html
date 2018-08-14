@@ -83,7 +83,7 @@
               <br>
               {{:~formatDate(prop.online_date, 'YYYY-MM-DD')}}
             </td>
-            <td><a href="https://stage.how-living.com/p/{{:prop.id}}" target="_blank" class="is-pulled-right"> <span class="icon"><i class="fa fa-share-square-o"></i></span> </a>
+            <td><a href="{{:~fixLink('p/'+prop.id)}}" target="_blank" class="is-pulled-right"> <span class="icon"><i class="fa fa-share-square-o"></i></span> </a>
             </td>
             <td><div class="ellipsis" style=" width: 70px;">{{:prop.account}}</div></td>
             <td> <div class="tags" style="width: 25vw;"> {{props prop.tags}} <span class="tag is-info"> {{:prop.title}} </span> {{/props}} </div> </td>

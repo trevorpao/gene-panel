@@ -201,7 +201,7 @@ a:hover {
     color: #fff;
 }
 .button.fuu-input{
-    border-radius:0 6px 6px 0;
+    border-radius:0;
 }
 
 .subnavbar-menu,
@@ -280,12 +280,7 @@ a:hover {
     font-size:1em !important;
     color:#363636;
 }
-.image.is-4by3{
-    padding-top:100%;
-    img{
-    height:auto;
-    }
-}
+
 .gallery .content{
     padding: 0 10px 5px 10px;
 }
