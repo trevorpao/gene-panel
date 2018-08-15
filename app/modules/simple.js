@@ -37,12 +37,10 @@
                         if (row.tags) {
                             $('input[name="tags"]').data('initial-value', row.tags).val(_.map(row.tags, 'id').join());
                         }
-                        if (row.teachers) {
-                            $('input[name="teachers"]').data('initial-value', row.teachers).val(_.map(row.teachers, 'id').join());
-                        }
 
                         gee.init();
                         app.editor.init();
+
                         if (row.lang.tw.content) {
                             app.editor.load('content', row.lang);
                         }

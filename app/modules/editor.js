@@ -39,22 +39,12 @@
             toolbarButtonsMD: null
         },
 
-        init: function () {
-            if ($('.froalaEditor').length > 0) {
-                app.editor.selector = '.froalaEditor';
-                $('.froalaEditor').froalaEditor(app.editor.option)
-                .on('froalaEditor.image.inserted', function (e, editor, $img) {
-                    $img.addClass('img-responsive');
-                });
-            }
+        selector: '.froalaEditor',
 
-            if ($('.froalaInlineEditor').length > 0) {
-                app.editor.selector = '.froalaInlineEditor';
-                $('.froalaInlineEditor').froalaEditor(app.editor.inlineOption)
-                .on('froalaEditor.image.inserted', function (e, editor, $img) {
-                    $img.addClass('img-responsive');
-                });
-            }
+        init: function (row) {
+            $(app.editor.selector).each(function () {
+                app.editor.initFroala($(this), row);
+            });
 
             if ($('.multipleSelect').length > 0) {
                 $('.multipleSelect').fastselect();
@@ -81,29 +71,46 @@
             return app.editor;
         },
 
-        load: function (column, content) {
-            if (_.isObject(content)) {
-                _.map(content, function (row, idx) {
-                    app.waitFor(function () {
-                        return ($(app.editor.selector + '.col-'+ idx +'-' + column).length > 0);
-                    }).then(function () {
-                        $(app.editor.selector + '.col-'+ idx +'-' + column).froalaEditor('html.set', row[column]);
-                    });
-                });
+        initFroala: function ($elem, row) {
+            var opt = app.editor.option;
+            var param = $elem.data('param');
+            var val = '';
+
+            if ($elem.data('inline') === '1') {
+                opt = app.editor.inlineOption;
             }
-            else {
-                app.waitFor(function () {
-                    return ($(app.editor.selector + '.col-' + column).length > 0);
-                }).then(function () {
-                    $(app.editor.selector + '.col-' + column).froalaEditor('html.set', content);
-                });
+            $elem.froalaEditor(opt)
+            .on('froalaEditor.image.inserted', function (e, editor, $img) {
+                $img.addClass('img-responsive');
+            });
+
+            param = param.replace(/\[/g, '.').replace(/]/g, '');
+
+            if (row) {
+                if (param.indexOf('.') !== -1) { // only support meta[column] & lang[code][column]
+                    var dp = param.split('.');
+                    if (row[dp[0]] && row[dp[0]][dp[1]]) {
+                        if (dp.length === 3) {
+                            val = row[dp[0]][dp[1]][dp[2]];
+                        }
+                        else {
+                            val = row[dp[0]][dp[1]];
+                        }
+                    }
+                }
+                else {
+                    val = row[param];
+                }
             }
 
-            return app.editor;
+            $elem.froalaEditor('html.set', val);
         },
 
-        get: function (column) {
-            return $(app.editor.selector + '.col-' + column).froalaEditor('html.get');
+        passVal: function (form) {
+            form.find(app.editor.selector).each(function () {
+                var uid = $(this).data('uid');
+                $(uid).val($(this).froalaEditor('html.get'));
+            });
         },
 
         tabRender: function (me) {
@@ -134,5 +141,25 @@
             me.attr('id', 'tabs-content-'+ suffix).before(templateCode.render({ tabs: tabs, suffix: suffix}));
         }
     };
+
+    // <gee:editor data-param="lang[tw][content]" data-inline="0"></gee:editor>
+    gee.hookTag('gee\\:editor', (me) => {
+        me.each((idx) => {
+            let cu = $(me[idx]);
+            let param = cu.attr('data-param') ? cu.attr('data-param') : 'content';
+            let inline = cu.attr('data-inline') ? cu.attr('data-inline') : '0';
+            let uniqid = 'feditor-' + Math.floor(Math.random() * 999 + 1);
+
+            let templateCode = app.tmplStores.editor;
+            if (!templateCode) {
+                let htmlCode = '<div class="froalaEditor" data-uid="#{{:uniqid}}" data-param="{{:param}}" data-inline="{{:inline}}"></div><textarea name="{{:param}}" class="is-hidden" id="{{:uniqid}}" ></textarea>';
+
+                templateCode = $.templates(htmlCode);
+                app.tmplStores.editor = templateCode;
+            }
+
+            cu.replaceWith(templateCode.render({ param: param, inline: inline, uniqid: uniqid }));
+        });
+    });
 
 }(app, gee, jQuery));

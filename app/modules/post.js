@@ -15,7 +15,7 @@
 
                     app.waitFor(0.1).then(function () {
                         gee.init();
-                        app.editor.init().load('content', row.lang);
+                        app.editor.init(row);
                     });
                 }
             };
@@ -93,7 +93,7 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
+                app.editor.init();
             });
         }
     });
@@ -114,7 +114,7 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
+                app.editor.init();
             });
         }
     });
@@ -128,8 +128,7 @@
             }
         });
 
-        form.find('[name="lang[tw][content]"]').val(app.editor.get('tw-content'));
-        form.find('[name="lang[en][content]"]').val(app.editor.get('en-content'));
+        app.editor.passVal(form);
 
         if (!$.validatr.validateForm(form)) {
             return false;

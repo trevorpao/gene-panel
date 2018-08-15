@@ -28,7 +28,7 @@
                         $('input[name="tags"]').data('initial-value', row.tags).val(_.map(row.tags, 'id').join());
                         $('input[name="authors"]').data('initial-value', row.authors).val(_.map(row.authors, 'id').join());
                         $('input[name="relateds"]').data('initial-value', row.relateds).val(_.map(row.relateds, 'id').join());
-                        app.editor.init().load('content', row.content);
+                        app.editor.init(row);
 
                         // initialize content data for upload module pic preview
                         let dataParams = app.upload.checkDataParam();
@@ -180,7 +180,7 @@
                     $('.no-kol').addClass('hidden');
                 }
                 gee.init();
-                app.editor.init().load('content', '');
+                app.editor.init();
             });
         }
     });
@@ -194,7 +194,7 @@
             }
         });
 
-        form.find('[name="content"]').val(app.editor.get('content'));
+        app.editor.passVal(form);
 
         if (!$.validatr.validateForm(form)) {
             return false;

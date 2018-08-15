@@ -15,7 +15,6 @@
 
                     app.waitFor(0.1).then(function () {
                         gee.init();
-                        app.editor.init().load('content', row.content);
                     });
                 }
             };
@@ -90,7 +89,6 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
             });
         }
     });
@@ -111,7 +109,6 @@
                 return !box.is(':empty');
             }).then(function () {
                 gee.init();
-                app.editor.init().load('content', '');
             });
         }
     });
@@ -124,8 +121,6 @@
                 $(this).val('');
             }
         });
-
-        form.find('[name="content"]').val(app.editor.get('content'));
 
         if (!$.validatr.validateForm(form)) {
             return false;
