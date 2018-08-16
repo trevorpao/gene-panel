@@ -167,20 +167,19 @@
 
         app.loadTmpl(tmplName, box);
 
-        if (app.module.pid) {
+        if (app.module.pid && app.module.pid !== '0') {
             app.press.loadRow(app.module.pid, tmpl);
         } else {
-            app.arena.renderBox(box, { item: { id: 0 } }, 1);
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
-            app.waitFor(function () {
-                return !box.is(':empty');
-            }).then(function () {
+            app.waitFor(0.1).then(function () {
                 let priv = app.staff.parsePriv(app.staff.current.priv);
                 if (priv[1] !== '1') {
                     $('.no-kol').addClass('hidden');
                 }
                 gee.init();
                 app.editor.init();
+                $('[name="online_date"]').val(moment().add(1, 'days').format('YYYY-MM-DD'));
             });
         }
     });
