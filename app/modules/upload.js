@@ -371,4 +371,75 @@
         app.upload.setUpDnD(dndArea, moduleName, multiple);
     });
 
+    gee.hook('largeclickarea', function (me) {
+        let target = $(me.event.target)
+        let selectName = target.attr('value') ? target.attr('name') + '-all' : me.find('input[type=checkbox]').attr('name') + '-all';
+        let checkedEle = target.attr('value') ? target : me.find('input[type=checkbox]');
+
+        if (!target.attr('value') && !target.is('a')) {
+            me.find('input[type=checkbox]').each(function (index, c) {
+                $(c).prop('checked', !$(c).prop("checked"));
+            });
+        }
+
+        // synchonized check-all behavior
+        let checkallEle = $(`input[name=${selectName}]`);
+        if (checkallEle.is(':checked') && !checkedEle.is(":checked")) {
+            checkallEle.prop('checked', false);
+        } else if (!checkallEle.is(':checked') && checkedEle.is(':checked')) {
+            let result = true;
+            let checkboxes = $('tbody input[type="checkbox"]');
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (!$(checkboxes[i]).is(":checked")) {
+                    result = false;
+                    break;
+                }
+            }
+
+            if (result) {
+                checkallEle.prop('checked', true);
+            }
+        }
+    });
+
+    gee.hookTag('gee\\:upload1', (me) => {
+        me.each((idx) => {
+            let cu = $(me[idx]);
+            let param = cu.attr('data-param') ? cu.attr('data-param') : 'pic';
+            let infoText = cu.attr('info-text') ? cu.attr('info-text') : '1200*800';
+
+            let templateCode = app.tmplStores.upload1;
+            if (!templateCode) {
+                let htmlCode = '<div class="field fuu has-addons"> <p class="control"> <input type="text" name="{{:param}}" class="input fuu-filename" readonly="readonly" placeholder="{{:infoText}}"> </p> <p class="control"> <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a> </p> <div class="button is-expanded fuu-input"> <span class="glyphicon glyphicon-folder-open"></span> <span class="fuu-input-btn">Browse</span> <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" /> </div> <p class="control"> <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a> </p> </div>';
+
+                templateCode = $.templates(htmlCode);
+                app.tmplStores.upload1 = templateCode;
+            }
+
+            cu.replaceWith(templateCode.render({ param: param, infoText: infoText }));
+        });
+    });
+
+    gee.hookTag('gee\\:upload', (me) => {
+        me.each((idx) => {
+            let cu = $(me[idx]);
+            let moduleName = cu.attr('module-name');
+            let multiple = cu.attr('data-multiple');
+            let param = cu.attr('data-param') ? cu.attr('data-param') : 'pic';
+            let infoText = cu.attr('info-text') ? cu.attr('info-text') : '1200*800';
+
+            let templateCode = app.tmplStores.upload;
+            if (!templateCode) {
+                let htmlCode = `<div class="gee__uploadingFile-dnd"><input type="file" accept="image/png, image/jpeg, image/gif" class="inputfile pre-gee" data-gene="change:uploadingFile" module={{:module}} data-multiple={{:multiple}} data-param={{:param}} /><label for="file"><div class="pre-gee" data-gene="init:upload/dndUploading,click:upload/uploading" module={{:module}} data-multiple={{:multiple}} data-param={{:param}}><div class="file__loading-text"><i class="fa fa-cloud-upload" aria-hidden="true"></i><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here (NOTE:{{:infoText}})</span>.</div><div class="file__uploading-progressbar">Uploading...</div></div></label></div>`;
+
+                htmlCode = htmlCode.replace(/pre-gee/g, 'gee');
+                templateCode = $.templates(htmlCode);
+                app.tmplStores.upload = templateCode;
+            }
+
+            cu.replaceWith(templateCode.render({ module: moduleName, multiple: multiple, param: param, infoText: infoText }));
+        });
+    });
+
 }(app, gee, jQuery));

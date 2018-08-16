@@ -26,8 +26,8 @@
                     app.arena.renderBox($('#' + tmpl), { item: row }, 1);
 
                     // dealing with fileUploaidngDnd
-                    if (row.pic) {
-                        let imgSrc = row.pic;
+                    if (row.cover) {
+                        let imgSrc = row.cover;
                         let targetArea = $('.gee__uploadingFile-dnd > input');
                         app.simple.renderFLDnDDataPic(targetArea, imgSrc);
                     }
@@ -39,11 +39,7 @@
                         }
 
                         gee.init();
-                        app.editor.init();
-
-                        if (row.lang.tw.content) {
-                            app.editor.load('content', row.lang);
-                        }
+                        app.editor.init(row);
 
                         // initialize content data for upload module pic preview
                         let dataParams = app.upload.checkDataParam();
@@ -89,34 +85,9 @@
             gee.yell(attr.module + '/get_opts', JSON.stringify(data), callback, callback);
         },
 
-        loadDetailRow: function (pid, tmpl) {
-            let callback = function () {
-                app.module.pid = null;
-                if (this.code !== 1) {
-                    app.stdErr(this);
-                } else {
-                    let row = this.data;
-
-                    app.arena.renderBox($('#' + tmpl), { item: row }, 1);
-
-                    app.waitFor(0.1).then(function () {
-                        if (row.tags) {
-                            $('input[name="tags"]').data('initial-value', row.tags).val(_.map(row.tags, 'id').join());
-                        }
-
-                        gee.init();
-                        app.editor.init();
-                    });
-                }
-            };
-
-            gee.yell(app.module.name + '/get_detail', JSON.stringify({ parent_id: pid }), callback, callback);
-        },
-
         set: function (data, btn) {
             let callback = function () {
-
-                app.waitFor(0.9).then(function () {
+                app.waitFor(0.9).then(function () { // for user's feeling it
                     app.doneBtn(btn);
                 });
 
@@ -138,28 +109,6 @@
             gee.yell(app.module.name + '/save', data, callback, callback);
         },
 
-        setDetail: function (data, btn) {
-            let callback = function () {
-                app.waitFor(0.9).then(function () {
-                    app.doneBtn(btn);
-                });
-                if (this.code !== 1) {
-                    app.stdErr(this);
-                } else {
-                    app.stdSuccess(this);
-                    app.arena.loadPage(app.arena.pageBox);
-                    let successTxt = '已儲存成功!';
-                    if (data.indexOf('id=0') !== -1) {
-                        btn.closest('form')[0].reset();
-                        successTxt = '已新增成功!';
-                    }
-                    app.arena.addNotification(successTxt);
-                }
-            };
-
-            gee.yell(app.module.name + '/saveDetail', data, callback, callback);
-        },
-
         del: function (data, btn) {
             let callback = function () {
                 if (this.code !== 1) {
@@ -168,7 +117,7 @@
                     app.stdSuccess(this);
                     btn.closest('tr, .loop-item').remove();
 
-                    btn.closest('').remove();
+                    btn.closest('').remove(); // TODO: make sure what is the reason
                 }
             };
 
@@ -216,9 +165,12 @@
     });
 
     gee.hook('loadRow', function (me, tmplNameRef) {
-        let pid = app.module.pid || me.data('id');
-        // NOTE : add templName input to expand the functinalities(also add the complexity)
-        let tmpl = tmplNameRef ? tmplNameRef : me.data('tmpl');
+        let pid = me.data('id');
+        let tmpl = me.data('tmpl');
+        if (tmplNameRef) { // NOTE : add templName input to expand the functinalities(also add the complexity) -- for menu.js:65
+            pid = app.module.pid;
+            tmpl = tmplNameRef;
+        }
         let tmplName = app.module.name + tmpl;
         let box = $('#' + tmpl);
 
@@ -228,33 +180,17 @@
                 app.module.pid = pid;
                 app.module.modal = me.data('src');
                 var path = app.route.getPath();
-
                 app.route.flash({ ta: app.module.name, path: path });
                 // app.arena.showModal(me.data('title'), me.data('src'), size);
             } else {
                 app.simple.loadRow(pid, tmpl);
             }
         } else {
-            var row = app.moduleItems[tmplName];
-            gee.clog(row);
-            app.arena.renderBox(box, { item: row }, 1);
-            app.waitFor(function () {
-                return !box.is(':empty');
-            }).then(function () {
-                if (row.tags) {
-                    $('input[name="tags"]').data('initial-value', row.tags).val(_.map(row.tags, 'id').join());
-                }
+            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
-                if (row.teachers) {
-                    $('input[name="teachers"]').data('initial-value', row.teachers).val(_.map(row.teachers, 'id').join());
-                }
-
+            app.waitFor(0.1).then(function () {
                 gee.init();
                 app.editor.init();
-
-                if (row.lang.tw.content) {
-                    app.editor.load('content', row.lang);
-                }
             });
         }
     });
@@ -266,15 +202,14 @@
 
         app.loadTmpl(tmplName, box);
 
-        if (app.module.pid) {
+        if (app.module.pid && app.module.pid !== '0') {
             app.simple.loadRow(app.module.pid, tmpl);
         } else {
             app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
-            app.waitFor(function () {
-                return !box.is(':empty');
-            }).then(function () {
+
+            app.waitFor(0.1).then(function () {
                 gee.init();
-                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
+                app.editor.init();
             });
         }
 
@@ -283,32 +218,6 @@
             app[app.module.name].uploadFiles = [];
         }
     });
-
-    gee.hook('initDetailForm', function (me) {
-        let tmpl = me.data('tmpl');
-        let box = $('#' + tmpl);
-        let tmplName = app.module.name + tmpl;
-
-        app.loadTmpl(tmplName, box);
-
-        // gee.clog('-------------------------------------- gee.initForm');
-
-        if (app.module.pid) {
-            app.simple.loadDetailRow(app.module.pid, tmpl);
-        } else {
-            app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
-
-            app.waitFor(function () {
-                return !box.is(':empty');
-            }).then(function () {
-                gee.init();
-                app.editor.init().load('content', {tw: {content: ''}, en: {content: ''}});
-            });
-        }
-    });
-
-    // NOTE: fetch common form-verify from setRow&setRowV2(not finished)
-    gee.hook('generalVerifyForm', (jForm) => {});
 
     gee.hook('setRow', function (me) {
         let form = me.closest('form');
@@ -319,34 +228,13 @@
             }
         });
 
-        if (form.find('.col-tw-content').length > 0) {
-            form.find('[name="lang[tw][content]"]').val(app.editor.get('tw-content'));
-            form.find('[name="lang[en][content]"]').val(app.editor.get('en-content'));
-        }
+        app.editor.passVal(form);
 
         if (!$.validatr.validateForm(form)) {
             return false;
         } else {
             app.progressingBtn(me);
             app.simple.set(form.serialize(), me);
-            gee.hideModal();
-        }
-    });
-
-    gee.hook('setDetailRow', function (me) {
-        let form = me.closest('form');
-
-        form.find('input').each(function () {
-            if ($(this).val() === $(this).attr('placeholder')) {
-                $(this).val('');
-            }
-        });
-
-        if (!$.validatr.validateForm(form)) {
-            return false;
-        } else {
-            app.progressingBtn(me);
-            app.simple.setDetail(form.serialize(), me);
             gee.hideModal();
         }
     });
@@ -368,38 +256,6 @@
                 ta.event = me.event;
                 gee.exe(func, ta);
                 me.event.preventDefault();
-            }
-        }
-    });
-
-    gee.hook('largeclickarea', function (me) {
-        let target = $(me.event.target)
-        let selectName = target.attr('value') ? target.attr('name') + '-all' : me.find('input[type=checkbox]').attr('name') + '-all';
-        let checkedEle = target.attr('value') ? target : me.find('input[type=checkbox]');
-
-        if (!target.attr('value') && !target.is('a')) {
-            me.find('input[type=checkbox]').each(function (index, c) {
-                $(c).prop('checked', !$(c).prop("checked"));
-            });
-        }
-
-        // synchonized check-all behavior
-        let checkallEle = $(`input[name=${selectName}]`);
-        if (checkallEle.is(':checked') && !checkedEle.is(":checked")) {
-            checkallEle.prop('checked', false);
-        } else if (!checkallEle.is(':checked') && checkedEle.is(':checked')) {
-            let result = true;
-            let checkboxes = $('tbody input[type="checkbox"]');
-
-            for (let i = 0; i < checkboxes.length; i++) {
-                if (!$(checkboxes[i]).is(":checked")) {
-                    result = false;
-                    break;
-                }
-            }
-
-            if (result) {
-                checkallEle.prop('checked', true);
             }
         }
     });
@@ -514,45 +370,6 @@
             cu.parent().addClass('is-active');
             $('#'+ cu.data('ta')).addClass('is-active');
         }
-    });
-
-    gee.hookTag('gee\\:upload1', (me) => {
-        me.each((idx) => {
-            let cu = $(me[idx]);
-            let param = cu.attr('data-param') ? cu.attr('data-param') : 'pic';
-            let infoText = cu.attr('info-text') ? cu.attr('info-text') : '1200*800';
-
-            let templateCode = app.tmplStores.upload1;
-            if (!templateCode) {
-                let htmlCode = '<div class="field fuu has-addons"> <p class="control"> <input type="text" name="{{:param}}" class="input fuu-filename" readonly="readonly" placeholder="{{:infoText}}"> </p> <p class="control"> <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a> </p> <div class="button is-expanded fuu-input"> <span class="glyphicon glyphicon-folder-open"></span> <span class="fuu-input-btn">Browse</span> <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" /> </div> <p class="control"> <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a> </p> </div>';
-
-                templateCode = $.templates(htmlCode);
-                app.tmplStores.upload1 = templateCode;
-            }
-
-            cu.replaceWith(templateCode.render({ param: param, infoText: infoText }));
-        });
-    });
-
-    gee.hookTag('gee\\:upload', (me) => {
-        me.each((idx) => {
-            let cu = $(me[idx]);
-            let moduleName = cu.attr('module-name');
-            let multiple = cu.attr('data-multiple');
-            let param = cu.attr('data-param') ? cu.attr('data-param') : 'pic';
-            let infoText = cu.attr('info-text') ? cu.attr('info-text') : '1200*800';
-
-            let templateCode = app.tmplStores.upload;
-            if (!templateCode) {
-                let htmlCode = `<div class="gee__uploadingFile-dnd"><input type="file" accept="image/png, image/jpeg, image/gif" class="inputfile pre-gee" data-gene="change:uploadingFile" module={{:module}} data-multiple={{:multiple}} data-param={{:param}} /><label for="file"><div class="pre-gee" data-gene="init:upload/dndUploading,click:upload/uploading" module={{:module}} data-multiple={{:multiple}} data-param={{:param}}><div class="file__loading-text"><i class="fa fa-cloud-upload" aria-hidden="true"></i><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here (NOTE:{{:infoText}})</span>.</div><div class="file__uploading-progressbar">Uploading...</div></div></label></div>`;
-
-                htmlCode = htmlCode.replace(/pre-gee/g, 'gee');
-                templateCode = $.templates(htmlCode);
-                app.tmplStores.upload = templateCode;
-            }
-
-            cu.replaceWith(templateCode.render({ module: moduleName, multiple: multiple, param: param, infoText: infoText }));
-        });
     });
 
 }(app, gee, jQuery));

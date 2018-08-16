@@ -59,13 +59,10 @@ import './modules/route';
 import './modules/arena';
 import './modules/editor';
 import './modules/upload';
-import './modules/query';
+import './modules/query'; // for render query string
 import './modules/staff';
-import './modules/simple';
-import './modules/post';
+import './modules/simple'; // basic CRUD
 import './modules/press';
-import './modules/author';
-import './modules/media';
 import './modules/edm';
 import './modules/menu';
 
