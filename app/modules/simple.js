@@ -27,9 +27,10 @@
 
                     // dealing with fileUploaidngDnd
                     if (row.cover) {
-                        let imgSrc = row.cover;
-                        let targetArea = $('.gee__uploadingFile-dnd > input');
-                        app.simple.renderFLDnDDataPic(targetArea, imgSrc);
+                        app.simple.renderFLDnDDataPic(row, 'cover');
+                    }
+                    if (row.pic) {
+                        app.simple.renderFLDnDDataPic(row, 'pic');
                     }
 
                     app.waitFor(0.1).then(function () {
@@ -124,12 +125,11 @@
             gee.yell(app.module.name + '/del', data, callback, callback);
         },
 
-        renderFLDnDDataPic: (area, imgSrc) => {
-            let image = new Image();
-            image.src = window.apiUrl.substring(0, window.apiUrl.length - 1) + imgSrc;
-            image.style.width = '100%';
+        renderFLDnDDataPic: (row, imgSrc) => {
+            let image = '<figure class="img-'+ imgSrc +'-box image is-64x64 is-pulled-right"> '+
+                '<img src="'+ app.formatHelper.loadPic(row[imgSrc], 128, 128) +'"> </figure>';
 
-            area.append(image);
+            $('.img-'+ imgSrc).before(image);
         },
 
         bat: function (action, data) {

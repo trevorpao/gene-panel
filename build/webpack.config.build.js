@@ -4,6 +4,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpackConfig = require('./webpack.config');
 var FileManagerPlugin = require('filemanager-webpack-plugin');
 
+var targetProject = 'f3cms';
+
 webpackConfig.devtool = 'cheap-module-source-map';
 // webpackConfig.devtool = 'inline-source-map';
 
@@ -18,7 +20,7 @@ webpackConfig.plugins.push(
             default: {
                 minChunks: 2,
                 priority: -20,
-                reuseExistingChunk: true,
+                reuseExistingChunk: true
             },
             vendor: {
                 chunks: 'initial',
@@ -41,6 +43,10 @@ webpackConfig.plugins.push(
 
     new webpack.optimize.RuntimeChunkPlugin({
         name: 'vendor'
+    }),
+
+    new webpack.optimize.RuntimeChunkPlugin({
+        name: 'manifest'
     })
 );
 
@@ -48,12 +54,12 @@ webpackConfig.plugins.push(
     new FileManagerPlugin({
         onEnd: {
             delete: [
-                path.join(__dirname, '../../www/f3cms/backend')
+                path.join(__dirname, '../../www/'+ targetProject +'/backend')
             ],
             move: [
                 {
                     source: path.join(__dirname, '../dist'),
-                    destination: path.join(__dirname, '../../www/f3cms/backend')
+                    destination: path.join(__dirname, '../../www/'+ targetProject +'/backend')
                 }
             ]
         }

@@ -15,20 +15,7 @@
     <div class="field">
       <label class="label">上傳圖片</label>
     </div>
-    <div class="field fuu has-addons">
-      <p class="control">
-        <input type="text" name="pic" class="input fuu-filename" readonly="readonly" placeholder="Pic">
-      </p>
-      <p class="control">
-          <a class="button is-warning fuu-clear gee" data-gene="click:clearFile" style="display:none;">Clear</a>
-          <div class="button is-expanded fuu-input">
-              <span class="glyphicon glyphicon-folder-open"></span>
-              <span class="fuu-input-btn">Browse</span>
-              <input type="file" accept="image/png, image/jpeg, image/gif" class="gee" data-gene="change:passFile" />
-          </div>
-          <a class="button is-success fuu-upload gee" data-gene="click:upload" style="display:none;">Upload</a>
-      </p>
-    </div>
+    <gee:upload1 module-name="media" data-param="pic" info-text="請勿大於 2 MB"></gee:upload1>
     <div class="field">
       <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
       <label class="radio" for="tag-status-enabled">啟用</label>

@@ -15,7 +15,7 @@
 <div class="columns">
   <div class="column">
     <div id="menu-tree-container" class="">
-      <ul id='menu-ul-jstree' class="gee" data-gene="init:menu/initial" data-tmpl="menuItemList">
+      <ul id='js-menu-tree' class="gee" data-gene="init:menu/initial" data-tmpl="menuItemList">
       </ul>
     </div>
     <div class="list-footer"></div>
@@ -24,80 +24,95 @@
   <div class="column is-4">
     <div class="box">
       <form class="gee" data-gene="init:initForm" data-tmpl="menuForm" id="menuForm">
-        <!-- <div class="field">
-          <label class="label">所在資料夾</label>
-          <p class="control">
-            <span class="select"><gee:set-option module="menu" name="parent_id" force="1" tmpl="menuOptTmpl"></gee:set-option></span>
-          </p>
-        </div> -->
-        <div class="field">
-          <label class="label">網址</label>
-          <p class="control">
-            <input class="input" name="uri" type="text" placeholder="URI">
-          </p>
-        </div>
-        <div class="field">
-          <label class="label">標題</label>
-          <p class="control">
-            <input class="input" name="title" type="text" placeholder="title">
-          </p>
-        </div>
-        <div class="field">
-          <input type="radio" class="is-checkradio" name="type" value="Basic" checked="checked" id="tag-highlight-basic">
-          <label class="radio" for="tag-highlight-basic">單欄</label>
-          <input type="radio" class="is-checkradio" name="type" value="Mega" id="tag-highlight-mega">
-          <label class="radio" for="tag-highlight-mega">五欄</label>
-          <input type="radio" class="is-checkradio" name="type" value="Mega CTA" id="tag-highlight-mega-cta">
-          <label class="radio" for="tag-highlight-mega-cta">雙欄帶廣告</label>
-        </div>
-        <div class="field">
-          <label class="label">雙欄帶廣告 - 廣告版位 ID</label>
-          <p class="control">
-            <input class="input" name="board_id" type="text" placeholder="廣告版位 ID">
-          </p>
-        </div>
-        <!-- <div class="field">
-          <label class="label">排序</label>
-          <p class="control">
-            <input class="input" name="sorter" type="text" placeholder="預設值：0">
-          </p>
-        </div> -->
-        <div class="field">
-          <label class="label">Highlight</label>
-          <p class="control">
-            <input class="input" name="highlight" type="text" placeholder="Highlight">
-          </p>
-        </div>
-        <div class="field">
-          <input type="radio" class="is-checkradio" name="label_clr" value="primary" id="tag-highlight-primary">
-          <label class="radio" for="tag-highlight-primary" style="color: #8DCCDF "> ▉ </label>
-          <input type="radio" class="is-checkradio" name="label_clr" value="success" id="tag-highlight-success">
-          <label class="radio" for="tag-highlight-success" style="color: #8cc4a2"> ▉ </label>
-          <input type="radio" class="is-checkradio" name="label_clr" value="sencondary" id="tag-highlight-sencondary">
-          <label class="radio" for="tag-highlight-sencondary" style="color: #e39887"> ▉ </label>
-          <input type="radio" class="is-checkradio" name="label_clr" value="danger" id="tag-highlight-danger">
-          <label class="radio" for="tag-highlight-danger" style="color: #d89098"> ▉ </label>
-          <input type="radio" class="is-checkradio" name="label_clr" value="info" checked="checked" id="tag-highlight-info">
-          <label class="radio" for="tag-highlight-info" style="color: #8a8eb8"> ▉ </label>
-        </div>
-        <!-- <div class="field">
-          <label class="label">Tags</label>
-          <div class="control">
-            <input type="text" multiple class="multipleSelect" name="tags" placeholder="Tags" data-url='tag/get_opts' />
+        <div class="tabs-content" >
+          <div class="tab-box" title="基本資訊">
+            <div class="field">
+              <label class="label">父選單</label>
+              <p class="control">
+                <span class="select"><gee:set-option module="menu" name="parent_id" force="1" tmpl="menuOptTmpl"></gee:set-option></span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">選單網址</label>
+              <p class="control">
+                <input class="input" name="uri" type="text" placeholder="URI">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">排序</label>
+              <p class="control">
+                <input class="input" name="sorter" type="text" placeholder="預設值：0">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">呈現樣式</label>
+              <input type="radio" class="is-checkradio" name="theme" value="Basic" checked="checked" id="tag-theme-basic">
+              <label class="radio" for="tag-theme-basic">單欄</label>
+              <input type="radio" class="is-checkradio" name="theme" value="Mixed" id="tag-theme-mixed">
+              <label class="radio" for="tag-theme-mixed">圖文混合</label>
+            </div>
+            <div class="field">
+              <label class="label">標記顏色</label>
+              <input type="radio" class="is-checkradio" name="color" value="primary" id="tag-badge-primary">
+              <label class="radio" for="tag-badge-primary" style="color: #8DCCDF "> ▉ </label>
+              <input type="radio" class="is-checkradio" name="color" value="success" id="tag-badge-success">
+              <label class="radio" for="tag-badge-success" style="color: #8cc4a2"> ▉ </label>
+              <input type="radio" class="is-checkradio" name="color" value="sencondary" id="tag-badge-sencondary">
+              <label class="radio" for="tag-badge-sencondary" style="color: #e39887"> ▉ </label>
+              <input type="radio" class="is-checkradio" name="color" value="danger" id="tag-badge-danger">
+              <label class="radio" for="tag-badge-danger" style="color: #d89098"> ▉ </label>
+              <input type="radio" class="is-checkradio" name="color" value="info" checked="checked" id="tag-badge-info">
+              <label class="radio" for="tag-badge-info" style="color: #8a8eb8"> ▉ </label>
+            </div>
+            <div class="field">
+              <label class="label">狀態</label>
+              <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
+              <label class="radio" for="tag-status-enabled">啟用</label>
+              <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
+              <label class="radio" for="tag-status-disabled">停用</label>
+            </div>
           </div>
-        </div> -->
-        <div class="field">
-          <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
-          <label class="radio" for="tag-status-enabled">啟用</label>
-          <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
-          <label class="radio" for="tag-status-disabled">停用</label>
+          <div class="tab-box" title="中文">
+            <div class="field">
+              <label class="label">選單標題</label>
+              <p class="control">
+                <input class="input" name="lang[tw][title]" type="text" placeholder="title">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">標記文字</label>
+              <p class="control">
+                <input class="input" name="lang[tw][badge]" type="text" placeholder="e.g. 熱門"><!-- badge -->
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">選單簡介</label>
+              <p class="control">
+                <textarea class="textarea" placeholder="Summary" name="lang[tw][summary]"></textarea>
+              </p>
+            </div>
+          </div>
+          <div class="tab-box" title="英文">
+            <div class="field">
+              <label class="label">選單標題</label>
+              <p class="control">
+                <input class="input" name="lang[en][title]" type="text" placeholder="title">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">標記文字</label>
+              <p class="control">
+                <input class="input" name="lang[en][badge]" type="text" placeholder="e.g. Hot"><!-- badge -->
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">選單簡介</label>
+              <p class="control">
+                <textarea class="textarea" placeholder="Summary" name="lang[en][summary]"></textarea>
+              </p>
+            </div>
+          </div>
         </div>
-        <!-- <div class="field">
-          <label class="label">簡介</label>
-          <p class="control">
-            <textarea class="textarea" placeholder="Summary" name="summary"></textarea>
-          </p>
-        </div> -->
         <div class="field is-grouped">
           <p class="control">
             <button type="button" class="button is-primary pre-gee" data-gene="click:menu/setRow" data-reset="1">Submit</button>
