@@ -2,6 +2,7 @@
   <div class="level-left">
     <nav class="breadcrumb">
       <ul>
+        <li> <a>網站管理</a> </li>
         <li class="is-active"> <a>Menu</a> </li>
       </ul>
     </nav>
@@ -15,8 +16,7 @@
 <div class="columns">
   <div class="column">
     <div id="menu-tree-container" class="">
-      <ul id='js-menu-tree' class="gee" data-gene="init:menu/initial" data-tmpl="menuItemList">
-      </ul>
+      <ul id='js-menu-tree' class="gee sortable" data-gene="init:menu.initial,click:reactList" data-tmpl="menuItemList"></ul>
     </div>
     <div class="list-footer"></div>
   </div>
@@ -24,7 +24,7 @@
   <div class="column is-4">
     <div class="box">
       <form class="gee" data-gene="init:initForm" data-tmpl="menuForm" id="menuForm">
-        <div class="tabs-content" >
+        <div class="tabs-content">
           <div class="tab-box" title="基本資訊">
             <div class="field">
               <label class="label">父選單</label>
@@ -82,7 +82,8 @@
             <div class="field">
               <label class="label">標記文字</label>
               <p class="control">
-                <input class="input" name="lang[tw][badge]" type="text" placeholder="e.g. 熱門"><!-- badge -->
+                <input class="input" name="lang[tw][badge]" type="text" placeholder="e.g. 熱門">
+                <!-- badge -->
               </p>
             </div>
             <div class="field">
@@ -102,7 +103,8 @@
             <div class="field">
               <label class="label">標記文字</label>
               <p class="control">
-                <input class="input" name="lang[en][badge]" type="text" placeholder="e.g. Hot"><!-- badge -->
+                <input class="input" name="lang[en][badge]" type="text" placeholder="e.g. Hot">
+                <!-- badge -->
               </p>
             </div>
             <div class="field">
@@ -115,15 +117,39 @@
         </div>
         <div class="field is-grouped">
           <p class="control">
-            <button type="button" class="button is-primary pre-gee" data-gene="click:menu/setRow" data-reset="1">Submit</button>
+            <button type="button" class="button is-primary pre-gee" data-gene="click:setRow" data-reset="1">Submit</button>
           </p>
           <p class="control">
-            <button type="button" class="button is-link pre-gee" data-gene="click:menu/cancelForm">Cancel</button>
+            <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>
           </p>
         </div>
         <input type="hidden" name="id">
-        <input type="hidden" name="parent_id">
       </form>
     </div>
   </div>
 </div>
+<script id="menuList" type="text/x-jsrender">
+  {{props rows}}
+  <li class="sortable-block">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item js-sortable-handle"><i class="fa fa-minus pull-right"></i></div>
+        <div class="level-item menu-name">{{:prop.title}}</div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <a href="javascript:;" class="button is-info" data-func="loadRow" data-tmpl="menuForm" data-id="{{:prop.id}}"> 編輯 </a>
+            </p>
+            <p class="control">
+              <a href="javascript:;" class="button is-danger" data-func="delRow" data-id="{{:prop.id}}"> 刪除 </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="sortable">{{include prop tmpl="#menuList" /}}</ul>
+  </li>
+  {{/props}}
+</script>

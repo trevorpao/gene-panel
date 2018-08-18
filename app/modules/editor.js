@@ -126,7 +126,7 @@
 
             let templateCode = app.tmplStores.tabNav;
             if (!templateCode) {
-                let htmlCode = `<div class="tabs is-boxed gee" data-gene="click:toggleTab" data-ta="tabs-content-{{:suffix}}" data-nopde="1">
+                let htmlCode = `<div class="tabs gee" data-gene="click:toggleTab" data-ta="tabs-content-{{:suffix}}" data-nopde="1">
                   <ul>{{props tabs}}
                     <li>
                       <a href="javascript:;" data-ta="tab-{{:#index}}-{{:#parent.parent.data.suffix}}"> {{:prop.title}} </a>

@@ -301,6 +301,14 @@ var App = function() {
             }
         },
 
+        stdCallback: function() {
+            if (this.code !== 1) {
+                app.stdErr(this);
+            } else {
+                app.stdSuccess(this);
+            }
+        },
+
         showErrMsg: function(col, cond, msg) {
             var box = col.closest('.form-group');
             box.removeClass('has-error has-success has-feedback');
