@@ -16,7 +16,7 @@
 <div class="columns">
   <div class="column">
     <div id="menu-tree-container" class="">
-      <ul id='js-menu-tree' class="gee sortable" data-gene="init:menu.initial,click:reactList" data-tmpl="menuItemList"></ul>
+      <ul id='js-menu-tree' class="gee sortable" data-gene="init:menu.initial,click:reactList" data-tmpl="menuItemList" data-parent="0"></ul>
     </div>
     <div class="list-footer"></div>
   </div>
@@ -130,7 +130,7 @@
 </div>
 <script id="menuList" type="text/x-jsrender">
   {{props rows}}
-  <li class="sortable-block">
+  <li class="sortable-block" data-id="{{:prop.id}}">
     <div class="level">
       <div class="level-left">
         <div class="level-item js-sortable-handle"><i class="fa fa-minus pull-right"></i></div>
@@ -149,7 +149,7 @@
         </div>
       </div>
     </div>
-    <ul class="sortable">{{include prop tmpl="#menuList" /}}</ul>
+    <ul class="sortable" data-parent="{{:prop.id}}">{{include prop tmpl="#menuList" /}}</ul>
   </li>
   {{/props}}
 </script>

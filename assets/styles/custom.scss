@@ -142,14 +142,14 @@ body {
     padding: 15px 0 10px 15px;
     margin: 0 0 0 10px;
     min-height: 15px;
-    border: 1px dashed #dbdbdb;
+    border: 1px dashed #dfedf0;
     &.js-sortable-ing {
         .control {
             display: none;
         }
         .placeholder {
             height: 30px;
-            background-color: #dbdbdb;
+            background-color: #daeaee;
         }
         .sortable {
             border-right: none;

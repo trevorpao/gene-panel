@@ -19,9 +19,7 @@
             },
             stop: function( event, ui ) {
                 app.menu.box.removeClass('js-sortable-ing');
-                // TODO:
-                // update ui.item's parent_id
-                // update parent's children sort
+                app.menu.resort(ui.item);
             }
         },
 
@@ -43,8 +41,15 @@
             gee.yell(app.module.name +'/list', {}, callback, callback);
         },
 
-        resort: function (objs) {
-            gee.yell(app.module.name +'/update_sorter', JSON.stringify({ data: objs }), app.stdCallback, app.stdCallback);
+        resort: function (item) {
+            let itemID = item.data('id');
+            let parentID = item.closest('.sortable').data('parent');
+            let sort = [];
+            item.closest('.sortable').find('>.sortable-block').each(function (idx) {
+                sort.push({id: $(this).data('id'), sorter: idx});
+            });
+
+            gee.yell(app.module.name +'/update_sorter', JSON.stringify({itemID: itemID, parentID: parentID, sort: sort}), app.stdCallback, app.stdCallback);
         }
     };
 
