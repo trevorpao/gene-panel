@@ -1,11 +1,21 @@
-<nav class="breadcrumb">
-  <ul>
-    <li class="is-active"> <a>Tag</a> </li>
-  </ul>
+<nav class="level">
+  <div class="level-left">
+    <nav class="breadcrumb">
+      <ul>
+        <li> <a>內容管理</a> </li>
+        <li class="is-active"> <a>Tag</a> </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="tagForm" data-id="0">新增</a>
+    </p>
+  </div>
 </nav>
 <nav class="list-filter level">
   <div class="level-left">
-    <div class="level-item">
+    <div class="level-item query-box">
       <p class="control">
         <div class="select" >
           <select name="query" class="gee" data-gene="change:checkOption">
@@ -32,20 +42,11 @@
         </p>
       </div>
     </div>
-  </div>
-  <div class="level-right">
-    <p class="level-item">
-      <a class="button is-primary gee" data-gene="click:loadRow" data-tmpl="tagForm" data-id="0">新增</a>
-    </p>
+    <p class="level-item is-hidden">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div>
   </div>
 </nav>
 <div class="columns is-multiline">
-  <div class="column level is-12">
-    <div class="level-left">
-      <p class="level-item">搜尋條件：</p>
-      <div class="tags js-query-list level-item"></div>
-    </div>
-  </div>
   <div class="column">
     <div class="content">
       <div class="field is-grouped is-grouped-multiline gee" data-gene="init:loadList,click:reactList" data-tmpl="tagList" data-nopde="1">{{props data}}
@@ -64,8 +65,6 @@
     </div>
     <div class="list-footer">
       <nav class="pagination">
-        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
-          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
         <ul id="paginate"></ul>
       </nav>
     </div>

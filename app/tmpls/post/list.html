@@ -1,7 +1,17 @@
-<nav class="breadcrumb">
-  <ul>
-    <li class="is-active"> <a>Post</a> </li>
-  </ul>
+<nav class="level">
+  <div class="level-left">
+    <nav class="breadcrumb">
+      <ul>
+        <li> <a>網站管理</a> </li>
+        <li class="is-active"> <a>Post</a> </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="postForm" data-src="modal" data-size="lg" data-id="0">新增</a>
+    </p>
+  </div>
 </nav>
 <nav class="list-filter level">
   <div class="level-left">
@@ -15,20 +25,11 @@
         </p>
       </div>
     </div>
-  </div>
-  <div class="level-right">
-    <p class="level-item">
-      <a class="button is-primary modal-btn gee" data-gene="click:showModal" data-tmpl="postForm" data-src="modal" data-size="lg" data-id="0">新增</a>
-    </p>
+    <p class="level-item is-hidden">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div>
   </div>
 </nav>
 <div class="columns is-multiline">
-  <div class="column level is-12">
-    <div class="level-left">
-      <p class="level-item">搜尋條件：</p>
-      <div class="tags js-query-list level-item"></div>
-    </div>
-  </div>
   <div class="column">
     <div class="content">
       <!-- LIST -->
@@ -57,8 +58,6 @@
     </div>
     <div class="list-footer">
       <nav class="pagination">
-        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
-          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
         <ul id="paginate"></ul>
       </nav>
     </div>

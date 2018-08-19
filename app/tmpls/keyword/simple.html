@@ -1,10 +1,17 @@
-<h2 class="title">Keyword</h2>
-<hr>
-<nav class="breadcrumb">
-  <ul>
-    <li> <a>Admin</a> </li>
-    <li class="is-active"> <a>Keyword</a> </li>
-  </ul>
+<nav class="level">
+  <div class="level-left">
+    <nav class="breadcrumb">
+      <ul>
+        <li> <a>內容管理</a> </li>
+        <li class="is-active"> <a>Keyword</a> </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <p class="level-item">
+      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="keywordForm" data-id="0">New</a>
+    </p>
+  </div>
 </nav>
 <nav class="list-filter level">
   <div class="level-left">
@@ -18,17 +25,11 @@
         </p>
       </div>
     </div>
-  </div>
-  <div class="level-right">
-    <p class="level-item">
-      <a class="button is-success gee" data-gene="click:loadRow" data-tmpl="keywordForm" data-id="0">New</a>
-    </p>
+    <p class="level-item is-hidden">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div>
   </div>
 </nav>
 <div class="columns is-multiline">
-  <div class="column is-12">
-    <div class="tags js-query-list"></div>
-  </div>
   <div class="column">
     <div class="content">
       <div class="tags gee" data-gene="init:loadList,click:reactList" data-tmpl="keywordList" data-nopde="1">{{props data}}
@@ -40,8 +41,6 @@
     </div>
     <div class="list-footer">
       <nav class="pagination">
-        <!-- <a class="pagination-previous gee" data-gene="click:prevPage">Previous</a>
-          <a class="pagination-next gee" data-gene="click:nextPage">Next page</a> -->
         <ul id="paginate"></ul>
       </nav>
     </div>

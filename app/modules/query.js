@@ -66,17 +66,24 @@
             app.query.set(item.col, item, module);
             app.query.box.find('.js-query-'+ item.col).remove().end() // remove the same column from the condition
                 .append(app.query.tagTmpl.render(item));
-            // gee.init(); // TODO: update list
+
+            if (app.query.cu[0]) {
+                app.query.box.prev('.level-item').removeClass('is-hidden');
+            }
+
             app.waitFor(0.1).then(function () {
                 gee.init();
             });
         },
         renderAll: function (callback) {
-            app.query.box.html('');
+            app.query.box.html('').prev('.level-item').addClass('is-hidden');
 
-            for (let idx in app.query.cu) {
-                app.query.box.find('.js-query-'+ app.query.cu[idx].col).remove().end()
-                    .append(app.query.tagTmpl.render(app.query.cu[idx]));
+            if (!_.isEmpty(app.query.cu)) {
+                for (let idx in app.query.cu) {
+                    app.query.box.find('.js-query-'+ app.query.cu[idx].col).remove().end()
+                        .append(app.query.tagTmpl.render(app.query.cu[idx]));
+                }
+                app.query.box.prev('.level-item').removeClass('is-hidden');
             }
 
             app.waitFor(0.1).then(function () {
@@ -88,12 +95,15 @@
             let item = app.query._str2Item(tag.text().trim());
             gee.clog(item);
             app.query.del(item.col);
-            tag.remove(); // TODO: update list
+            tag.remove();
+            if (_.isEmpty(app.query.cu)) {
+                app.query.box.prev('.level-item').addClass('is-hidden');
+            }
         },
         removeAll: function () {
             app.query.cu = [];
             app.arena.feed.setItem(app.module.name + 'Qry', app.query.cu).catch( gee.clog );
-            app.query.box.html('');
+            app.query.box.html('').prev('.level-item').addClass('is-hidden');
         },
         dealingSearchOption: function(opt, result){
             if( opt.indexOf('出貨') !== -1 ){
