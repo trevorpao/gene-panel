@@ -89,7 +89,7 @@
             <div class="field">
               <label class="label">選單簡介</label>
               <p class="control">
-                <textarea class="textarea" placeholder="Summary" name="lang[tw][summary]"></textarea>
+                <textarea class="textarea" placeholder="Summary" name="lang[tw][info]"></textarea>
               </p>
             </div>
           </div>
@@ -110,7 +110,7 @@
             <div class="field">
               <label class="label">選單簡介</label>
               <p class="control">
-                <textarea class="textarea" placeholder="Summary" name="lang[en][summary]"></textarea>
+                <textarea class="textarea" placeholder="Summary" name="lang[en][info]"></textarea>
               </p>
             </div>
           </div>
@@ -130,7 +130,7 @@
 </div>
 <script id="menuList" type="text/x-jsrender">
   {{props rows}}
-  <li class="sortable-block" data-id="{{:prop.id}}">
+  <li class="sortable-block loop-item" data-id="{{:prop.id}}">
     <div class="level">
       <div class="level-left">
         <div class="level-item js-sortable-handle"><i class="fa fa-minus pull-right"></i></div>
