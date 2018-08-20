@@ -10,10 +10,10 @@
             placeholderText: '開始打字吧~~~~~~',
             pluginsEnabled: ['fullscreen', 'image', 'link', 'wordPaste', 'codeView', 'quote', 'url', 'video'],
             imageUploadURL: 'media/editor_upload',
+            pastedImagesUploadURL: 'media/editor_upload',
             imageUploadParam: 'photo',
             pasteImage: true,
             htmlAllowComments: false,
-            pastedImagesUploadURL: 'media/editor_upload',
             imageDefaultWidth: 0,
             requestWithCredentials: true,
             toolbarFixed: false,
@@ -79,6 +79,10 @@
             if ($elem.data('inline') === '1') {
                 opt = app.editor.inlineOption;
             }
+
+            opt.imageUploadURL = gee.apiUri + opt.imageUploadURL;
+            opt.pastedImagesUploadURL = gee.apiUri + opt.pastedImagesUploadURL;
+
             $elem.froalaEditor(opt)
             .on('froalaEditor.image.inserted', function (e, editor, $img) {
                 $img.addClass('img-responsive');

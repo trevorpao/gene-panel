@@ -9,7 +9,7 @@
   </div>
   <div class="level-right">
     <p class="level-item">
-      <div class="level-item"><a class="button is-primary engrossed-btn gee" data-gene="click:press/loadRow" data-tmpl="pressForm" data-src="editor" data-size="lg" data-id="0" data-module="press">新增文章</a></div>
+      <div class="level-item"><a class="button is-primary engrossed-btn gee" data-gene="click:press.loadRow" data-tmpl="pressForm" data-src="editor" data-size="lg" data-id="0" data-module="press">新增文章</a></div>
     </p>
   </div>
 </nav>
@@ -64,9 +64,9 @@
         <tfoot></tfoot>
         <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="pressList" data-nopde="1">
           <tr>
-            <td><figure class="image is-16by9 is-marginless"> <img pre-src="{{:~loadPic(prop.pic)}}" alt="Image"> </figure></td>
+            <td><figure class="image is-16by9 is-marginless"> <img pre-src="{{:~loadPic(prop.cover)}}" alt="Image"> </figure></td>
             <td>
-              <a href="javascript:;" data-func="press/loadRow" data-tmpl="pressForm" data-src="editor" data-id="{{:prop.id}}" class="ellipsis press-title engrossed-btn" title="{{:prop.title}}" style="width: 28vw;">{{:prop.title}}</a>
+              <a href="javascript:;" data-func="press.loadRow" data-tmpl="pressForm" data-src="editor" data-id="{{:prop.id}}" class="ellipsis press-title engrossed-btn" title="{{:prop.title}}" style="width: 28vw;">{{:prop.title}}</a>
               <br>
               {{props prop.authors}} <a href="javascript:;" data-func="loadQuery" data-query="author_id:{{:prop.id}}" data-mode="Add" class="author-id">{{:prop.title}}</a> {{/props}}
               <br>
@@ -77,6 +77,7 @@
             <td><div class="ellipsis" style=" width: 70px;">{{:prop.account}}</div></td>
             <td> <div class="tags" style="width: 25vw;"> {{props prop.tags}} <span class="tag is-info"> {{:prop.title}} </span> {{/props}} </div> </td>
           </tr>
+
         </tbody>
       </table>
     </div>

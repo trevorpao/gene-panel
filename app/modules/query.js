@@ -101,7 +101,7 @@
             }
         },
         removeAll: function () {
-            app.query.cu = [];
+            app.query.cu = {};
             app.arena.feed.setItem(app.module.name + 'Qry', app.query.cu).catch( gee.clog );
             app.query.box.html('').prev('.level-item').addClass('is-hidden');
         },
@@ -218,10 +218,13 @@
     gee.hook('loadQuery', function(me) {
         let txt = me.data('query') || 'status:Enabled';
         let ary = txt.split(',');
+        let module = me.data('module') || app.module.name;
         app.query.removeAll();
         $.each(ary, function (idx) {
-            app.query.add(this);
+            let item = app.query._str2Item(this);
+            app.query.set(item.col, item, module);
         });
+        app.query.renderAll(function () {});
         app.query.deploy();
     });
 

@@ -23,11 +23,12 @@
                         // if (priv[1] !== '1') {
                         //     $('.no-kol').addClass('hidden');
                         // }
-                        gee.init();
 
                         $('input[name="tags"]').data('initial-value', row.tags).val(_.map(row.tags, 'id').join());
                         $('input[name="authors"]').data('initial-value', row.authors).val(_.map(row.authors, 'id').join());
                         $('input[name="relateds"]').data('initial-value', row.relateds).val(_.map(row.relateds, 'id').join());
+
+                        gee.init();
                         app.editor.init(row);
 
                         // initialize content data for upload module pic preview
@@ -41,6 +42,7 @@
                             });
                             app.upload.initContent(pics);
                         }
+
                         app.press.initSicebar(row);
                     });
                 }
@@ -58,13 +60,13 @@
                 if (this.code !== 1) {
                     app.stdErr(this);
                 } else {
-                    let $id = $('[name="id"]');
                     app.stdSuccess(this);
                     app.arena.loadPage(app.arena.pageBox);
+
                     let successTxt = '已儲存成功!';
-                    if ($id.val()*1 === 0) {
+                    if (data.indexOf('id=0') !== -1) {
+                        btn.closest('form')[0].reset();
                         successTxt = '已新增成功!';
-                        $id.val(this.data.id);
                     }
                     app.arena.addNotification(successTxt);
                 }
@@ -134,16 +136,7 @@
         }
     };
 
-    gee.hook('press/loadList', function (me) {
-        app.arena.resetCurrent(me);
-        app.arena.nextPage(me);
-    });
-
-    gee.hook('press/cancelForm', function (me) {
-        me.closest('form').html('');
-    });
-
-    gee.hook('press/loadRow', function (me) {
+    gee.hook('press.loadRow', function (me) {
         let pid = app.module.pid || me.data('id');
         let tmpl = me.data('tmpl');
         let tmplName = app.module.name + tmpl;
@@ -160,7 +153,7 @@
         }
     });
 
-    gee.hook('press/initForm', function (me) {
+    gee.hook('press.initForm', function (me) {
         let tmpl = me.data('tmpl');
         let box = $('#' + tmpl);
         let tmplName = app.module.name + tmpl;
@@ -173,10 +166,10 @@
             app.arena.renderBox(box, { item: app.moduleItems[tmplName] }, 1);
 
             app.waitFor(0.1).then(function () {
-                let priv = app.staff.parsePriv(app.staff.current.priv);
-                if (priv[1] !== '1') {
-                    $('.no-kol').addClass('hidden');
-                }
+                // let priv = app.staff.parsePriv(app.staff.current.priv);
+                // if (priv[1] !== '1') {
+                //     $('.no-kol').addClass('hidden');
+                // }
                 gee.init();
                 app.editor.init();
                 $('[name="online_date"]').val(moment().add(1, 'days').format('YYYY-MM-DD'));
@@ -184,7 +177,7 @@
         }
     });
 
-    gee.hook('press/setRow', function (me) {
+    gee.hook('press.setRow', function (me) {
         let form = me.closest('form');
 
         form.find('input').each(function () {
@@ -203,33 +196,11 @@
             formSerializedArray = app.upload.addPics(formSerializedArray, moduleName);
 
             app.progressingBtn(me);
-            app.press.set(formSerializedArray, me);
+            app.simple.set(formSerializedArray, me);
         }
     });
 
-    gee.hook('press/delRow', function (me) {
-        if (confirm('確認刪除此記錄')) {
-            app.press.del({ id: me.data('id') }, me);
-        }
-    });
-
-    gee.hook('press/reactList', function (me) {
-        gee.clog(me.event.target);
-        var ta = $(me.event.target).closest('[data-func]');
-        var func = ta.data('func');
-
-        if (typeof func !== 'undefined') {
-            // func = func.replace(me.event.type +':', '');
-
-            if (gee.check(func)) {
-                ta.event = me.event;
-                gee.exe(func, ta);
-                me.event.preventDefault();
-            }
-        }
-    });
-
-    gee.hook('press/offline', function (me) {
+    gee.hook('press.offline', function (me) {
         var data = 'id=' + $('[name="id"]').val();
         data += '&status=Offlined&online_date=2000-01-01 00:00'; // reset online_date
         app.press.published(data, me);
@@ -238,7 +209,7 @@
             .siblings('.js-published-f').toggleClass('hidden', false);
     });
 
-    gee.hook('press/online', function (me) {
+    gee.hook('press.online', function (me) {
         var data = 'id=' + $('[name="id"]').val();
         var status = me.data('force') || $('#status-published').prop('checked');
         var onlineDate = $('[name="online_date"]').val() + ' '+ $('[name="hh"]').val() +':'+ $('[name="mm"]').val();
@@ -264,7 +235,7 @@
         }
     });
 
-    gee.hook('press/reset', function (me) {
+    gee.hook('press.reset', function (me) {
         $('#status-published').prop('checked', true);
         $('[name="online_date"]').val(moment().format('YYYY-MM-DD'));
         $('[name="hh"] option:eq(17)').prop('selected', true);
