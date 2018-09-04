@@ -1,3 +1,5 @@
+@import "../../node_modules/bulmaswatch/Litera/_variables.scss";
+
 body {
     // position: relative;
     &.logout {
@@ -123,7 +125,7 @@ body {
     li {
         border-bottom: none;
         &.is-active {
-            border-bottom: 3px #9cc7d3 solid;
+            border-bottom: 3px $primary solid;
         }
         a, a:hover {
             border-bottom: none;
@@ -142,7 +144,7 @@ body {
     padding: 15px 0 10px 15px;
     margin: 0 0 0 10px;
     min-height: 15px;
-    border: 1px dashed #dfedf0;
+    border: 1px dashed #ccc;
     &.js-sortable-ing {
         .control {
             display: none;
@@ -197,17 +199,17 @@ body {
     margin: 30px;
 }
 
-.subnavbar-menu, .columns.is-gapless .section {
-    padding: 0.5rem 0.5rem;
-}
+// .subnavbar-menu, .columns.is-gapless .section {
+//     padding: 0.5rem 0.5rem;
+// }
 
-.navbar-menu a.navbar-item:not(.button).is-active, .navbar-menu a.navbar-item:not(.button):hover {
-    color: #fff;
-}
+// .navbar-menu a.navbar-item:not(.button).is-active, .navbar-menu a.navbar-item:not(.button):hover {
+//     color: #fff;
+// }
 
-.navbar-menu a.navbar-item:not(.button).is-active.is-tab {
-    border-bottom-color: rgba(255,255,255,.6);
-}
+// .navbar-menu a.navbar-item:not(.button).is-active.is-tab {
+//     border-bottom-color: rgba(255,255,255,.6);
+// }
 
 .js-staff-name {
     text-transform: capitalize;
@@ -232,18 +234,56 @@ body {
 a.ellipsis {
     display: inline-block;
 }
+
+form{
+
+    .field{
+        margin-bottom: 2rem!important;
+    }
+}
 .content .list-body {
     th, .datetime {
         white-space: nowrap;
     }
 
+
+
     figure {
         width: 150px;
     }
+    .list{
+       p{
+           margin:0;
+           &.date {
+            color:#ccc;
+            font-size: .8rem;
+            }
+           &.authors {
+               margin-bottom: 1rem;
+
+             .author-id{
+                 background: #ccc;
+                 padding:0.2rem 1rem;
+                 font-size: .9rem;
+                 border-radius: 5px;
+                 color:#fff;
+
+             }
+
+            }
+
+
+        }
+
+
+    }
+
 
     .ellipsis.press-title {
         max-width: 45vw;
         min-width: 30vw;
+        color:#333;
+        font-weight: bold;
     }
 }
 
@@ -297,7 +337,7 @@ a.ellipsis {
 }
 
 .breadcrumb li + li:before {
-    content: ">";
+    content: "/";
 }
 
 @media screen and (min-width: 1024px) {
@@ -366,4 +406,12 @@ a.ellipsis {
 .btn__pic--remove {
     float: right;
     margin-bottom: 1rem;
+}
+
+table{
+    th.actions {
+        &.actions-2{
+            width:150px;
+        }
+    }
 }

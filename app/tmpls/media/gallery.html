@@ -42,40 +42,40 @@
 </nav>
 <div class="columns is-multiline">
   <div class="column">
-    <div class="gee" data-gene="init:loadList,click:reactList" data-tmpl="mediaList" data-nopde="1">
+    <div class="box gee" data-gene="init:loadList,click:reactList" data-tmpl="mediaList" data-nopde="1">
       <div class="columns is-multiline">
-    {{props data}}<div class="column is-3">
-      <div class="card">
-        <div class="card-image">
-          <figure class="image is-5by4"> <img pre-src="{{:~loadPic(prop.pic, 260, 196)}}" alt="Image"> </figure>
-        </div>
-        <div class="card-content">{{:prop.title}}
-          <br />
-          <a href="{{:~loadPic(prop.pic)}}" target="_blank"><small>另開視窗</small></a>
-          <nav class="level">
-            <div class="level-left">
-              <div class="level-item"><small>{{:~formatDate(prop.last_ts, 'YYYY-MM-DD')}}</small></div>
+        {{props data}}<div class="column is-3">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-5by4"> <img pre-src="{{:~loadPic(prop.pic, 260, 196)}}" alt="Image"> </figure>
             </div>
-            <div class="level-right">
-              <div class="level-item">
-                <div class="field has-addons">
-                  <p class="control">
-                    <a href="javascript:;" class="modal-btn button is-info" data-func="loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
-                  </p>
-                  <p class="control">
-                    <a href="javascript:;" class="button is-danger" data-func="delRow" data-id="{{:prop.id}}"> 刪除 </a>
-                  </p>
+            <div class="card-content">{{:prop.title}}
+              <br />
+              <a href="{{:~loadPic(prop.pic)}}" target="_blank"><small>另開視窗</small></a>
+              <nav class="level">
+                <div class="level-left">
+                  <div class="level-item"><small>{{:~formatDate(prop.last_ts, 'YYYY-MM-DD')}}</small></div>
                 </div>
-              </div>
+                <div class="level-right">
+                  <div class="level-item">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a href="javascript:;" class="modal-btn button is-info" data-func="loadRow" data-tmpl="mediaForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
+                      </p>
+                      <p class="control">
+                        <a href="javascript:;" class="button is-danger" data-func="delRow" data-id="{{:prop.id}}"> 刪除 </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </nav>
             </div>
-        </div>
-      </div></div>
-      {{/props}}</div>
+          </div>
+        </div>{{/props}}
+      </div>
     </div>
     <div class="list-footer">
-      <nav class="pagination">
-        <ul id="paginate"></ul>
-      </nav>
+      <nav class="pagination"><ul id="paginate"></ul></nav>
     </div>
   </div>
 </div>

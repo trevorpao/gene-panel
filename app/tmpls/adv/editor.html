@@ -1,211 +1,211 @@
 <form class="gee" data-gene="init:initForm" data-tmpl="resourceForm" id="resourceForm">
   <div class="columns is-multiline is-engrossed-t editor">
     <div class="column">
+      <div class="box">
+        <div class="field">
+          <label class="label">廣告標題</label>
+          <p class="control">
+            <input class="input" name="title" type="text" placeholder="Title">
+          </p>
+        </div>
 
-      <div class="field">
-        <label class="label">廣告標題</label>
-        <p class="control">
-          <input class="input" name="title" type="text" placeholder="Title">
-        </p>
+        <div class="field">
+          <label class="label">主圖</label>
+          <gee:upload1 module-name="adv" data-param="cover" info-text="依版位規定"></gee:upload1>
+        </div>
+
+        <div class="field">
+          <label class="label">URL</label>
+          <p class="control">
+            <input class="input" name="uri" type="text" placeholder="輸入完整網址">
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label">文案描述</label>
+          <p class="control">
+            <textarea class="textarea" placeholder="請輸入文案內容" name="summary"></textarea>
+          </p>
+        </div>
       </div>
-
-      <div class="field">
-        <label class="label">主圖</label>
-        <gee:upload1 module-name="adv" data-param="cover" info-text="依版位規定"></gee:upload1>
-      </div>
-
-      <div class="field">
-        <label class="label">URL</label>
-        <p class="control">
-          <input class="input" name="uri" type="text" placeholder="輸入完整網址">
-        </p>
-      </div>
-
-      <div class="field">
-        <label class="label">文案描述</label>
-        <p class="control">
-          <textarea class="textarea" placeholder="請輸入文案內容" name="summary"></textarea>
-        </p>
-      </div>
-
       <input type="hidden" name="id">
     </div>
     <div class="column is-4">
+      <div class="box">
+        <div class="field has-text-right">
+            <button type="button" class="button is-primary pre-gee" data-gene="click:press.setRow">儲存</button>
+        </div>
 
-      <div class="field has-text-right">
-          <button type="button" class="button is-primary pre-gee" data-gene="click:press.setRow">Submit</button>
-      </div>
-
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="field">
-            <label class="label">上架時間</label>
-            <p class="control">
-              <input class="input datepicker" name="start_date" type="text" placeholder="上架時間">
-            </p>
-          </div>
-          <div class="field">
-            <label class="label">時</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select name="sh">
-                  <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                </select>
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <label class="label">上架時間</label>
+              <p class="control">
+                <input class="input datepicker" name="start_date" type="text" placeholder="上架時間">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">時</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select name="sh">
+                    <option value="00">00</option>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="field">
-            <label class="label">分</label>
-            <p class="control">
-              <div class="select is-fullwidth">
-                <select name="sm">
-                  <option value="00">00</option>
-                  <option value="05">05</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                  <option value="35">35</option>
-                  <option value="40">40</option>
-                  <option value="45">45</option>
-                  <option value="50">50</option>
-                  <option value="55">55</option>
-                </select>
-              </div>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="field">
-            <label class="label">下架時間</label>
-            <p class="control">
-              <input class="input datepicker" name="end_date" type="text" placeholder="下架時間">
-            </p>
-          </div>
-          <div class="field">
-            <label class="label">時</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select name="eh">
-                  <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                </select>
-              </div>
+            <div class="field">
+              <label class="label">分</label>
+              <p class="control">
+                <div class="select is-fullwidth">
+                  <select name="sm">
+                    <option value="00">00</option>
+                    <option value="05">05</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
+                  </select>
+                </div>
+              </p>
             </div>
           </div>
-          <div class="field">
-            <label class="label">分</label>
-            <p class="control">
-              <div class="select is-fullwidth">
-                <select name="em">
-                  <option value="00">00</option>
-                  <option value="05">05</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                  <option value="35">35</option>
-                  <option value="40">40</option>
-                  <option value="45">45</option>
-                  <option value="50">50</option>
-                  <option value="55">55</option>
-                </select>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <label class="label">下架時間</label>
+              <p class="control">
+                <input class="input datepicker" name="end_date" type="text" placeholder="下架時間">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">時</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select name="eh">
+                    <option value="00">00</option>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                  </select>
+                </div>
               </div>
-            </p>
+            </div>
+            <div class="field">
+              <label class="label">分</label>
+              <p class="control">
+                <div class="select is-fullwidth">
+                  <select name="em">
+                    <option value="00">00</option>
+                    <option value="05">05</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
+                  </select>
+                </div>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label class="label">選擇版位</label>
-        <p class="control">
-          <input class="input" name="position_id" type="text" placeholder="版位編號">
-        </p>
-      </div>
+        <div class="field">
+          <label class="label">選擇版位</label>
+          <p class="control">
+            <input class="input" name="position_id" type="text" placeholder="版位編號">
+          </p>
+        </div>
 
-      <div class="field">
-        <label class="label">權重</label>
-        <p class="control">
-          <input class="input" name="weight" type="text" placeholder="請輸入 1-10 數字，10 為曝光機率最高">
-        </p>
-      </div>
+        <div class="field">
+          <label class="label">權重</label>
+          <p class="control">
+            <input class="input" name="weight" type="text" placeholder="請輸入 1-10 數字，10 為曝光機率最高">
+          </p>
+        </div>
 
-      <div class="field">
-        <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
-        <label class="radio" for="tag-status-enabled">啟用</label>
-        <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
-        <label class="radio" for="tag-status-disabled">停用</label>
-      </div>
+        <div class="field">
+          <input type="radio" class="is-checkradio" name="status" value="Enabled" id="tag-status-enabled">
+          <label class="radio" for="tag-status-enabled">啟用</label>
+          <input type="radio" class="is-checkradio" name="status" value="Disabled" checked="checked" id="tag-status-disabled">
+          <label class="radio" for="tag-status-disabled">停用</label>
+        </div>
 
-      <div class="field">
-        <label class="label">副圖</label>
-        <gee:upload1 module-name="adv" data-param="background" info-text="依版位規定"></gee:upload1>
-      </div>
+        <div class="field">
+          <label class="label">副圖</label>
+          <gee:upload1 module-name="adv" data-param="background" info-text="依版位規定"></gee:upload1>
+        </div>
 
-      <div class="field">
-        <label class="label">Youtube 主影片嵌入碼</label>
-        <p class="control">
-          <input class="input" name="meta[_video_id]" type="text" placeholder="例：MhdjKAsnCbk">
-        </p>
-      </div>
+        <div class="field">
+          <label class="label">Youtube 主影片嵌入碼</label>
+          <p class="control">
+            <input class="input" name="meta[_video_id]" type="text" placeholder="例：MhdjKAsnCbk">
+          </p>
+        </div>
 
-      <div class="field">
-        <label class="label">按鈕文案</label>
-        <p class="control">
-          <input class="input" name="meta[btn_txt]" type="text" placeholder="例：立即購買">
-        </p>
+        <div class="field">
+          <label class="label">按鈕文案</label>
+          <p class="control">
+            <input class="input" name="meta[btn_txt]" type="text" placeholder="例：立即購買">
+          </p>
+        </div>
       </div>
-
     </div>
   </div>
 </form>
