@@ -1,0 +1,45 @@
+<div class="box">
+  <form class="gee" data-gene="init:initForm" data-tmpl="contactForm" id="contactForm">
+    <div class="field">
+      <label class="label">Name</label>
+      <p class="control">
+        <input class="input" name="name" type="text" readonly placeholder="Name">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Email</label>
+      <p class="control">
+        <input class="input" name="email" type="text" readonly placeholder="Email">
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Message</label>
+      <p class="control">
+        <textarea class="textarea" placeholder="Message" name="message" readonly></textarea>
+      </p>
+    </div>
+    <div class="field">
+      <input type="radio" class="is-checkradio" name="status" value="New" id="contact-status-new">
+      <label class="radio" for="contact-status-new">新訊息</label>
+      <input type="radio" class="is-checkradio" name="status" value="Process" checked="checked" id="contact-status-process">
+      <label class="radio" for="contact-status-process">聯絡中</label>
+      <input type="radio" class="is-checkradio" name="status" value="Done" checked="checked" id="contact-status-done">
+      <label class="radio" for="contact-status-done">結單</label>
+    </div>
+    <div class="field">
+      <label class="label">回覆簡述</label>
+      <p class="control">
+        <textarea class="textarea" placeholder="回覆簡述" name="response" readonly></textarea>
+      </p>
+    </div>
+    <div class="field is-grouped">
+      <p class="control">
+        <button type="button" class="button is-primary pre-gee" data-gene="click:setRow" data-reset="1">Submit</button>
+      </p>
+      <p class="control">
+        <button type="button" class="button is-link pre-gee" data-gene="click:cancelForm">Cancel</button>
+      </p>
+    </div>
+    <input type="hidden" name="id">
+  </form>
+</div>

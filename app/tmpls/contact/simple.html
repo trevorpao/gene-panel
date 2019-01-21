@@ -1,0 +1,64 @@
+<nav class="level">
+  <div class="level-left">
+    <nav class="breadcrumb">
+      <ul>
+        <li> <a>網站管理</a> </li>
+        <li class="is-active"> <a>Contact</a> </li>
+      </ul>
+    </nav>
+  </div>
+</nav>
+<nav class="list-filter level">
+  <div class="level-left">
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input" type="text" placeholder="Find a contact">
+        </p>
+        <p class="control">
+          <button class="button is-expanded gee" data-gene="init:initQueryForm,click:addQuery" type="button">查詢</button>
+        </p>
+      </div>
+    </div>
+    <p class="level-item is-hidden">搜尋條件：</p>
+    <div class="tags js-query-list level-item"></div>
+  </div>
+</nav>
+<div class="columns is-multiline">
+  <div class="column">
+    <div class="content box">
+      <!-- LIST -->
+      <table class="list-body table is-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>提問時間</th>
+            <th>最後處理時間</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody class="gee" data-gene="init:loadList,click:reactList" data-tmpl="contactList" data-nopde="1">
+          <tr>
+            <td>{{:prop.name}}</td>
+            <td>{{:prop.email}}</td>
+            <td>{{:prop.status}}</td>
+            <td>{{:prop.insert_ts}}</td>
+            <td>{{:prop.last_ts}}</td>
+            <td>
+              <a href="javascript:;" class="button is-info" data-func="loadRow" data-tmpl="contactForm" data-src="modal" data-size="lg" data-id="{{:prop.id}}"> 編輯 </a>
+              <a href="javascript:;" class="button is-danger" data-func="delRow" data-id="{{:prop.id}}"> 刪除 </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="list-footer">
+      <nav class="pagination">
+        <ul id="paginate"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
