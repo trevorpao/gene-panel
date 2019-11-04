@@ -74,6 +74,10 @@ localforage.config({
     version: 3
 });
 
+if (app.isProd() && $(location).attr('protocol') != 'https:') {
+    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
 $(document).ready(function () {
     if (gee.debug) {
         app.route.mode = 'hash';

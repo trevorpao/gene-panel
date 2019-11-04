@@ -13,7 +13,7 @@ GeneJs Panel
 ### DEV
 ```
     $ npm run dev #to preview and watch for changes
-    $ open http://f3cms.lo:8008/
+    $ open https://f3cms.lo:8008/
 ```
 
 ### Deploy

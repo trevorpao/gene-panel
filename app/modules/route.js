@@ -135,7 +135,13 @@
                 app.route.changing = 1;
                 app.route.params = params;
                 app.space = params.space;
-                gee.loadApp($('.navbar-menu .navbar-item[data-app="'+ params.space +'"]'));
+                let taBtn = $('.navbar-menu .navbar-item[data-app="'+ params.space +'"]');
+
+                if (params.space === 'dashboard') {
+                    taBtn = $('.navbar-brand .navbar-item[data-app="'+ params.space +'"]');
+                }
+
+                gee.loadApp(taBtn);
             }
             else {
                 if (params.modal) {
@@ -162,6 +168,7 @@
                                 $('.engrossed-app').animateIt('swoopInRight');
                             }
                             else {
+                                app.arena.slienceMode = 0;
                                 app.arena.showModal(ta.attr('title'), '/'+ app.module.name +'/'+ params.modal, (ta.data('size') ? ta.data('size') : 'nor'));
 
                                 // app.modal.show({

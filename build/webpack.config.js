@@ -17,6 +17,8 @@ const basePath = (IS_DEV === true) ? '/' : '/backend/';
 
 const domainName = (IS_DEV === true) ? 'f3cms.lo' : 'f3cms.lo'; // 'your.domain.name';
 
+const tmplVersion = '20190504001';
+
 module.exports = {
     entry: {
         vendor: [

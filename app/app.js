@@ -61,6 +61,11 @@ var App = function() {
             }
         },
 
+        isProd: function () {
+            var host = $(location).attr('hostname');
+            return (host !== 'localhost' && host.indexOf('f3cms.lo') === -1 && host.indexOf('fake.') === -1 && host.indexOf('loc.') === -1);
+        },
+
         loadHtml: function (src, box, redirect) {
             var newPath = src;
             var success = function (html, status, xhr) {
@@ -83,7 +88,7 @@ var App = function() {
 
             if (typeof app.htmlStores[app.module.name + '-tmpl-' + src] === 'undefined') {
                 gee.clog('load: ' + app.tmplPath + newPath + '.html');
-                box.load(app.tmplPath + newPath + '.html', success);
+                box.load(app.tmplPath + newPath + '.html?v='+ document.tmplVersion, success);
             } else {
                 box.html(app.htmlStores[app.module.name + '-tmpl-' + src]);
                 if (redirect !== '') {
