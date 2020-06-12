@@ -426,7 +426,7 @@
                 app.route.loadModule(app.route.params);
             }
             else {
-                $('#submenu-box li:eq(0) a').trigger('tap');
+                $('#submenu-box li:eq(0) a').trigger('click');
             }
         });
     });

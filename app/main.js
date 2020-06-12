@@ -10,6 +10,7 @@ import 'blueimp-file-upload/js/jquery.fileupload';
 import 'localforage/dist/localforage';
 
 import 'moment/moment';
+import './fastsearch';
 import './fastselect';
 
 import 'jstree';
@@ -38,7 +39,8 @@ import 'styles/custom.scss';
 
 if (IS_DEV) {
     window.mainUri = 'https://f3cms.lo:4433/';
-    window.apiUri = 'https://f3cms.lo:4433/api/';
+    // window.apiUri = 'https://f3cms.lo:4433/api/';
+    window.apiUri = 'https://api.shopartner.co/';
 
     $.ajaxSetup({
         crossDomain: true,
@@ -88,7 +90,7 @@ $(document).ready(function () {
     app.waitFor(0.5).then(function () {
         if (app.route.changing) {
             gee.clog($('#navMenu .navbar-start .navbar-item:eq(0)'));
-            $('#navMenu .navbar-start .navbar-item:eq(0)').trigger('tap');
+            $('#navMenu .navbar-start .navbar-item:eq(0)').trigger('click');
         }
     });
 });
