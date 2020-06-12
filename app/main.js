@@ -1,6 +1,6 @@
-import 'jquery-touch-events/src/jquery.mobile-events';
+// import 'jquery-touch-events/src/jquery.mobile-events';
 import 'jquery.cookie/jquery.cookie';
-import 'twbs-pagination/jquery.twbsPagination';
+// import 'twbs-pagination/jquery.twbsPagination';
 import 'jquery-ui/ui/core';
 import 'jquery-ui/ui/widgets/sortable';
 import 'jquery-ui/ui/disable-selection';

@@ -31,8 +31,7 @@
     "jstree": "^3.3.5",
     "localforage": "^1.7.1",
     "lodash": "^4.17.4",
-    "moment": "^2.20.1",
-    "twbs-pagination": "^1.4.1"
+    "moment": "^2.20.1"
   },
   "devDependencies": {
     "ajv": "^6.5.2",
