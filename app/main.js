@@ -27,12 +27,12 @@ import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 
 import 'styles/index.scss';
-import 'fastselect/dist/fastselect.css';
 
 import 'jquery-ui/themes/base/core.css';
 import 'jquery-ui/themes/base/theme.css';
 import 'jquery-ui/themes/base/datepicker.css';
 
+import '../assets/styles/fastselect.css';
 import '../assets/styles/vivify.min.css';
 
 import 'styles/custom.scss';
