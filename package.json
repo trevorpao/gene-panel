@@ -11,6 +11,9 @@
     "win_dev": "cross-env NODE_ENV=dev webpack-dev-server --port 8008 --progress --config build/webpack.config.dev.js",
     "build": "webpack -p --progress --config build/webpack.config.build.js"
   },
+  "engines": {
+    "node": ">=10.21.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://trevorpao@github.com/trevorpao/gene-panel.git"

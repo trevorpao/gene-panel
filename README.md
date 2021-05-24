@@ -12,6 +12,7 @@ GeneJs Panel
 
 ### DEV
 ```
+    $ nvm use v10.21.0
     $ npm run dev #to preview and watch for changes
     $ open https://f3cms.lo:8008/
 ```
