@@ -168,7 +168,11 @@ body {
     }
 }
 
-.fuu-input {
+.field.fuu.has-addons, .field.fuq.has-addons {
+    // margin-top: 18px;
+}
+
+.fuu-input, .fuq-input {
     position: relative;
     overflow: hidden;
     margin: 0px;
@@ -176,7 +180,8 @@ body {
     background-color: #fff;
     border-color: #ccc;
 }
-.fuu-input input[type=file] {
+.fuu-input input[type=file],
+.fuq-input input[type=file] {
     position: absolute;
     top: 0;
     right: 0;
@@ -187,8 +192,28 @@ body {
     opacity: 0;
     filter: alpha(opacity=0);
 }
-.fuu-input-title {
+.fuu-input-title,
+.fuq-input-title {
     margin-left:2px;
+}
+
+.footer.fuq-progress {
+    padding: 1rem 1.5rem 1rem 6rem;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 2400;
+    display: none;
+}
+
+.footer.fuq-progress:before {
+    content: "上傳進度";
+    position: absolute;
+    left: 1rem;
+}
+
+.j-progressing .footer.fuq-progress {
+    display: block;
 }
 
 .fr-popup, .fr-toolbar {
@@ -248,9 +273,9 @@ form{
 
 
 
-    figure {
-        width: 150px;
-    }
+    // figure {
+    //     width: 150px;
+    // }
     .list{
        p{
            margin:0;
@@ -284,6 +309,15 @@ form{
         min-width: 30vw;
         color:#333;
         font-weight: bold;
+    }
+
+    .line-clamp {
+        max-width: 45vw;
+        min-width: 30vw;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
     }
 }
 
@@ -338,6 +372,11 @@ form{
 
 .breadcrumb li + li:before {
     content: "/";
+}
+
+
+.navbar .navbar-brand {
+    margin-right: 1em;
 }
 
 @media screen and (min-width: 1024px) {
@@ -399,67 +438,96 @@ form{
     }
 }
 
-.navbar .navbar-brand {
-    margin-right: 1em;
+#main-box .field .radio {
+    display: inline-block;
 }
-.hidden,
-.gee,
-.en .js-lang-switcher-en,
-.tw .js-lang-switcher-tw  {
+
+.is-3 .field.per2-break .radio:nth-of-type(2n),
+.is-4 .field.per2-break .radio:nth-of-type(2n) {
+    display: block;
+}
+
+.hidden {
     display: none !important;
 }
+
 .btn__pic--remove {
     float: right;
     margin-bottom: 1rem;
 }
-table {
+
+table{
     th.actions {
-        &.actions-2 {
-            width: 150px;
+        &.actions-2{
+            width:150px;
         }
     }
 }
-.fstChoiceMove .holder {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    cursor: pointer;
-    background: none;
-    font-size: 1.16667em;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 1.28571em;
-    line-height: 1.28571em;
-    margin-top: -0.64286em;
-    text-align: center;
-    color: #fff;
+
+.fstMultipleMode .fstControls {
+    width: 100%;
 }
+
+.fstChoiceMove .holder {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+  font-size: 1.16667em;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 1.28571em;
+  line-height: 1.28571em;
+  margin-top: -0.64286em;
+  text-align: center;
+  color: #fff;
+}
+
 .fstChoiceMove .holder:before {
     font: normal normal normal 14px/1 FontAwesome;
     content: "\f074";
 }
+
 .fstChoiceItem.fstChoiceMove {
     padding: 0.33333em 1.5em;
 }
+
+.fstChoiceItem .addoninput{
+    border: none;
+    line-height: 1.5em;
+    margin: 0 0 0 7px;
+    width: 80px;
+    background-color: #43A2F3;
+    color: #fff;
+}
+.fstChoiceItem .addoninput:focus{
+    outline: none;
+}
+
 .timeline .timeline-item {
     padding-bottom: 3em;
     .timeline-content {
         padding: 2em 0 0 4em;
     }
 }
+
 .image img.is-rounded {
     border-radius: 290486px;
 }
+
 .checkradio-box {
     float: left;
 }
+
 .per6-break .checkradio-box {
     width: 15%;
 }
 .per8-break .checkradio-box {
     width: 12%;
 }
+
 .per6-break .checkradio-box:nth-of-type(6n+1) {
     clear: left;
 }
@@ -467,38 +535,108 @@ table {
     clear: left;
 }
 
-.field-editable {
-    position: relative;
-    // padding: 0 0 1rem 0;
-    .btn-group {
-        position: absolute;
-        right: 0;
-        bottom: -4.5rem;
+.is-many .fstMultipleMode .fstControls {
+    width: 100%;
+}
+
+
+// .fr-wrapper>div:first-child {
+//     display: none;
+// }
+
+.fr-view {
+    ul {
+        list-style: disc;
+        padding-left: 40px; 
+    }
+
+    ol {
+        padding-left: 40px; 
+    }
+
+    h3 {
+        font-size: 1.17em;
+        font-weight: bold;
+        background-color: #ca5f00;
+        color: #fff;
+        display: inline-block;
+        padding: 2px 4px;
+    }
+
+    h4 {
+        font-weight: bold;
+        background-color: #ca5f00;
+        color: #fff;
+        display: inline-block;
+        padding: 2px 4px;
     }
 }
 
-.empty-hit {
-    font: normal normal normal 1.2rem FontAwesome;
-    height: 1.2rem;
-    width: 1.2rem;
-}
-.empty-hit:before {
-    content: "\f040";
-    color: #aaa;
+.sortable-holder:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\F074";
 }
 
-.tag-tree .tags:last-child {
+.ui-state-highlight { 
+    background-color: #caf1fd;
+    height: 1.5em; 
+    line-height: 1.2em; 
+}
+
+.pid-- .only-af-save, 
+.pid-- .tabs-content .tab-box.only-af-save.is-active, 
+.only-bf-save {
+    display: none;
+}
+
+.pid-- .only-bf-save {
+    display: block;
+}
+
+.field.has-error .input, .field.has-error .textarea {
+    border-color: #f0ad4e;
+}
+
+.field.has-error .label {
+    color: #f0ad4e !important;
+}
+
+.is-pointer {
+    cursor: pointer;
+}
+
+.hover-highlight:hover {
+    background-color: rgb(255 213 0 / 0.2);
+}
+
+.content figure {
+    overflow: hidden;
+}
+
+
+
+.fr-view .fr-fic.col-6,
+.fr-view span.fr-img-caption.fr-dib.fr-fic.col-6,
+.fr-view span.fr-img-caption.fr-dii.fr-fic.col-6 {
+    display: inline-block;
+    float: none;
+    width: 50% !important;
+    margin: 0;
+}
+
+.fr-view .fr-img-caption .fr-inner {
+    color: #617182e8;
+    font-size: 14px;
+}
+
+.fr-view .fr-video iframe {
+    max-width: 100%;
+}
+
+.fr-view .card-body .fr-img-space-wrap img {
     margin-bottom: 0.5rem;
 }
 
-.tag-tree .tags-area {
-    border-radius: 8px;
-    padding: 15px 0 10px 15px;
-    margin: 0 0 0 10px;
-    min-height: 15px;
-    border: 1px dashed #ccc;
-}
-
-.is-caps {
-    text-transform: capitalize;
+.fr-view .card-body .fr-img-space-wrap {
+    margin-bottom: 1rem;
 }

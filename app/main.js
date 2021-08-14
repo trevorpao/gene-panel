@@ -1,6 +1,6 @@
-// import 'jquery-touch-events/src/jquery.mobile-events';
+import '@benmajor/jquery-touch-events/src/jquery.mobile-events';
 import 'jquery.cookie/jquery.cookie';
-// import 'twbs-pagination/jquery.twbsPagination';
+import 'twbs-pagination/jquery.twbsPagination';
 import 'jquery-ui/ui/core';
 import 'jquery-ui/ui/widgets/sortable';
 import 'jquery-ui/ui/disable-selection';
@@ -10,6 +10,8 @@ import 'blueimp-file-upload/js/jquery.fileupload';
 import 'localforage/dist/localforage';
 
 import 'moment/moment';
+import 'moment/locale/zh-tw';
+
 import './fastsearch';
 import './fastselect';
 
@@ -19,41 +21,33 @@ require('jsrender');
 import 'gene-event-handler/app/scripts/validatr';
 import 'gene-event-handler/app/scripts/jquery.gene';
 
-// Require Editor JS files.
-import 'froala-editor/js/froala_editor.pkgd.min';
-
-// Require Editor CSS files.
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-
 import 'styles/index.scss';
+import '../assets/styles/fastselect.css';
 
 import 'jquery-ui/themes/base/core.css';
 import 'jquery-ui/themes/base/theme.css';
 import 'jquery-ui/themes/base/datepicker.css';
 
-import '../assets/styles/fastselect.css';
 import '../assets/styles/vivify.min.css';
 
 import 'styles/custom.scss';
 
-if (IS_DEV) {
-    window.mainUri = 'https://f3cms.lo:4433/';
-    // window.apiUri = 'https://f3cms.lo:4433/api/';
-    window.apiUri = 'https://api.shopartner.co/';
+window.mainUri = 'https://{env}'+ document.domain +'{port}/';
+window.apiUri = window.mainUri + 'api/';
+window.picUri = window.mainUri; 
 
+gee.debug = 0;
+
+if (isDev) {
     $.ajaxSetup({
         crossDomain: true,
         xhrFields: {
             withCredentials: true
         }
     });
-} else {
-    window.mainUri = 'https://f3cms.lo:4433/';
-    window.apiUri = window.mainUri +'api/';
-}
 
-gee.debug = IS_DEV;
+    gee.debug = 1;
+}
 
 import './extend';
 import './app';

@@ -1,23 +1,50 @@
 GeneJs Panel
 ===========
 
-## Documentation
+## Credits
 
-### Install
-```
-    $ npm install
-    $ npm install --only=dev
-    $ "0.0.0.0  f3cms.lo" >> /etc/hosts
-```
++ Theme
+    * bulma
+    * bulma-extensions
+    * bulmaswatch
 
-### DEV
-```
-    $ nvm use v10.21.0
-    $ npm run dev #to preview and watch for changes
-    $ open https://f3cms.lo:8008/
-```
++ Plugins
+    * blueimp-file-upload
+    * fastselect
+    * froala-editor
+    * gene-event-handle
+    * jquery
+    * jquery-ui
+    * jquery.cookie
+    * jsrender
+    * jstree
+    * localforage
+    * lodash
+    * moment
+    * validatr
+    * twbs-pagination
 
-### Deploy
-```
-    $ npm run build #to build your webapp for production
-```
+## Install
+> 
+> nvm install v14.17.4
+> 
+> npm i
+> 
+> npm i --global webpack-cli
+> 
+> "0.0.0.0  loc.f3cms.com" >> /etc/hosts
+> 
+
+## DEV
+> 
+> nvm use v14.17.4
+> 
+> npm run dev # to preview and watch for changes
+> 
+
+## Deploy
+> nvm use v14.17.4
+> 
+> npm run build #to build your webapp for production
+> 
+

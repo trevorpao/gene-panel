@@ -304,18 +304,6 @@
         // TODO calling API
     });
 
-    // <gee:set-option module="site"></gee:set-option>
-    gee.hookTag('gee\\:set-option', function (me) {
-        me.each(function (idx) {
-            let cu = $(this);
-            let attr = app.extractAttr(cu);
-
-            if (attr.module) {
-                app.simple.loadOpt(attr, {}, cu);
-            }
-        });
-    });
-
     gee.hook('setSelect', function (me) {
         let option = me.data('value');
         let force = me.attr('force');

@@ -2,13 +2,13 @@
   <div class="column is-half">
     <section class="app-main section">
       <div class="box">
-        <h1 class="title">Login</h1>
+        <h1 class="title"><%= htmlWebpackPlugin.options.title %></h1>
         <form action="/authenticate?loginredirect=" method="post">
           <div class="notification is-danger hidden"></div>
           <div class="notification is-info hidden"></div>
           <div class="field is-horizontal">
               <div class="field-label is-normal">
-                  <label class="label">Email</label>
+                  <label class="label">Account</label>
               </div>
               <div class="field-body">
                   <div class="field">

@@ -46,9 +46,12 @@ var App = function() {
             app.screen = (app.body.width() < that.config.detectWidth) ? 'mobile' : 'tablet';
             app.body.addClass(app.screen);
 
-            gee.mainUri = window.mainUri;
-            gee.apiUri = window.apiUri +'';
-            gee.picUri = gee.mainUri.slice(0, -1);
+            let opt = app.isProd() ? { env: '', port: '' } : { env: '', port: ':4433' };
+            gee.mainUri = app.tmpl(window.mainUri, opt);
+            gee.apiUri = app.tmpl(window.apiUri, opt);
+            gee.picUri = app.tmpl(window.picUri, opt);
+            
+            gee.picUri = gee.picUri.slice(0, -1); // img path start from /
 
             gee.init();
 
@@ -63,7 +66,7 @@ var App = function() {
 
         isProd: function () {
             var host = $(location).attr('hostname');
-            return (host !== 'localhost' && host.indexOf('f3cms.lo') === -1 && host.indexOf('fake.') === -1 && host.indexOf('loc.') === -1);
+            return (host !== 'localhost' && host.indexOf('fake.') === -1 && host.indexOf('loc.') === -1);
         },
 
         loadHtml: function (src, box, redirect) {
@@ -212,7 +215,7 @@ var App = function() {
 
         redirect: function (state) {
             if (!app.route) {
-                if (IS_DEV) {
+                if (isDev) {
                     window.location.hash = state.ta;
                 } else {
                     window.history.pushState(state, '', state.path);

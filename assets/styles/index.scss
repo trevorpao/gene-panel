@@ -1,23 +1,23 @@
 // Custom variable overrides
-@import "../../node_modules/bulmaswatch/Litera/_variables.scss";
-@import "../../node_modules/bulma/bulma.sass";
+@import "bulmaswatch/Litera/_variables.scss";
+@import "bulma/bulma.sass";
 
-@import "../../node_modules/bulma-extensions/bulma-accordion/accordion.sass";
-@import "../../node_modules/bulma-extensions/bulma-badge/badge.sass";
-// @import "../../node_modules/bulma-extensions/bulma-calendar/calendar.sass";
-// @import "../../node_modules/bulma-extensions/bulma-carousel/carousel.sass";
-@import "../../node_modules/bulma-extensions/bulma-checkradio/checkradio.sass";
-@import "../../node_modules/bulma-extensions/bulma-divider/divider.sass";
-// @import "../../node_modules/bulma-extensions/bulma-iconpicker/iconPicker.sass";
-// @import "../../node_modules/bulma-extensions/bulma-pageloader/pageloader.sass";
-// @import "../../node_modules/bulma-extensions/bulma-pricingtable/pricing-table.sass";
-@import "../../node_modules/bulma-extensions/bulma-quickview/quickview.sass";
-@import "../../node_modules/bulma-extensions/bulma-slider/slider.sass";
-@import "../../node_modules/bulma-extensions/bulma-steps/steps.sass";
-// @import "../../node_modules/bulma-extensions/bulma-switch/switch.sass";
-@import "../../node_modules/bulma-extensions/bulma-tagsinput/tagsinput.sass";
-@import "../../node_modules/bulma-extensions/bulma-timeline/timeline.sass";
-@import "../../node_modules/bulma-extensions/bulma-tooltip/tooltip.sass";
+@import "bulma-extensions/bulma-accordion/src/sass/index";
+@import "bulma-extensions/bulma-badge/src/sass/index";
+// @import "bulma-extensions/bulma-calendar/src/sass/index";
+// @import "bulma-extensions/bulma-carousel/src/sass/index";
+@import "bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.min.css";
+@import "bulma-extensions/bulma-divider/src/sass/index";
+// @import "bulma-extensions/bulma-iconpicker/src/sass/index";
+// @import "bulma-extensions/bulma-pageloader/src/sass/index";
+// @import "bulma-extensions/bulma-pricingtable/src/sass/index";
+@import "bulma-extensions/bulma-quickview/src/sass/index";
+@import "bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css";
+@import "bulma-extensions/bulma-steps/src/sass/index";
+// @import "bulma-extensions/bulma-switch/src/sass/index";
+@import "bulma-extensions/bulma-tagsinput/src/sass/index";
+@import "bulma-extensions/bulma-timeline/dist/css/bulma-timeline.min.css";
+@import "bulma-extensions/bulma-tooltip/src/sass/index";
 
 // @import "../../node_modules/bulmaswatch/cosmo/_overrides.scss";
 

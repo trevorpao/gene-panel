@@ -1,64 +1,173 @@
-;
+// 1. Import the Froala Editor
+import FroalaEditor from 'froala-editor';
+
+// 2. Import a Froala Editor plugin(s)
+import 'froala-editor/js/plugins/fullscreen.min.js';  
+import 'froala-editor/js/plugins/image.min.js';  
+import 'froala-editor/js/plugins/link.min.js';  
+import 'froala-editor/js/plugins/word_paste.min.js';  
+import 'froala-editor/js/plugins/code_view.min.js';  
+import 'froala-editor/js/plugins/quote.min.js';  
+import 'froala-editor/js/plugins/url.min.js';  
+import 'froala-editor/js/plugins/video.min.js';  
+import 'froala-editor/js/plugins/lists.min.js';  
+// import 'froala-editor/js/plugins/font_family.min.js';  
+// import 'froala-editor/js/plugins/font_size.min.js';  
+import 'froala-editor/js/plugins/inline_style.min.js';  
+import 'froala-editor/js/plugins/paragraph_format.min.js';  
+import 'froala-editor/js/plugins/paragraph_style.min.js';  
+import 'froala-editor/js/plugins/align.min.js';  
+import 'froala-editor/js/plugins/quick_insert.min.js';  
+// import 'froala-editor/js/plugins/emoticons.min.js'; // OR EmailOctopus EmojiPicker v1.0.0 (https://emailoctopus.com/)
+
+import 'froala-editor/js/languages/zh_tw.js';  
+
+// 3. Import the Froala Editor css
+// The webpack style-loader & css-loader are required to import css here. 
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+
 (function (app, gee, $) {
     'use strict';
 
+    var licenseKey = '';
+
+    var apiPath = 'media/editor_upload';
+
+    var paragraphStyles = {
+        'fr-grey-block': 'QuoteBlock',
+        'fr-text-gray': 'Gray',
+        'fr-text-bordered': 'Bordered',
+        'fr-text-spaced': 'Spaced',
+        'fr-text-uppercase': 'Uppercase'
+    };
+
+    var imageStyles = {
+        'fr-rounded': 'Rounded',
+        'fr-bordered': 'Bordered',
+        'fr-shadow': 'Shadow',
+        'img-responsive': '100%',
+        'col-6': '50%',
+        'col-4': '33%',
+    };
+
+    var paragraphFormat = {
+        N: 'Normal',
+        H3: 'Heading 3',
+        PRE: 'Code'
+    }
+
     app.editor = {
         option: {
+            toolbarSticky: true,
+            toolbarFixed: false,
+            toolbarStickyOffset: 0,
             inlineMode: false,
             language: 'zh_tw',
-            key: 'qB1H2H1G1rA1C7C7C4E1D4B3E1B9C5eC-11F5C-9pmE2ln==',
+            key: licenseKey,
             placeholderText: '開始打字吧~~~~~~',
-            pluginsEnabled: ['fullscreen', 'image', 'link', 'wordPaste', 'codeView', 'quote', 'url', 'video'],
-            imageUploadURL: 'media/editor_upload',
-            pastedImagesUploadURL: 'media/editor_upload',
+            imageUploadURL: apiPath,
+            pastedImagesUploadURL: apiPath,
             imageUploadParam: 'photo',
             pasteImage: true,
             htmlAllowComments: false,
-            imageDefaultWidth: 0,
+            imageDefaultWidth: 1,
+            imageResizeWithPercent: true,
             requestWithCredentials: true,
-            toolbarFixed: false,
-            plainPaste: true,
-            minHeight: 300,
-            htmlAllowedEmptyTags: ['textarea', 'a', 'iframe', 'span', 'video', 'style', 'script', '.fa']
-        },
+            minHeight: 500,
+            htmlAllowedEmptyTags: ['textarea', 'a', 'iframe', 'span', 'video', 'style', 'script', '.fa'],
+            imageStyles: imageStyles,
+            paragraphStyles: paragraphStyles,
+            paragraphFormat: paragraphFormat,
 
-        inlineOption: {
-            key: 'qB1H2H1G1rA1C7C7C4E1D4B3E1B9C5eC-11F5C-9pmE2ln==',
-            placeholderText: '開始打字吧~~~~~~',
-            toolbarInline: true,
-            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'indent', 'outdent', '-', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertLink', 'undo', 'redo'],
-            quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],
-            imageUploadURL: 'media/editor_upload',
-            pastedImagesUploadURL: 'media/editor_upload',
-            imageUploadParam: 'photo',
-            requestWithCredentials: true,
-            htmlAllowComments: false,
-            imageDefaultWidth: 0,
-            toolbarButtonsXS: null,
-            toolbarButtonsSM: null,
-            toolbarButtonsMD: null
+            quickInsertEnabled: true,
+            quickInsertButtons: ['image', 'video', 'embedly', 'table', 'ul', 'ol', 'hr'],
+
+            // Define new inline styles.
+            inlineStyles: {
+                '標色文字': 'color: #ca5f00;',
+            },
+
+            // useless
+            // pastePlain: true,
+            // wordAllowedStyleProps: ['font-size'],
+            // wordDeniedAttrs: ['style'],
+
+            // simple mode
+            // toolbarButtons: ['bold', 'italic', 'underline', 'insertImage', 'insertLink', 'insertTable', 'undo', 'redo'], 
+
+            // default
+            toolbarButtons: {
+              moreText: {
+                buttonsVisible: 4,
+                buttons: ['bold', 'inlineStyle', 'clearFormatting', 'italic', 'underline', 'strikeThrough', 'backgroundColor', 'inlineClass']
+              }, // , 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'emoticons'
+              moreParagraph: {
+                buttonsVisible: 3,
+                buttons: ['paragraphFormat', 'quote', 'formatUL', 'alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'paragraphStyle',  'lineHeight', 'outdent', 'indent']
+              },
+              moreRich: {
+                buttonsVisible: 2,
+                buttons: ['insertImage', 'insertLink', 'insertVideo', 'insertTable', 'emoticons', 'specialCharacters', 'embedly', 'insertHR']
+              },
+              moreMisc: {
+                buttonsVisible: 2,
+                buttons: ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker', 'selectAll', 'html', 'help']
+              }
+            }
+
         },
 
         selector: '.froalaEditor',
 
         init: function (row) {
-            $(app.editor.selector).each(function () {
-                app.editor.initFroala($(this), row);
-            });
+            app.editor.initFroala(row);
 
             if ($('.multipleSelect').length > 0) {
                 $('.multipleSelect').fastselect();
+
+                app.waitFor(0.3).then(function () {
+                    $('.fstControls').sortable({
+                        handle: '.holder',
+                        items: '.fstChoiceItem',
+                        start: function (event, ui) {
+                            $(ui.placeholder[0]).height(ui.item.height());
+                            $(this).addClass('js-sortable-ing');
+                        },
+                        stop: function (event, ui) {
+                            var tmp = [];
+                            $(this).removeClass('js-sortable-ing');
+                            let sbox = $(this).closest('.fstMultipleMode');
+                            sbox.find('.fstChoiceItem').each(function () {
+                                tmp.push($(this).data('id'));
+                            });
+
+                            sbox.find('input.multipleSelect').val(tmp.join(','));
+                        },
+                        cancel: '.js-sortable-cancel',
+                        opacity: 0.8
+                    });
+
+                    // var ary = [];
+                    // sbox.find('.fstChoiceItem').each(function () {
+                    //     ary.push($(this).data('id'));
+                    // });
+                    // box.find('input[name="relateds"]').val(ary.join(','));
+                });
             }
             if ($('input.datepicker').length > 0) {
-                $('input.datepicker').datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    numberOfMonths: 2,
-                    defaultDate: +7,
-                    minDate: 0
+                $('input.datepicker').each(function () {
+                    let minDate = $(this).data('mindate') || 0;
+                    $(this).datepicker({
+                        dateFormat: 'yy-mm-dd',
+                        numberOfMonths: 2,
+                        defaultDate: +7,
+                        minDate: minDate
+                    });
                 });
             }
 
-            if ($('.tabs-content').length > 0) {
+            if ($('.tabs-content').length > 0 && !$('.tabs-content').parent().find('.tabs').length) {
                 app.editor.tabRender($('.tabs-content'));
                 app.waitFor(function () {
                     return ($('.tabs').length > 0);
@@ -71,50 +180,67 @@
             return app.editor;
         },
 
-        initFroala: function ($elem, row) {
-            var opt = app.editor.option;
-            var param = $elem.data('param');
-            var val = '';
-
-            if ($elem.data('inline') === '1') {
-                opt = app.editor.inlineOption;
-            }
+        initFroala: function (row) {
+            var opt = _.cloneDeep(app.editor.option);
 
             opt.imageUploadURL = gee.apiUri + opt.imageUploadURL;
             opt.pastedImagesUploadURL = gee.apiUri + opt.pastedImagesUploadURL;
 
-            $elem.froalaEditor(opt)
-            .on('froalaEditor.image.inserted', function (e, editor, $img) {
-                $img.addClass('img-responsive');
-            });
+            opt.events = {
+                'image.inserted': function ($img, response) {
+                    $img.addClass('img-responsive');
+                },
+                'initialized': function () {
+                    var param = this.$box.data('param');
+                    var val = '';
 
-            param = param.replace(/\[/g, '.').replace(/]/g, '');
+                    // $(this.$box.find('.fr-wrapper')).find('div:eq(0)').hide();
 
-            if (row) {
-                if (param.indexOf('.') !== -1) { // only support meta[column] & lang[code][column]
-                    var dp = param.split('.');
-                    if (row[dp[0]] && row[dp[0]][dp[1]]) {
-                        if (dp.length === 3) {
-                            val = row[dp[0]][dp[1]][dp[2]];
+                    param = param.replace(/\[/g, '.').replace(/]/g, '');
+
+                    if (row) {
+                        if (param.indexOf('.') !== -1) { // only support meta[column] & lang[code][column]
+                            var dp = param.split('.');
+                            if (row[dp[0]] && row[dp[0]][dp[1]]) {
+                                if (dp.length === 3) {
+                                    val = row[dp[0]][dp[1]][dp[2]];
+                                }
+                                else {
+                                    val = row[dp[0]][dp[1]];
+                                }
+                            }
                         }
                         else {
-                            val = row[dp[0]][dp[1]];
+                            val = row[param];
                         }
                     }
-                }
-                else {
-                    val = row[param];
-                }
-            }
 
-            $elem.froalaEditor('html.set', val);
+                    if (gee.isset(this.html) && val != '') {
+                        this.html.set(val);
+                    }
+                },
+                'paste.afterCleanup': function (clipboard_html) {
+                  // Do something here.
+                  // this is the editor instance.
+                  // console.log('====================================');
+                  // console.log(clipboard_html);
+                  // console.log(this);
+                }
+            };
+
+            app.editor.instance = new FroalaEditor(app.editor.selector, opt);
         },
 
         passVal: function (form) {
-            form.find(app.editor.selector).each(function () {
-                var uid = $(this).data('uid');
-                $(uid).val($(this).froalaEditor('html.get'));
-            });
+            if (app.editor.instance.length > 1) {
+                _.map(app.editor.instance, function (el) {
+                    var param = el.$box.data('param');
+                    $('textarea[name="'+ param +'"]', form).val(el.html.get());
+                });
+            } else if (app.editor.instance.length == 1) {
+                var param = app.editor.instance.$box.data('param');
+                $('textarea[name="'+ param +'"]', form).val(app.editor.instance.html.get());
+            }
         },
 
         tabRender: function (me) {
@@ -123,7 +249,6 @@
 
             me.find('.tab-box').each(function (idx) {
                 let cu = $(this);
-                gee.clog(cu);
                 cu.attr('id', 'tab-'+ idx +'-'+ suffix);
                 tabs.push({title: cu.attr('title')});
             });
@@ -143,22 +268,66 @@
             }
 
             me.attr('id', 'tabs-content-'+ suffix).before(templateCode.render({ tabs: tabs, suffix: suffix}));
-        }
+        },
     };
+
+    gee.hook('setColumn', function (me) {
+        let form = me.closest('.field-editable');
+        let box = me.closest('.editing');
+        let cModule = me.data('module');
+        let val = form.find('textarea[name="content"]').val();
+        let pid = form.find('input[name="pid"]').val();
+        let col = box.data('column');
+
+        if (!pid || !col) {
+            return false;
+        } else {
+            val = val.trim();
+            let tmpModule = app.module.name;
+            app.module.name = cModule;
+
+            app.simple.set('&id='+ pid +'&'+ col +'='+ encodeURIComponent(val), me);
+            app.module.name = tmpModule;
+
+            if (val === '') {
+                val = '<p class="empty-hit"></p>';
+            }
+
+            box.html(app.formatHelper.nl2br(val)).removeClass('editing');
+        }
+    });
+
+    // <gee:set-option module="artwork" name="artwork_id" force="1"></gee:set-option>
+    // <gee:set-option module="menu" name="parent_id" force="1" tmpl="menuOptTmpl"></gee:set-option>
+    gee.hookTag('gee\\:set-option', function (me) {
+        me.not('.js-going').each(function (idx) {
+            let cu = $(this);
+            cu.addClass('js-going');
+            let val = cu.data('value');
+            let attr = app.extractAttr(cu);
+            attr.param = (gee.isset(attr.param)) ? JSON.parse(attr.param) : {};
+
+            if (attr.module) {
+                app.simple.loadOpt(attr, attr.param, cu, val);
+            }
+        });
+    });
 
     // <gee:editor data-param="lang[tw][content]" data-inline="0"></gee:editor>
     gee.hookTag('gee\\:editor', (me) => {
-        me.each((idx) => {
-            let cu = $(me[idx]);
+        me.not('.js-going').each(function (idx) {
+            let cu = $(this);
+            cu.addClass('js-going');
             let param = cu.attr('data-param') ? cu.attr('data-param') : 'content';
             let inline = cu.attr('data-inline') ? cu.attr('data-inline') : '0';
             let uniqid = 'feditor-' + Math.floor(Math.random() * 999 + 1);
 
             let templateCode = app.tmplStores.editor;
             if (!templateCode) {
-                let htmlCode = '<div class="froalaEditor" data-uid="#{{:uniqid}}" data-param="{{:param}}" data-inline="{{:inline}}"></div><textarea name="{{:param}}" class="is-hidden" id="{{:uniqid}}" ></textarea>';
+                let htmlCode = '<div class="froalaEditor" data-param="{{:param}}" data-inline="{{:inline}}"></div><textarea name="{{:param}}" class="is-hidden" ></textarea>';
 
                 templateCode = $.templates(htmlCode);
+                gee.clog(templateCode.render({ param: param, inline: inline, uniqid: uniqid }));
                 app.tmplStores.editor = templateCode;
             }
 
